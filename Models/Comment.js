@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
-class Country extends Model {}
+class Comment extends Model {}
 
-Country.init(
+Comment.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -18,8 +18,8 @@ Country.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'country',
+    modelName: 'comment',
   }
 );
 
-module.exports = Country;
+module.exports = Comment;
