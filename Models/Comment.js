@@ -12,13 +12,38 @@ Comment.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    comment_text: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    user_id: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
+    },
+    snack_id: { 
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Snack',
+        key: 'id'
+      }
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'comment',
+    modelName: 'Comment',
   }
 );
 
