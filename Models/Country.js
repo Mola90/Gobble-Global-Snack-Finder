@@ -12,6 +12,10 @@ Country.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    country_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize,
