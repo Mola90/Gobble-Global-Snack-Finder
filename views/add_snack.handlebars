@@ -1,0 +1,43 @@
+<div class="flex flex-col items-center">
+    <h1 class="text-5xl font-bold m-6">Add a snack from your country</h1>
+    <div class="flex flex-row w-screen justify-evenly h-screen">
+        <div class="w-2/5 shadow-md bg-blue-200 flex flex-col items-center h-4/5 p-5">
+            <form id="search-form">
+                <h2 class="text-3xl m-2 font-bold">Search For Your Snack</h2>
+                <p>Select a search result to populate the 'Snack Submission' form.</p>
+                <input type="text" id="searchTerm" class="m-6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <button type="submit" id="snackSearch" class="rounded-full bg-orange-400 text-slate-100 p-3">Search</button>
+            </form>
+            <div id="resultsArea" class="shadow-md grid grid-cols-1 h-4/5 overflow-y-auto"></div>
+        </div>
+    
+        <div class="flex flex-col w-2/5 shadow-md bg-blue-200  h-4/5 p-5">
+            <form class="flex flex-col items-center justify-evenly" id="submitSnack">
+                <h2 class="text-3xl font-bold">Snack Submission</h2>
+                <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-bold mb-3">Product Name</h3>
+                    <input type="text" id="product_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex flex-col justify-center items-center">
+                    <h3 class="text-xl font-bold mb-3">What country do you find this product?</h3>
+                    <input type="text" id="product_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-bold mb-3">Brand Name</h3>
+                    <input type="text" id="product_brand" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                </div>
+                <div class="flex flex-col items-center">
+                    <h3 class="text-xl font-bold mb-3">Image to use</h3>
+                    <p>If you would like to use a seperate image than the one shown, submit an img link here</p>
+                    <input type="text" id="imgLink" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <img id="formImg" style="height: 250px;">
+                </div>
+                <button type="submit" class="bg-orange-400 text-slate-100 p-3 rounded-full">Submit Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="/js/addSnack.js"></script>
