@@ -16,6 +16,10 @@ Snack.init(
         type: DataTypes.STRING,
         allowNull: false,
     },
+    brand_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     locations_id: {
         type: DataTypes.INTEGER,
 
