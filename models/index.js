@@ -28,6 +28,7 @@ Country.belongsToMany(Snack, {
 
 //Each country hasMany snacks
 
+
 //Each Category has many snacks
 Category.belongsToMany(Snack, {
     through: 'Snack_Category'
