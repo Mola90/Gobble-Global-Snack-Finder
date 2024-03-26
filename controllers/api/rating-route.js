@@ -1,3 +1,4 @@
+
 router = require('express').Router();
 //const Rating = require('../../Models/Ratings');
 
@@ -25,50 +26,19 @@ router.post('/', async (req, res) => {
   }
 })
 
-
-//Update a user blog post 
-router.put('/update/:id', async (req, res) => {
-    try{
-    const blog = await Blog.findByPk(req.params.id);
-
-    if(!blog){
-      return res.status(404).json(err)
+router.get('/', async (req, res) => {
+    try {
+      const ratingData = await Ratings.findAll();
+      console.log("Ratings fetched successfully:", ratingData);
+      res.status(200).json(ratingData);
+    } catch (err) {
+      console.error("Error occurred while Ratings:", err);
+      res.status(500).json(err);
     }
+  });
 
-    const updateBlog = Blog.update(
-      {
-      title: req.body.title,
-      content: req.body.content
-    }, 
-    {
-      where:{
-        id: req.params.id
-      }
-    });
-
-    res.status(200).json(updateBlog)
-  }catch(err){
-    console.log(err);
-    res.status(400).json(err);
-  }
-})
-
-//Delete a user blog post 
-router.delete('/', async (req,res) => {
-  try{let id = req.body.id;
-
-  const blog = await Blog.findByPk(id);
-
-    if(!blog){
-      return res.status(404).json(err)
-    }
-
-    blog.destroy();
-    res.status(200).json(blog);
-  } catch(err){
-    console.log(err);
-    res.status(400).json(err)
-  }
-})
+  module.exports = router;
 
 module.exports = router;
+
+

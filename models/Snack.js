@@ -33,7 +33,7 @@ Snack.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'snack',
+    modelName: 'Snack',
   }
 );
 
