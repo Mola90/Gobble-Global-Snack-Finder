@@ -1,5 +1,30 @@
-const router = require('express').Router();
-const {Ratings } = require('../../Models');
+
+router = require('express').Router();
+//const Rating = require('../../Models/Ratings');
+
+
+//Post a user Rating
+router.post('/', async (req, res) => {
+  try{
+    
+    const ratingData = {
+    user_rating: req.body.user_rating,
+    text_review: req.body.text_review,
+    date_created: req.body.date_created,
+    user_id: req.session.user_id,
+    snack_id: req.body.snack_id
+  }
+    //const newRating = await Rating.create(ratingData);
+
+    console.log(newRating);
+
+    res.status(200).json(newRating)
+
+  } catch(err){
+    console.log(err);
+    res.status(400).json(err);
+  }
+})
 
 router.get('/', async (req, res) => {
     try {
@@ -13,3 +38,7 @@ router.get('/', async (req, res) => {
   });
 
   module.exports = router;
+
+module.exports = router;
+
+

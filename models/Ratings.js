@@ -12,6 +12,33 @@ Rating.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    user_rating: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    text_review: {
+      type: DataTypes.TEXT
+    },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    snack_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "snack",
+        key: "id"
+      }
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "user",
+        key: "id"
+      }
+    }
   },
   {
     sequelize,

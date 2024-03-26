@@ -30,9 +30,10 @@ const searchAPI = async (event) => {
             product_name: product.product_name,
             brand: product.brands,
             img: product.image_front_url,
-            countries: product.countries_tag,
+            countries: product.countries_tags,
             code: product.code,
-            ingredients: product.ingredients_text_en
+            ingredients: product.ingredients_text_en,
+            categories: product.categories_hierarchy
         }
         productDiv.setAttribute('data-product', JSON.stringify(necessaryData))
 
@@ -63,7 +64,7 @@ const searchAPI = async (event) => {
 }
 
 const fillForm = (event) => {
-    let productData = JSON.parse(event.target.closest('#parentDiv').getAttribute('data-product'))
+    let productData = JSON.parse(event.target.closest('#parentDiv').getAttribute('data-product'));
 
     let productInput = document.querySelector('#product_name');
     productInput.value = productData.product_name
@@ -74,26 +75,69 @@ const fillForm = (event) => {
     let img = document.querySelector('#formImg');
     img.src = productData.img;
 
+    let countries = productData.countries;
+    let countriesDiv = document.querySelector('#generatedCountries');
+    countriesDiv.innerHTML = ""
+    countries.forEach((country) => {
+        let countrySingular = document.createElement('li');
+        let str = country.slice(3);
+        countrySingular.classList.add("ml-2");
+        countrySingular.setAttribute('data-country', str);
+        countrySingular.id = "formCountry"
+        countrySingular.innerText = country;
+        countrySingular.innerText = str;
+
+        countriesDiv.append(countrySingular);
+    })
+    
+
+    let categories = productData.categories
+    let categoriesDiv = document.querySelector('#generatedCategories');
+    categoriesDiv.innerHTML = ""
+    categories.forEach((category) => {
+        let categorySingular = document.createElement('li');
+        let str = category.slice(3);
+        categorySingular.setAttribute('data-category', str);
+        categorySingular.id = "formCategory";
+        categorySingular.classList.add("ml-2");
+        categorySingular.innerText = str;
+
+        categoriesDiv.append(categorySingular);
+    })
+
 
     let form = document.querySelector('#submitSnack');
     form.setAttribute('data-product', JSON.stringify(productData))
 
 
 }
-
 const submitForm = async (event) => {
     event.preventDefault();
 
     const productName = document.querySelector('#product_name').value;
-    const productCountries = document.querySelector('#product_country').value;
     const productBrand = document.querySelector('#product_brand').value;
-    const productData = document.querySelector('#submitSnack').getAttribute('data-product');
+    const productData = JSON.parse(document.querySelector('#submitSnack').getAttribute('data-product'));
+    const productCode = productData.code;
 
-    if(productName && productBrand && productData && productCountries){
+    const productCountries = document.querySelectorAll('#formCountry');
+    let productCountriesArr = [];
+    productCountries.forEach((country) => {
+        productCountriesArr.push(country.getAttribute('data-country'))
+    });
+
+    const productCategories = document.querySelectorAll('#formCategory');
+    let productCategoriesArr = [];
+    productCategories.forEach((category) => {
+        productCategoriesArr.push(category.getAttribute('data-category'))
+    });
+
+    console.log({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr})
+
+    if(productName && productBrand && productData && productCountriesArr && productCode && productCategoriesArr){
         const response = await fetch('/api/snack', {
             method: 'POST',
-            body: JSON.stringify(),
-            headers: {'Content-Type': 'applicatoin/json'}
+            body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr}),
+            headers: {'Content-Type': 'application/json'}
         });
 
         if(response.ok){
