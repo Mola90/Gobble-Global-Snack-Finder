@@ -20,9 +20,12 @@ Snack.init(
         type: DataTypes.STRING,
         allowNull: false,
     },
-    locations_id: {
-        type: DataTypes.INTEGER,
-
+    user_id: {
+      type: DataTypes.STRING,
+      references: {
+        model: "user",
+        key: "id"
+      }
     }
   },
   {

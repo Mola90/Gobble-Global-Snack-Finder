@@ -20,4 +20,13 @@ router.get('/add', async(req,res) => {
     }
 });
 
+router.get('/snack', async(req,res) => {
+    try{
+        res.render('single_snack')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+})
+
 module.exports = router;

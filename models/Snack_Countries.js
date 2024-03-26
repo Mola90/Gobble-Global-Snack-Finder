@@ -8,12 +8,6 @@ class Snack_Countries extends Model {}
 
 Snack_Countries.init(
   {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
-    },
     country_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -24,7 +18,7 @@ Snack_Countries.init(
     },
     snack_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
             model: 'snack',
             key: 'id'
