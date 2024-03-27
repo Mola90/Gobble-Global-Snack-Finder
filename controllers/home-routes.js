@@ -57,10 +57,30 @@ router.get('/snack/:id', async(req,res) => {
             snack_rating: serialisedSnack.rating
         }
         res.render('single_snack', snackData)
+     }catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    });
+      
+  
+router.get('/signup', async(req,res) => {
+    try{
+        res.render('signup')
     } catch(err){
         console.log(err);
         res.status(400).json(err);
     }
 })
+
+
+router.get('/login', async(req,res) => {
+    try{
+        res.render('login')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
 
 module.exports = router;

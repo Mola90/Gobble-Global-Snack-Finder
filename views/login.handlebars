@@ -1,50 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomePage</title>
-    <link rel="stylesheet" href="../public/css/login.css"/>
-</head>
-
-<div class="row">
-  <div class="col-md-6">
-    <h2>Login</h2>
-    <form class="form login-form">
-      <div class="form-group">
-        <label for="email-login">email:</label>
-        <input class="form-input" type="text" id="email-login" />
-      </div>
-      <div class="form-group">
-        <label for="password-login">password:</label>
-        <input class="form-input" type="password" id="password-login" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">login</button>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-6">
-    <h2>Signup</h2>
-
-    <form class="form signup-form">
-      <div class="form-group">
-        <label for="name-signup">name:</label>
-        <input class="form-input" type="text" id="name-signup" />
-      </div>
-      <div class="form-group">
-        <label for="email-signup">email:</label>
-        <input class="form-input" type="text" id="email-signup" />
-      </div>
-      <div class="form-group">
-        <label for="password-signup">password:</label>
-        <input class="form-input" type="password" id="password-signup" />
-      </div>
-      <div class="form-group">
-        <button class="btn btn-primary" type="submit">signup</button>
-      </div>
-    </form>
-  </div>
+{{!-- login form --}}
+<div class="flex flex-row w-screen justify-evenly h-screen">
+    <div class="w-2/5 shadow-md bg-blue-200 flex flex-col items-center h-4/5 p-5">
+        <h1 class="flex justify-center my-4 mb-3 text-xl font-bold my-4 self-start ml-10 mb-6">Login Here!</h1>
+            <form class="space-y-8">
+                <div class="my-2 flex flex-col mb-3">
+                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Username :</label>
+                    <input type="text" name="username" class="form-input mt-1 block w-full p-2 border rounded-md" required>
+                </div>
+                <div class="my-2 flex flex-col mb-3">
+                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Password:</label>
+                    <input type="password" name="password" class="form-input mt-1 block w-full p-2 border rounded-md" required>
+                </div>
+                <div class="flex justify-center my-4 mb-3">
+                    <button type="submit" class="text-sm font-medium bg-orange-400 text-white p-3 rounded-full">Login</button>
+                </div>
+                <div class="flex justify-center my-4 mb-3">
+                    <p class="flex justify-center my-4 mb-3"> Don't have an account yet?</p>
+                </div>
+                <div class="flex justify-center my-4 mb-3">
+                    <button type="submit" class="text-sm font-medium bg-orange-400 text-white p-3 rounded-full">signup</button>
+                </div>
+            </form>
+    </div>
 </div>
 
-<script src="../public/js/login.js"></script>
+<script src="../public/js/login.js">
