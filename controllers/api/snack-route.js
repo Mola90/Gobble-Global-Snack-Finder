@@ -1,5 +1,5 @@
 router = require('express').Router();
-const {Snack, User, Category, Country, Snack_Countries, Snack_Category} = require('../../Models');
+const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../Models');
 const { associations } = require('../../Models/Category');
 
 router.get('/', async (res,req) => {
@@ -15,6 +15,7 @@ router.post('/', async (req, res) => {
         const snackData = {
             snack_name: req.body.productName,
             brand_name: req.body.productBrand,
+            snack_image: req.body.productImage,
             user_id: 1
         }
 
@@ -34,9 +35,11 @@ router.post('/', async (req, res) => {
 
         //Submit snack if appropriate
         let addSnack = await Snack.create(snackData);
+        console.log(addSnack)
 
         //Find all categories that match categories list and their ids
         let allCountries = await Country.findAll();
+        console.log(allCountries);
         let countryAssociations = [];
         const countries = req.body.productCountriesArr;
         allCountries.forEach((country) => {
@@ -56,13 +59,9 @@ router.post('/', async (req, res) => {
         });
         console.log("associations", countryAssociations);
         //Create a country - snack association for each matching country
-        //let newCountryAssociation = await Snack_Countries.bulkCreate(countryAssociations);
-        countryAssociations.forEach(async (countryA) => {
-            console.log("This is the single CountryA", countryA)
-            let newAssociation = await Snack_Countries.create(countryA)
-            console.log("Log new association", newAssociation);
-        })
-        //console.log(newCountryAssociation)
+        let newCountryAssociation = await Snack_Country.bulkCreate(countryAssociations);
+        console.log(newCountryAssociation);
+
         
 
         //Create snack_category to link snack_id and category

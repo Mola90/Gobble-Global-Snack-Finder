@@ -1,4 +1,4 @@
-const { Country } = require('../models');
+const { Country } = require('../Models');
 
 const countryData = [
     {

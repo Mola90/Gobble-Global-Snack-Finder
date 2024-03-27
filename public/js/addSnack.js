@@ -118,6 +118,7 @@ const submitForm = async (event) => {
     const productBrand = document.querySelector('#product_brand').value;
     const productData = JSON.parse(document.querySelector('#submitSnack').getAttribute('data-product'));
     const productCode = productData.code;
+    const productImage = document.querySelector('#imgLink').value;
 
     const productCountries = document.querySelectorAll('#formCountry');
     let productCountriesArr = [];
@@ -133,10 +134,10 @@ const submitForm = async (event) => {
 
     console.log({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr})
 
-    if(productName && productBrand && productData && productCountriesArr && productCode && productCategoriesArr){
+    if(productName && productBrand && productData && productCountriesArr && productCode && productCategoriesArr && productImage){
         const response = await fetch('/api/snack', {
             method: 'POST',
-            body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr}),
+            body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr, productImage}),
             headers: {'Content-Type': 'application/json'}
         });
 

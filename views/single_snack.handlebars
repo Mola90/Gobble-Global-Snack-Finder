@@ -1,17 +1,19 @@
 <div class="w-screen flex flex-col items-center">
     <div class="w-4/5 shadow-xl bg-stone-100 flex flex-row p-8 justify-evenly rounded-lg mt-8">
-        <img src="https://images.openfoodfacts.org/images/products/762/221/044/9283/front_fr.584.400.jpg" class="ml-10">
-        <div class="border-stone-400 border-4" style="height: 500px;"></div>
+        <img src={{snack_image}} class="ml-10" style="height: 500px;">
+        <div class="border-stone-400 border-4" style="max-height: 500px;"></div>
         <div class="text-slate-950 flex flex-col">
-            <h1 class="text-3xl font-bold">{{product_name}} PRINCE CHOCOLATE</h1>
+            <h1 class="text-3xl font-bold">{{snack_name}}</h1>
             <div class="border-stone-400 border-4 w-4/5"></div>
             <div>
                 <h2 class="text-lg font-bold">Brand Name:</h2>
-                <p>PRINCE</p>
+                <p>{{snack_brand}}</p>
             </div>
             <div>
                 <h2 class="text-lg font-bold">Categories</h2>
-                <p>Choccy</p>
+                {{#each snack.snack_category as |category|}}
+                    <p>{{category}}</p>
+                {{/each}}
             </div>
             <div>
                 <h2 class="text-lg font-bold">Countries:</h2>
