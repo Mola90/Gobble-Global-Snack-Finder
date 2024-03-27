@@ -5,99 +5,110 @@ const Item = require('./Item');
 const Ratings = require('./Ratings');
 const Snack = require('./Snack');
 const User = require('./User');
-const Snack_Countries = require('./Snack_Countries');
+const Snack_Country = require('./Snack_Country');
 const Snack_Category = require('./Snack_Category')
 
 
 //Each user belongs to one country
 User.belongsTo(Country, {
-    include: "country_id"
+    foreignKey: "country_id"
 })
 //Each country has many users
 Country.hasMany(User, {
-    include: "country_id"
+    foreignKey: "country_id"
 })
 
-//Each snack belongs to multiple countries
-Snack.belongsToMany(Country, {
-    through: Snack_Countries
+//Each snack belongs to multiple Country
+Snack.hasMany(Snack_Country, {
+    foreignKey: "snack_id"
 });
+Snack_Country.belongsTo(Snack, {
+    foreignKey: "snack_id"
+})
 
 //Each Country belongs to Multiple snacks
-Country.belongsToMany(Snack, {
-    through: Snack_Countries
+Country.hasMany(Snack_Country, {
+    foreignKey: "country_id"
 });
-
+Snack_Country.belongsTo(Country, {
+    foreignKey: "country_id"
+})
 //Each country hasMany snacks
 
 
 //Each Category has many snacks
-Category.belongsToMany(Snack, {
-    through: 'Snack_Category'
+Category.hasMany(Snack_Category, {
+    foreignKey: 'category_id'
+})
+Snack_Category.belongsTo(Category, {
+    foreignKey: 'category_id'
 })
 
 //Each Snack belongs to many categories
-Snack.belongsToMany(Category, {
-    through: 'Snack_Category'
+Snack.hasMany(Snack_Category, {
+    foreignKey: 'snack_id'
+})
+Snack_Category.belongsTo(Snack, {
+    foreignKey: "snack_id"
 })
 
 //Each snack hasMany comments
 
 Snack.hasMany(Comment, {
-    include: "snack_id"
+    foreignKey: "snack_id"
 })
 
 //Each comment hasOne Snack 
 Comment.belongsTo(Snack, {
-    include: "snack_id"
+    foreignKey: "snack_id"
 })
 
 //Each User hasMany comments
 User.hasMany(Comment, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 
 //Each Comment belongs to ONE user
 Comment.belongsTo(User, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 
 //Each User hasMany ListItems
 User.hasMany(Item, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 
 Snack.belongsTo(User,{
-    include: "user_id"
+    foreignKey: "user_id"
 })
 
 User.hasMany(Snack, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 
 
 
 //Each rating has one user
 Ratings.belongsTo(User, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 //Each user has many ratings
 User.hasMany(Ratings, {
-    include: "user_id"
+    foreignKey: "user_id"
 })
 //Snacks have many ratings
 Snack.hasMany(Ratings, {
-    includes: "snack_id"
+    foreignKeys: "snack_id"
 })
 
 //Rating blongs to one snack
 Ratings.belongsTo(Snack, {
-    include: "snack_id"
+    foreignKey: "snack_id"
 })
 
 //ITEM IS A THROUGH TABLE
-//Snack_Countries are a through table
+//Snack_Country are a through table
 
 
 
-module.exports = {Category, Comment, Country, Item, Ratings, Snack, User, Snack_Countries, Snack_Category};
+module.exports = {Category, Comment, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category};

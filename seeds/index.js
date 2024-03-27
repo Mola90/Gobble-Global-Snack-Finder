@@ -4,7 +4,11 @@ const sequelize = require('../config/connection');
 
 const seedCountries = require('./country-seed');
 const seedCategories = require('./category-seed');
-const seedUsers = require('./user-seed')
+const seedUsers = require('./user-seed');
+const seedSnacks = require('./snack-seed');
+const seedSnackCountry = require('./snack_country-seed');
+const seedSnackCategories = require('./snack_categories-seed');
+const seedRatings = require('./ratings-seed');
 
 const seedAll = async () => {
   await sequelize.sync({ force: true });
@@ -14,11 +18,19 @@ const seedAll = async () => {
 
   process.exit(0);
 
-  seedCategories();
+  await seedCountries();
 
-  seedCountries();
+  await seedUsers();
+  
+  await seedSnacks();
 
-  seedUsers();
+  await seedCategories();
+
+  await seedSnackCountry();
+
+  await seedSnackCategories();
+
+  await seedRatings();
 };
 
 seedAll();

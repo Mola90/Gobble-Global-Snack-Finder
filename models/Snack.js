@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
 class Snack extends Model {}
@@ -20,8 +19,13 @@ Snack.init(
         type: DataTypes.STRING,
         allowNull: false,
     },
-    user_id: {
+    snack_image: {
       type: DataTypes.STRING,
+      allowNull: false,
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
       references: {
         model: "user",
         key: "id"

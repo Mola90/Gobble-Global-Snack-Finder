@@ -8,6 +8,12 @@ class Snack_Category extends Model {}
 
 Snack_Category.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
     category_id:{
         type: DataTypes.INTEGER,
         allowNull: false,
