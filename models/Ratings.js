@@ -23,6 +23,9 @@ Rating.init(
       type: DataTypes.DATE,
       allowNull: false
     },
+    review_title: {
+      type: DataTypes.TEXT
+    },
     snack_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
