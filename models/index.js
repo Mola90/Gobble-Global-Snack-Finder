@@ -85,6 +85,10 @@ User.hasMany(Item, {
     foreignKey: "user_id"
 })
 
+Item.belongsTo(User, {
+    foreignKey: "user_id"
+})
+
 Snack.belongsTo(User,{
     foreignKey: "user_id"
 })
