@@ -1,6 +1,6 @@
 
 router = require('express').Router();
-//const Rating = require('../../Models/Ratings');
+const Rating = require('../../Models/Ratings');
 
 
 //Post a user Rating
@@ -10,13 +10,14 @@ router.post('/', async (req, res) => {
     const ratingData = {
     user_rating: req.body.user_rating,
     text_review: req.body.text_review,
-    date_created: req.body.date_created,
+    review_title: req.body.title_review,
+    date_created: new Date(),
     user_id: req.session.user_id,
     snack_id: req.body.snack_id
   }
     //const newRating = await Rating.create(ratingData);
 
-    console.log(newRating);
+    const newRating = await Rating.create(ratingData)
 
     res.status(200).json(newRating)
 

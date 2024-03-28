@@ -1,5 +1,7 @@
 const Category = require('./Category');
+
 // const Comment = require('./Comment');
+
 const Country = require('./Country');
 const Item = require('./Item');
 const Ratings = require('./Ratings');
@@ -59,16 +61,21 @@ Snack_Category.belongsTo(Snack, {
 // })
 
 //Each comment hasOne Snack 
+
 // Comment.belongsTo(Snack, {
 //     foreignKey: "snack_id"
 // })
 
+
 //Each User hasMany comments
+
+
 // User.hasMany(Comment, {
 //     foreignKey: "user_id"
 // })
 
 //Each Comment belongs to ONE user
+
 // Comment.belongsTo(User, {
 //     foreignKey: "user_id"
 // })
@@ -106,11 +113,19 @@ Ratings.belongsTo(Snack, {
     foreignKey: "snack_id"
 })
 
+
+
 //ITEM IS A THROUGH TABLE
+
+User.belongsToMany(Snack, { through: Item });
+Snack.belongsToMany(Snack, { through: Item });
 //Snack_Country are a through table
+
 
 
 
 module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category};
 
 // Comment
+
+
