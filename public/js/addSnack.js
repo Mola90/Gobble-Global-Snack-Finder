@@ -1,3 +1,4 @@
+
 const searchAPI = async (event) => {
     event.preventDefault();
 
@@ -81,11 +82,16 @@ const fillForm = (event) => {
     countries.forEach((country) => {
         let countrySingular = document.createElement('li');
         let str = country.slice(3);
-        countrySingular.classList.add("ml-2");
+        countrySingular.classList.add("m-2", "cursor-pointer");
         countrySingular.setAttribute('data-country', str);
         countrySingular.id = "formCountry"
-        countrySingular.innerText = country;
-        countrySingular.innerText = str;
+        countrySingular.innerText = str + ", ";
+
+        countrySingular.addEventListener('click', (event) => {
+            if(event.target.tagName === "LI"){
+                event.target.remove();
+            }
+        })
 
         countriesDiv.append(countrySingular);
     })
@@ -99,8 +105,14 @@ const fillForm = (event) => {
         let str = category.slice(3);
         categorySingular.setAttribute('data-category', str);
         categorySingular.id = "formCategory";
-        categorySingular.classList.add("ml-2");
-        categorySingular.innerText = str;
+        categorySingular.classList.add("m-2", "text-slate-500", "hover:text-red-500", "cursor-pointer");
+        categorySingular.innerText = str + ", ";
+
+        categorySingular.addEventListener('click', (event) => {
+            if(event.target.tagName === "LI"){
+                event.target.remove();
+            }
+        })
 
         categoriesDiv.append(categorySingular);
     })
@@ -163,3 +175,18 @@ imgForm.addEventListener('input', handleInputChange)
 
 document.querySelector('#search-form').addEventListener('submit', searchAPI);
 document.querySelector('#submitSnack'). addEventListener('submit', submitForm);
+
+const loadDropdownChoices = async () => {
+    let allCountriesInDB = await fetch('/api/country');
+
+    for(let i = 0; i < allCountriesInDB.length; i++){
+        let countryOption = document.createElement('option');
+    }
+
+
+
+    let allCategoriesInDB = await fetch('/api/category');
+
+}
+
+loadDropdownChoices();
