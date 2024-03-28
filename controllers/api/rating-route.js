@@ -12,10 +12,9 @@ router.post('/', async (req, res) => {
     text_review: req.body.text_review,
     review_title: req.body.title_review,
     date_created: new Date(),
-    user_id: req.session.user_id,
+    user_id: 1,
     snack_id: req.body.snack_id
   }
-    //const newRating = await Rating.create(ratingData);
 
     const newRating = await Rating.create(ratingData)
 

@@ -111,13 +111,23 @@ const addRating = async () => {
     let title_review = document.querySelector('#reviewTitleInput').value;
     let text_review = document.querySelector('#reviewTextInput').value;
     let user_rating = currentRating;
-    let snack_id = document.querySelector('snackName').getAttribute('data-snackId')
+    let snack_id = document.querySelector('#snackName').getAttribute('data-snackId');
 
-    if(reviewTitle && reviewText && rating){
+    if(title_review && text_review && user_rating && snack_id){
         const response = await fetch('/api/rating', {
             method: 'POST',
-            body: JSON.stringify({reviewTitle, reviewText, rating}),
+            body: JSON.stringify({title_review, text_review, user_rating, snack_id}),
             headers: {'Content-Type': 'application/json'}
         });
+        if(response.ok){
+            window.location.replace(`/snack/${snack_id}`)
+        } else {
+            alert('Failed to add review')
+        }
     }
+    
+
 }
+
+
+let submitRatingBtn = document.querySelector('#submitReview').addEventListener('click', addRating)
