@@ -111,7 +111,7 @@ Ratings.belongsTo(Snack, {
 //ITEM IS A THROUGH TABLE
 
 User.belongsToMany(Snack, { through: Item });
-Snack.belongsToMany(Snack, { through: Item });
+Snack.belongsToMany(User, { through: Item });
 //Snack_Country are a through table
 
 
