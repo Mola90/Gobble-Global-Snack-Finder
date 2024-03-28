@@ -4,8 +4,6 @@ const searchAPI = async (event) => {
 
     let searchTerm = document.querySelector('#searchTerm').value;
 
-    console.log(searchTerm);
-
     try{
     const response = await fetch(`https://world.openfoodfacts.org/cgi/search.pl?search_terms=${searchTerm}&search_simple=1&action=process&json=1nmm&page_size=20&`)
 
@@ -15,8 +13,6 @@ const searchAPI = async (event) => {
 
     const data = await response.json();
     let products = data.products;
-
-    console.log(products)
 
     let resultsArea = document.querySelector('#resultsArea');
     resultsArea.innerHTML = ""
@@ -154,7 +150,7 @@ const submitForm = async (event) => {
         });
 
         if(response.ok){
-            window.location.replace()
+            window.location.replace("/dashboard")
         } else {
             alert('Failed to save Snack')
         }

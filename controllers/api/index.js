@@ -15,5 +15,6 @@ router.use('/user', userRoutes);
 router.use('/snack', snackRoute);
 router.use('/country', countryRoute);
 router.use('/category', categoryRoute)
+router.use('/snack', snackRoutes);
 
 module.exports = router;
