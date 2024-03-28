@@ -100,9 +100,12 @@ router.get('/snack/:id', async(req,res) => {
      }catch(err){
         console.log(err);
         res.status(400).json(err);
+
     }});
+
       
-  
+
+
 router.get('/signup', async(req,res) => {
     try{
         res.render('signup')

@@ -42,6 +42,14 @@ User.init(
         model: "country",
         key: "id"
       }
+    },
+    DOB: {
+      type: DataTypes.DATEONLY,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        isBefore: new Date().toISOString().split('T')[0],
+      }
     }
   },
   {
