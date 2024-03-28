@@ -60,20 +60,14 @@ router.get('/snack/:id', async(req,res) => {
         let ratings = serialisedSnack.ratings;
 
         //Find the average rating
-        let ratingTotal = 0;
-        for(let i = 0; i < ratings.length; i++){
-            ratingTotal = ratingTotal + ratings[i].user_ratings
-        }
-        let ratingsAvg = ratingTotal/ratings.length;
+        let ratingsTotal = 0;
 
-        //Create an array with star rating for rendering
+
+        //Create an array with star rating for rendering user review star ratings
         ratings.forEach((rating) => {
             rating.starArr = [];
             let goldStars = rating.user_rating;
             let blankStars = 5 - rating.user_rating;
-            console.log(rating.user_rating);
-            
-            console.log(rating.User);
 
             for(let i = 0; i < goldStars; i++){
                 rating.starArr.push({color: "text-yellow-300"});
@@ -81,8 +75,24 @@ router.get('/snack/:id', async(req,res) => {
             for(let i = 0; i < blankStars; i++){
                 rating.starArr.push({color: "text-gray-300"});
             }
-        })
-        console.log(ratings);
+            ratingsTotal = ratingsTotal + rating.user_rating;
+        });
+        //Find ratings average
+        let ratingsAvg = parseFloat((ratingsTotal / ratings.length).toFixed(2));
+        let ratingsFloor = Math.floor(ratingsAvg);
+
+        //Create array to generate overall score stars
+        let overallRatingStars = []
+        let goldStars = ratingsFloor;
+        let blankStars = 5 - ratingsFloor;
+
+        for(let i = 0; i < goldStars; i++){
+            overallRatingStars.push({color: "text-yellow-300"});
+        }
+        for(let i = 0; i < blankStars; i++){
+            overallRatingStars.push({color: "text-gray-300"});
+        }
+
 
         let snackData = {
             snack_name: serialisedSnack.snack_name,
@@ -92,10 +102,13 @@ router.get('/snack/:id', async(req,res) => {
             snack_categories: serialisedSnack.snack_categories,
             snack_countries: serialisedSnack.snack_countries,
             ratings_average: ratingsAvg,
+            ratings_floor: ratingsFloor,
             ratings: ratings,
-            snack_id: serialisedSnack.snack_id
+            snack_id: serialisedSnack.id,
+            overallStarArr: overallRatingStars,
+            numReviews: ratings.length
         }
-        console.log(snackData)
+        
         res.render('single_snack', snackData)
      }catch(err){
         console.log(err);

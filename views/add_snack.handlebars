@@ -1,17 +1,17 @@
 <div class="flex flex-col items-center">
     <h1 class="text-5xl font-bold m-6">Add a snack from your country</h1>
-    <div class="flex flex-row w-screen justify-evenly h-screen">
-        <div class="w-2/5 shadow-xl bg-stone-100 rounded-lg flex flex-col items-center h-4/5 p-5">
-            <form id="search-form">
+    <div class="flex flex-col w-screen justify-evenly items-center">
+        <div class=" w-4/5 shadow-xl bg-stone-100 rounded-lg flex flex-col items-center p-5 m-8">
+            <form id="search-form" class="flex flex-col items-center">
                 <h2 class="text-3xl m-2 font-bold">Search For Your Snack</h2>
                 <p>Select a search result to populate the 'Snack Submission' form.</p>
                 <input type="text" id="searchTerm" class="m-6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.">
                 <button type="submit" id="snackSearch" class="rounded-full bg-orange-400 text-slate-100 p-3">Search</button>
             </form>
-            <div id="resultsArea" class="shadow-md grid grid-cols-1 h-4/5 overflow-y-auto"></div>
+            <div id="resultsArea" class="shadow-md grid grid-cols-1 h-24 overflow-y-auto"></div>
         </div>
     
-        <div class="flex flex-col w-2/5 rounded-lg shadow-lg bg-stone-100  h-4/5 p-5">
+        <div class="flex flex-col w-4/5 rounded-lg shadow-lg bg-stone-100 p-5 m-8">
             <form class="flex flex-col items-center justify-evenly" id="submitSnack">
                 <h2 class="text-3xl font-bold">Snack Submission</h2>
                 <div class="flex flex-col items-center">
