@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
-class Rating extends Model {}
+class Country extends Model {}
 
-Rating.init(
+Country.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,14 +12,18 @@ Rating.init(
       primaryKey: true,
       autoIncrement: true,
     },
+    country_name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize,
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'rating',
+    modelName: 'country',
   }
 );
 
-module.exports = Rating;
+module.exports = Country;

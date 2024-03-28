@@ -1,8 +1,48 @@
-<div>
-    <h2>You have tried: Insert Number of Snacks from: Insert Number of Countries?</h2>
-    {{!-- Insert some sort of statistics board --}}
+<div class="w-screen flex flex-col items-center">
+    <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
+        <div class="flex justify-self-start flex-row items-center">
+            <div class="shadow-md h-36 w-36 rounded-full bg-stone-100">
+                <img>
+            </div>
+            <h2 class="text-2xl ml-8">Insert Username Here</h2>
+        </div>
+        
+        <div id="stat-board" class="flex flex-row justify-self-end items-center ">
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p class="">Snacks</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>This Year</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>Reviews</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>Likes</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg">
+        <ul class="flex space-x-12">
+            <a>Profile</a>
+            <a>Snacks</a>
+            <a>WishList</a>
+            <a>Reviews</a>
+            <a>Likes</a>
+            <a>Submissions</a>
+        </ul>
+    </div>
 </div>
 <div>
+    <h2>Favorite Snacks</h2>
+    <div>
+        
+    </div>
     <h2>Your wishlist</h2>
     <div>
         {{!-- Render wishList snacks here  --}}
@@ -13,6 +53,6 @@
     </div>
     <h2>Snacks you've added</h2>
     <div>
-        
+
     </div>
 </div>

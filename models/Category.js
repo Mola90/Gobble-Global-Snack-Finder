@@ -2,9 +2,9 @@ const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 
-class Snack extends Model {}
+class Category extends Model {}
 
-Snack.init(
+Category.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -12,13 +12,9 @@ Snack.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    snack_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    locations_id: {
-        type: DataTypes.INTEGER,
-
+    category_name:{
+      type: DataTypes.STRING,
+      allowNull: false
     }
   },
   {
@@ -26,8 +22,8 @@ Snack.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'snack',
+    modelName: 'category',
   }
 );
 
-module.exports = Snack;
+module.exports = Category;
