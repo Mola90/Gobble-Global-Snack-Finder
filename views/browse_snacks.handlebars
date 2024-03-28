@@ -1,0 +1,35 @@
+<div> 
+    <div>
+        {{> navbar}}
+    </div>
+    <div  class="search-bar">
+       <input type="text" id="search-input" placeholder="Search Snacks..">
+       <button id="search-btn">Search</button>
+    </div>
+    <hr>
+    <div class="filter-btns">
+        <select name="countries">
+            {{#each countries}}
+                <option value="this.name">{{this.name}}</option>
+            {{/each}}
+        </select>
+        <select class="categories">
+            {{#each category}}
+                <option value="this.category">{{this.categroy}}</option>
+            {{/each}}
+        </select>
+        <select class="rating">
+            {{#each rating}}
+                <option value="this.rating">{{this.rating}}</option>
+            {{/each}}
+        </select>
+    </div>
+    <div class="snack=list">
+        {{#each snack}}
+        <div>
+            <img src="{{this.imageUrl}}" alt="{{this.name}}" class="snack-image">
+            <h3>{{this.name}}</h3>
+        </div>
+        {{/each}}
+    </div>
+</div>

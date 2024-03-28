@@ -1,6 +1,22 @@
 <div class="flex flex-col">
-    <div class="h-80 w-32 shadow-md">
+    <div="h-80 w-32 shadow-md">
+        <img src="{{snack_image}}" alt="{{snack_name}}" class="h-full w-full object-cover" />
     </div>
-    <h2>Snack Name</h2>
+    <div>
+        <h2>Snack Name: {{snack_name}}</h2>
+    </div>
+    <div>
+        <h2>Ratings</h2>
+        <ul>
+            {{#each snack_ratings as |rating|}}
+                <li>{{rating}}</li>
+            {{/each}}
+        </ul>
+    </div>
+    <div>
+        <img>Brand: </i>
+        <p> {{snack_brand}}</p>
+    </div>
 </div>
-git 
+
+add brand in italics 
