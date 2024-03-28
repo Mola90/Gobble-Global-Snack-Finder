@@ -1,5 +1,5 @@
 const Category = require('./Category');
-const Comment = require('./Comment');
+//const Comment = require('./Comment');
 const Country = require('./Country');
 const Item = require('./Item');
 const Ratings = require('./Ratings');
@@ -54,24 +54,24 @@ Snack_Category.belongsTo(Snack, {
 
 //Each snack hasMany comments
 
-Snack.hasMany(Comment, {
-    foreignKey: "snack_id"
-})
+// Snack.hasMany(Comment, {
+//     foreignKey: "snack_id"
+// })
 
-//Each comment hasOne Snack 
-Comment.belongsTo(Snack, {
-    foreignKey: "snack_id"
-})
+// //Each comment hasOne Snack 
+// Comment.belongsTo(Snack, {
+//     foreignKey: "snack_id"
+// })
 
-//Each User hasMany comments
-User.hasMany(Comment, {
-    foreignKey: "user_id"
-})
+// //Each User hasMany comments
+// User.hasMany(Comment, {
+//     foreignKey: "user_id"
+// })
 
-//Each Comment belongs to ONE user
-Comment.belongsTo(User, {
-    foreignKey: "user_id"
-})
+// //Each Comment belongs to ONE user
+// Comment.belongsTo(User, {
+//     foreignKey: "user_id"
+// })
 
 //Each User hasMany ListItems
 User.hasMany(Item, {
@@ -111,4 +111,4 @@ Ratings.belongsTo(Snack, {
 
 
 
-module.exports = {Category, Comment, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category};
+module.exports = {Category,  Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category};
