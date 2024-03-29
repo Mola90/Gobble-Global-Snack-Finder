@@ -79,7 +79,27 @@ router.get('/likes', async (req, res) => {
 });
 
 
-router.get('/review', async (req, res) => {
+
+router.get('/likes', async(req,res) => {
+    try{
+        res.render('dashboard')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
+router.get('/likes', async(req,res) => {
+    try{
+        
+        res.render('dashboard')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
+router.get('/:userId', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
         const userId = req.session.userId; 
