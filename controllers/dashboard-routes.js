@@ -29,6 +29,7 @@ router.get('/', async(req,res) => {
             profile_picture: serialisedData.profile_picture
         }
         res.render('dashboard', dashboardData)
+        res.render('dashboard_review', dashboardData)
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -53,10 +54,25 @@ router.get('/wishlist', async(req,res) => {
     }
 });
 
-router.get('/dashboard/reviews', async(req,res) => {
-    try{
-        res.render('dashboard_review')
-    } catch(err){
+
+
+router.get('/likes', async (req, res) => {
+    try {
+        // Retrieve the logged-in user's ID from the session or request object
+        const userId = req.session.userId;
+
+        // Query the database for likes associated with the logged-in user
+        const likeData = await Like.findAll({
+            where: { user_id: 1 }, 
+            attributes: ['user_id'], 
+            include: [{ model: Snack, attributes: ['snack_name', 'brand_name', 'snack_image'] }] 
+        });
+
+        const likes = likeData.map((like) => like.get({ plain: true }));
+
+        res.render('dashboard_likes', {likes});
+        // res.json(likeData);
+    } catch (err) {
         console.log(err);
         res.status(400).json(err);
     }
@@ -83,7 +99,7 @@ router.get('/likes', async(req,res) => {
     }
 });
 
-router.get('/review', async (req, res) => {
+router.get('/:userId', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
         const userId = req.session.userId; 
