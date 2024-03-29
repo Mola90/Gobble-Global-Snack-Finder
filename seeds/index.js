@@ -1,3 +1,4 @@
+
 //const seedComments = require('./comment-seed');
 
 const sequelize = require('../config/connection');
@@ -12,8 +13,6 @@ const seedRatings = require('./ratings-seed');
 
 const seedAll = async () => {
   await sequelize.sync({ force: true });
- 
-  //await seedComments();
 
   await seedCountries();
 

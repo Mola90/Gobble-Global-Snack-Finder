@@ -1,10 +1,15 @@
 <div class="flex h-screen items-center justify-center">
     <div class= "bg-white rounded-lg">
         <h1 class="text-xl font-bold my-4 self-start ml-10 mb-6">Sign Up Here!</h1>
-            <form class="space-y-8">
+            <form class=" signup-form space-y-8">
                 <div class="my-2 p-6 flex flex-col mb-3">
                     <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Country of Birth:</label>
-                    <input type="text" name="country" class="form-input mt-1 block w-full p-2" required>
+                    <select name="country" class="form-select mt-1 block w-full p-2" required>
+                    <option value="">Select Country</option>
+                    {{#each countries}}
+                        <option value="{{this.id}}">{{this.name}}</option>
+                    {{/each}}
+                    </select>
                 </div>
                 <div class="my-2 flex flex-col mb-3">
                     <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Date of Birth:</label>
@@ -25,7 +30,13 @@
                 <div class="flex justify-center my-4 mb-3">
                     <button type="submit" class="text-sm font-medium bg-orange-400 text-white p-3 rounded-full">Sign Up</button>
                 </div>
+                <div>
+                    <p>Have an account? <a href="/login">Login Here</a></p>
+                </div>
             </form>
+
+                <br />
+            <a href='/login'>Log In</a>
     </div>
 </div>
 
