@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like} = require('../Models');
+const {User, Country, Ratings, Like, Snack} = require('../Models');
 
 
 router.get('/', async(req,res) => {
@@ -29,6 +29,7 @@ router.get('/', async(req,res) => {
             profile_picture: serialisedData.profile_picture
         }
         res.render('dashboard', dashboardData)
+        res.render('dashboard_review', dashboardData)
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -53,50 +54,48 @@ router.get('/wishlist', async(req,res) => {
     }
 });
 
-router.get('/dashboard/reviews', async(req,res) => {
-    try{
-        res.render('dashboard_review')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
 
 
-
-router.get('/likes', async(req,res) => {
-    try{
-        res.render('dashboard')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
-
-router.get('/likes', async(req,res) => {
-    try{
-        
-        res.render('dashboard')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
-
-router.get('/:userId', async (req, res) => {
+router.get('/likes', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.userId; // Assuming userId is stored in the session
+        const userId = req.session.userId;
+
+        // Query the database for likes associated with the logged-in user
+        const likeData = await Like.findAll({
+            where: { user_id: 1 }, 
+            attributes: ['user_id'], 
+            include: [{ model: Snack, attributes: ['snack_name', 'brand_name', 'snack_image'] }] 
+        });
+
+        const likes = likeData.map((like) => like.get({ plain: true }));
+
+        res.render('dashboard_likes', {likes});
+        // res.json(likeData);
+    } catch (err) {
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
+
+router.get('/review', async (req, res) => {
+    try {
+        // Retrieve the logged-in user's ID from the session or request object
+        const userId = req.session.userId; 
     
         // Query the database for ratings associated with the logged-in user
         const reviewData = await Ratings.findAll({
-            where: { user_id: req.params.userId },
-            attributes: ['text_review', 'review_title'], // Specify the required fields
-            include: [{ model: User, attributes: ['username'] }] // Include the User model to access user-related attributes
+            where: { user_id: 1 },
+            attributes: ['text_review', 'review_title', 'date_created'], // Specify the required fields
+            include: [{ model: Snack, attributes: ['snack_name', 'brand_name', 'snack_image'] }] // Include the User model to access user-related attributes
         });
+
+        const reviews = reviewData.map((reviews) => reviews.get({plain: true}));
     
         // Render the 'dashboard_review' template and pass the review data to it
-        res.render('dashboard_review', { reviews: reviewData });
+        res.render('dashboard_review', { reviews});
+        // res.json(reviewData);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);

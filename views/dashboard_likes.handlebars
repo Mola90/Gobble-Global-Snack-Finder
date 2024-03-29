@@ -37,7 +37,7 @@
             <a>Snacks</a>
             <a>WishList</a>
             <a href="/dashboard/review">Reviews</a>
-            <a href="/dashboard/likes">Likes</a>
+            <a>Likes</a>
             <a>Submissions</a>
         </ul>
     </div>
@@ -45,27 +45,24 @@
 
 <div class="flex justify-center items-center min-h-screen">
     <div class="w-4/5 shadow-xl bg-stone-100 flex flex-col p-8 justify-evenly rounded-lg m-8">
-        <h1 class="text-xl font-bold mb-6 text-center">Your Reviews</h1>
+        <h1 class="text-xl font-bold mb-6 text-center">All Likes</h1>
         <div class="reviews">
-            {{#if reviews.length}}
+            {{#if likes.length}}
                 <ul>
-                    {{#each reviews as |review|}}
+                    {{#each likes as |like|}}
                         <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center">
                             <div class="flex flex-col flex-grow">
-                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{review.Snack.snack_name}}  </h2>
-                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{review.Snack.brand_name}} </h2>
-                                <p class="text-xs text-gray-500"> Reviewed: {{format_date review.date_created}}</p>
-                                <div class="border-b border-gray-400 mb-2"></div>
-                                <h3 class="font-semibold text-gray-900">{{review.review_title}}</h3>
-                                <p class="mb-2 text-gray-500">{{review.text_review}}</p>
+                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{like.Snack.snack_name}} </h2>
+                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{like.Snack.brand_name}} </h2>
                             </div>
-                            <img src="{{review.Snack.snack_image}}" alt="{{review.Snack.snack_name}}" style="max-width: 200px; max-height: 200px;">
+                            <img src="{{like.Snack.snack_image}}" alt="{{like.Snack.snack_name}}" style="max-width: 200px; max-height: 200px;">
                         </div>
                     {{/each}}
                 </ul>
             {{else}}
-                <p>No reviews found.</p>
+                <p>No Likes Found</p>
             {{/if}}
         </div>
     </div>
 </div>
+
