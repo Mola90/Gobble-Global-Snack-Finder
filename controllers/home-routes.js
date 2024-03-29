@@ -328,5 +328,13 @@ router.get('/login', async(req,res) => {
     }
 });
 
+router.get('/browse', async(req,res) => {
+    try{
+        res.render('browse_snacks')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
 
 module.exports = router;
