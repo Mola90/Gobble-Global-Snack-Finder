@@ -50,6 +50,12 @@ User.init(
         isDate: true,
         isBefore: new Date().toISOString().split('T')[0],
       }
+    },
+    profile_picture: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+      defaultValue: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F002%2F634%2F888%2Flarge_2x%2Fsimple-person-user-outline-icon-vector.jpg&f=1&nofb=1&ipt=f92b9258a379d6a7f6ca50ce8e5984677ee42c3ba1451816b1f1f190561d6687&ipo=images"
+
     }
   },
   {

@@ -1,43 +1,56 @@
-<div class="flex h-screen items-center justify-center">
-    <div class= "bg-white rounded-lg">
+<div class="flex flex-row w-screen justify-evenly h-screen">
+    <div class="w-2/5 shadow-md bg-blue-200 flex flex-col items-center h-4/5 p-5">
         <h1 class="text-xl font-bold my-4 self-start ml-10 mb-6">Sign Up Here!</h1>
-            <form class=" signup-form space-y-8">
-                <div class="my-2 p-6 flex flex-col mb-3">
-                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Country of Birth:</label>
-                    <select name="country" class="form-select mt-1 block w-full p-2" required>
+        <form class=" signup-form space-y-8">
+            <div class="my-2 p-6 flex flex-col mb-3">
+                {{!-- <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Country of
+                    Birth:</label>
+                <select name="country" class="form-select mt-1 block w-full p-2" required>
                     <option value="">Select Country</option>
                     {{#each countries}}
-                        <option value="{{this.id}}">{{this.name}}</option>
+                    <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
-                    </select>
-                </div>
-                <div class="my-2 flex flex-col mb-3">
-                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Date of Birth:</label>
-                    <input type="date" name="DOB" class="form-input mt-1 block w-full p-2">
-                </div>
-                <div class="my-2 flex flex-col mb-3">
-                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Username:</label>
-                    <input type="text" name="Username" class="form-input mt-1 block w-full p-2" required>
-                </div>
-                <div class="my-2 flex flex-col mb-3">
-                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Email:</label>
-                    <input type="email" name="Email" class="form-input mt-1 block w-full p-2" required>
-                </div>
-                <div class="my-2 flex flex-col mb-3">
-                    <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Password:</label>
-                    <input type="password" name="Password" class="form-input mt-1 block w-full p-2" required>
-                </div>
-                <div class="flex justify-center my-4 mb-3">
-                    <button type="submit" class="text-sm font-medium bg-orange-400 text-white p-3 rounded-full">Sign Up</button>
-                </div>
-                <div>
-                    <p>Have an account? <a href="/login">Login Here</a></p>
-                </div>
-            </form>
+                </select> --}}
+                <form class="max-w-sm mx-auto">
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white self-start">Country
+                        of Birth:</label>
+                    <select name="country"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected>Select a country</option>
+                        {{#each countries}}
+                        <option value="{{this.id}}">{{this.country_name}}</option>
+                        {{/each}}
+            </div>
+            <div class="my-2 flex flex-col mb-3">
+                <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Date of
+                    Birth:</label>
+                <input type="date" name="DOB" class="form-input mt-1 block w-full p-2">
+            </div>
+            <div class="my-2 flex flex-col mb-3">
+                <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Username:</label>
+                <input type="text" name="Username" class="form-input mt-1 block w-full p-2" required>
+            </div>
+            <div class="my-2 flex flex-col mb-3">
+                <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Email:</label>
+                <input type="email" name="Email" class="form-input mt-1 block w-full p-2" required>
+            </div>
+            <div class="my-2 flex flex-col mb-3">
+                <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Password:</label>
+                <input type="password" name="Password" class="form-input mt-1 block w-full p-2" required>
+            </div>
+            <div class="flex justify-center my-4 mb-3">
+                <button type="submit" class="text-sm font-medium bg-orange-400 text-white p-3 rounded-full">Sign
+                    Up</button>
+            </div>
+            <div class="flex justify-center my-4 mb-3">
+                <p>Have an account?
+                    <a href="/login">Login Here</a>
+                </p>
+            </div>
+        </form>
 
-                <br />
-            <a href='/login'>Log In</a>
     </div>
 </div>
 
 <script src="../public/js/signup.js"></script>
+<script src="../controllers/api/country-route.js"></script>
