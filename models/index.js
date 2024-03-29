@@ -8,7 +8,8 @@ const Ratings = require('./Ratings');
 const Snack = require('./Snack');
 const User = require('./User');
 const Snack_Country = require('./Snack_Country');
-const Snack_Category = require('./Snack_Category')
+const Snack_Category = require('./Snack_Category');
+const Like = require('./Like');
 
 
 //Each user belongs to one country
@@ -80,22 +81,22 @@ Snack_Category.belongsTo(Snack, {
 //     foreignKey: "user_id"
 // })
 
-//Each User hasMany ListItems
+//User and list item relation
 User.hasMany(Item, {
     foreignKey: "user_id"
 })
-
 Item.belongsTo(User, {
     foreignKey: "user_id"
 })
 
+//Snack and user relations
 Snack.belongsTo(User,{
     foreignKey: "user_id"
 })
-
 User.hasMany(Snack, {
     foreignKey: "user_id"
 })
+
 
 
 
@@ -107,29 +108,58 @@ Ratings.belongsTo(User, {
 User.hasMany(Ratings, {
     foreignKey: "user_id"
 })
-//Snacks have many ratings
+
+
+//Snack and Ratings relations
 Snack.hasMany(Ratings, {
     foreignKeys: "snack_id"
 })
-
-//Rating blongs to one snack
 Ratings.belongsTo(Snack, {
     foreignKey: "snack_id"
 })
 
+//Like and User relation
+Like.belongsTo(User, {
+    foreignKey: "user_id"
+})
+User.hasMany(Like, {
+    foreignKey: "user_id"
+})
+
+//Like and snack relation
+Like.belongsTo(Snack, {
+    foreignKey: "snack_id"
+})
+Snack.hasMany(Like, {
+    foreignKey: "snack_id"
+})
 
 
 //ITEM IS A THROUGH TABLE
 
 User.belongsToMany(Snack, { through: Item });
 Snack.belongsToMany(User, { through: Item });
-//Snack_Country are a through table
+
+//Item snack relations
+Item.belongsTo(Snack, {
+    foreignKey: "snack_id"
+})
+Snack.hasMany(Item, {
+    foreignKey: "snack_id"
+})
+
+//Item user relations
+User.hasMany(Item, {
+    foreignKey: "user_id"
+})
+Item.belongsTo(User, {
+    foreignKey: "user_id"
+})
 
 
 
 
-module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category};
+module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category, Like};
 
-// Comment
 
 

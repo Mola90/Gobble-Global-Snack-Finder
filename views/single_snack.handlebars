@@ -1,7 +1,9 @@
 <div class="w-screen flex flex-col items-center">
-    <div class="w-4/5 shadow-xl bg-stone-100 flex flex-row p-8 justify-evenly rounded-lg mt-8">
-        <img src={{snack_image}} class="ml-10" style="height: 500px;">
-        <div class="border-stone-400 border-4" style="max-height: 500px;"></div>
+    <div class="w-4/5 shadow-xl bg-stone-100 flex flex-row p-8 justify-evenly rounded-lg mt-8 items-center">
+        <div class="w-2/5 h-4/5 flex justify-center items-center">
+            <img src={{snack_image}} class="ml-10" style=" max-height: 100%; max-width: 100%; width: auto; height: auto;">
+        </div>
+        <div class="border-stone-400 border-4" style="height: 500px;"></div>
         <div class="text-slate-950 flex flex-col">
             <h1 data-snackId={{snack_id}} class="text-3xl font-bold" id="snackName">{{snack_name}}</h1>
             <div class="border-stone-400 border-4 w-4/5"></div>
@@ -11,13 +13,13 @@
             <div>
                 <h2 class="text-lg font-bold">Categories</h2>
                 {{#each snack_categories as |individualCategory|}}
-                    <p>{{individualCategory.category.category_name}}</p>
+                    <p class="flex flex-row items-center">{{individualCategory.category.category_name}}</p>
                 {{/each}}
             </div>
             <div>
                 <h2 class="text-lg font-bold">Countries:</h2>
                 {{#each snack_countries as |individualCountry|}}
-                    <p>{{individualCountry.country.country_name}}</p>
+                    <p>{{individualCountry.country.country_name}} <span class="text-3xl ml-4">{{individualCountry.country.country_emoji}}</span></p>
                 {{/each}}
             </div>
 
@@ -36,6 +38,32 @@
                 <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
             </div>
             <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">Based on {{numReviews}} reviews</p>
+            <div class="mt-12">
+                <div class="flex flex-row items-center" >
+                    {{!-- <div class="m-8 flex flex-col items-center">
+                        <i class="fa-solid fa-cookie-bite fa-2xl mb-4"></i>
+                        <p>Eaten</p>
+                    </div> --}}
+                    <div id={{#if userLike}}"removeLike"{{else}}"likeBtn"{{/if}} class="m-8 flex flex-col items-center">
+                        {{#if userLike}}
+                            <i class="fa-solid fa-heart fa-2xl mb-4 text-red-500"></i>
+                        {{else}}
+                            <i class="fa-solid fa-heart-circle-plus fa-2xl mb-4"></i>
+                        {{/if}}
+                        <p>Like</p>
+                        <p>{{numLikes}}</p>
+                    </div>
+                    <div id={{#if userSaved}}"wishlistRemove"{{else}}"wishlistBtn"{{/if}} class="m-8 flex flex-col items-center">
+                        {{#if userSaved}}
+                            <i class="fa-solid fa-clock-rotate-left fa-2xl mb-4 text-green-600"></i>
+                        {{else}}
+                            <i class="fa-solid fa-clock-rotate-left fa-2xl mb-4"></i>
+                        {{/if}}
+                        <p>Wishlist</p>
+                        <p>{{numWish}}</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     {{!-- If logged In --}}

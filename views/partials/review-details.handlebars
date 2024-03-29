@@ -1,9 +1,8 @@
-<article>
+<article class="mb-4">
     <div class="flex items-center mb-4">
-        <img class="w-10 h-10 me-4 rounded-full" src="/docs/images/people/profile-picture-5.jpg" alt="">
+        <img class="w-10 h-10 me-4 rounded-full" src={{User.profile_picture}} alt="">
         <div class="font-medium dark:text-white">
-            <p>{{User.username}}<time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">{{!--Joined
-                    on August 2014--}}</time></p>
+            <p>{{User.username}} <span class="text-2xl">{{User.country.country_emoji}}</span></p>
         </div>
     </div>
     <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
@@ -22,4 +21,5 @@
         <p>Reviewed in {{User.country.country_name}} on {{format_date date_created}}</p>
     </footer>
     <p class="mb-2 text-gray-500 dark:text-gray-400">{{text_review}}</p>
+    <hr class="border-b-2 border-stone-400">
 </article>

@@ -16,7 +16,8 @@ router.post('/', async (req, res) => {
             snack_name: req.body.productName,
             brand_name: req.body.productBrand,
             snack_image: req.body.productImage,
-            user_id: 1
+            user_id: 1,
+            date_created: new Date()
         }
 
         console.log(snackData)

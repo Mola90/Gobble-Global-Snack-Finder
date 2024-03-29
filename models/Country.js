@@ -16,6 +16,10 @@ Country.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    country_emoji: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
   },
   {
     sequelize,
