@@ -51,22 +51,24 @@ router.get('/likes', async(req,res) => {
 
 router.get('/:userId', async (req, res) => {
     try {
-      // Retrieve the logged-in user's ID from the session or request object
-      const userId = req.session.userId; // Assuming userId is stored in the session
-  
-      // Query the database for ratings associated with the logged-in user
-      const reviewData = await Ratings.findAll({
-        where: { user_id: req.params.userId },
-        attributes: ['text_review', 'review_title'], // Specify the required fields
-        include: [{ model: User, attributes: ['username'] }] // Include the User model to access user-related attributes
-      });
-  
-      res.render('dashboard_review')
+        // Retrieve the logged-in user's ID from the session or request object
+        const userId = req.session.userId; // Assuming userId is stored in the session
+    
+        // Query the database for ratings associated with the logged-in user
+        const reviewData = await Ratings.findAll({
+            where: { user_id: req.params.userId },
+            attributes: ['text_review', 'review_title'], // Specify the required fields
+            include: [{ model: User, attributes: ['username'] }] // Include the User model to access user-related attributes
+        });
+    
+        // Render the 'dashboard_review' template and pass the review data to it
+        res.render('dashboard_review', { reviews: reviewData });
     } catch (err) {
-      console.error(err);
-      res.status(500).json(err);
+        console.error(err);
+        res.status(500).json(err);
     }
-  });
+});
+
   
 
 
