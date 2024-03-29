@@ -1,6 +1,6 @@
 
 router = require('express').Router();
-const Rating = require('../../Models/Ratings');
+const {Ratings, User} = require('../../models');
 
 
 //Post a user Rating
@@ -37,7 +37,11 @@ router.get('/', async (req, res) => {
     }
   });
 
-  module.exports = router;
+
+  
+
+  
+  
 
 module.exports = router;
 
