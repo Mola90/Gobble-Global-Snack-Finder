@@ -1,10 +1,14 @@
 <div class="w-screen flex flex-col items-center">
     <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
         <div class="flex justify-self-start flex-row items-center">
-            <div class="shadow-md h-36 w-36 rounded-full bg-stone-100">
-                <img>
+            <div >
+                <img class="shadow-md h-36 w-36 rounded-full bg-stone-100" src={{profile_picture}}>
             </div>
-            <h2 class="text-2xl ml-8">Insert Username Here</h2>
+            <div>
+                <h2 class="text-2xl ml-8">{{username}}</h2>
+                <p class="ml-8 flex flex-row items-center">From {{user_country}} <span class="text-3xl ml-4">{{country_emoji}}</span></p>
+            </div>
+            
         </div>
         
         <div id="stat-board" class="flex flex-row justify-self-end items-center ">
@@ -17,19 +21,18 @@
                 <p>This Year</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
+                <h3 class="font-bold text-2xl">{{numRatings}}</h3>
                 <p>Reviews</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
+                <h3 class="font-bold text-2xl">{{numLikes}}</h3>
                 <p>Likes</p>
             </div>
         </div>
     </div>
     
-    <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg">
+    <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
         <ul class="flex space-x-12">
-            <a>Profile</a>
             <a>Snacks</a>
             <a>WishList</a>
             <a>Reviews</a>
@@ -39,20 +42,4 @@
     </div>
 </div>
 <div>
-    <h2>Favorite Snacks</h2>
-    <div>
-        
-    </div>
-    <h2>Your wishlist</h2>
-    <div>
-        {{!-- Render wishList snacks here  --}}
-    </div>
-    <h2>Your ratings</h2>
-    <div>
-        {{!-- Render list of ratings for snacks here --}}
-    </div>
-    <h2>Snacks you've added</h2>
-    <div>
-
-    </div>
 </div>
