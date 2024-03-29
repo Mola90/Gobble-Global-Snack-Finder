@@ -129,5 +129,90 @@ const addRating = async () => {
 
 }
 
-
 let submitRatingBtn = document.querySelector('#submitReview').addEventListener('click', addRating)
+
+const addListItem = async () => {
+    let snack_id = document.querySelector('#snackName').getAttribute('data-snackId');
+
+
+    if(snack_id){
+        const response = await fetch('/api/wishlist', {
+            method: 'POST',
+            body: JSON.stringify({snack_id}),
+            headers: {'Content-Type': 'application/json'}
+        });
+        if(response.ok){
+            window.location.replace(`/snack/${snack_id}`)
+        } else {
+            alert('Failed to add to wishlist')
+        }
+    }
+}
+
+const removeWishlist = async () => {
+    let snack_id = document.querySelector('#snackName').getAttribute('data-snackId');
+
+    if(snack_id){
+        const response = await fetch(`/api/wishlist/${snack_id}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'}
+        });
+    if(response.ok){
+        window.location.replace(`/snack/${snack_id}`)
+    } else {
+        alert('Failed to remove wishlist item')
+    }
+    }
+}
+
+let wishlistListen = document.querySelector('#wishlistBtn')
+if(wishlistListen){
+    wishlistListen.addEventListener('click', addListItem)
+}
+
+let wishlistRemove = document.querySelector('#wishlistRemove')
+if(wishlistRemove){
+    wishlistRemove.addEventListener('click', removeWishlist)
+}
+
+const addLike = async () => {
+    let snack_id = document.querySelector('#snackName').getAttribute('data-snackId');
+
+    if(snack_id){
+        const response = await fetch('/api/like', {
+            method: 'POST',
+            body: JSON.stringify({snack_id}),
+            headers: {'Content-Type': 'application/json'}
+        });
+        if(response.ok){
+            window.location.replace(`/snack/${snack_id}`)
+        } else {
+            alert('Failed to add like')
+        }
+    }
+}
+
+const removeLike = async () => {
+    let snack_id = document.querySelector('#snackName').getAttribute('data-snackId');
+
+    if(snack_id){
+        const response = await fetch(`/api/like/${snack_id}`, {
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'}
+        });
+    if(response.ok){
+        window.location.replace(`/snack/${snack_id}`)
+    } else {
+        alert('Failed to remove like')
+    }
+    }
+}
+
+let likeListen = document.querySelector('#likeBtn')
+if(likeListen){
+    likeListen.addEventListener('click', addLike);
+}
+let removeLikeListen = document.querySelector('#removeLike');
+if(removeLikeListen){
+    removeLikeListen.addEventListener('click', removeLike);
+}
