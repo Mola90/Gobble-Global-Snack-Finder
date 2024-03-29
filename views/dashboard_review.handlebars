@@ -1,0 +1,46 @@
+<div class="w-screen flex flex-col items-center">
+    <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
+        <div class="flex justify-self-start flex-row items-center">
+            <div class="shadow-md h-36 w-36 rounded-full bg-stone-100">
+                <img>
+            </div>
+            <h2 class="text-2xl ml-8">Insert Username Here</h2>
+        </div>
+        
+        <div id="stat-board" class="flex flex-row justify-self-end items-center ">
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p class="">Snacks</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>This Year</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>Reviews</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">Num</h3>
+                <p>Likes</p>
+            </div>
+        </div>
+    </div>
+
+<div class="flex flex-row w-screen justify-evenly h-screen">
+    <div class="w-2/5 shadow-md bg-blue-200 flex flex-col items-center h-4/5 p-5">
+        <h1 class="flex justify-center my-4 mb-3 text-xl font-bold my-4 self-start ml-10 mb-6">Your Reviews</h1>
+{{#if ratings-seed.length}}
+    <h2>Your Reviews</h2>
+    <ul>
+        {{#each ratings-seed as |ratings|}}
+            <li>
+                   {{ratings.review_title}}
+                <p>{{rating.text_review}}</p>
+            </li>
+        {{/each}}
+    </ul>
+{{else}}
+    <p>No Reviews found</p>
+{{/if}}
+</div>
