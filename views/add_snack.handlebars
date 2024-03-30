@@ -1,18 +1,19 @@
 <div class="flex flex-col items-center">
     <h1 class="text-5xl font-bold m-6">Add a snack from your country</h1>
-    <div class="flex flex-col w-screen justify-evenly h-screen">
-        <div class=" shadow-xl bg-stone-100 rounded-lg flex flex-col items-center h-4/5 p-5 m-8">
+    <div class="flex flex-col w-screen justify-evenly">
+        <div class=" shadow-xl bg-stone-100 rounded-lg flex flex-col items-center p-5 m-8">
             <form id="search-form">
                 <h2 class="text-3xl m-2 font-bold">Search For Your Snack</h2>
                 <p>Select a search result to populate the 'Snack Submission' form.</p>
                 <input type="text" id="searchTerm" class="m-6" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.">
-                <button type="submit" id="snackSearch" class="rounded-full bg-orange-400 text-slate-100 p-3">Search</button>
+                <button id="snackSearch" type="button"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 ">Search</button>
             </form>
-            <div id="resultsArea" class="shadow-md grid grid-cols-1 h-dvh overflow-y-auto"></div>
+            <div id="resultsArea" class="shadow-md grid grid-cols-1 overflow-y-auto"></div>
         </div>
     
-        <div class="flex flex-col rounded-lg shadow-lg bg-stone-100 p-5 m-8">
-            <form class="flex flex-col items-center justify-evenly" id="submitSnack">
+        <div class="flex flex-col rounded-lg shadow-lg bg-stone-100 p-5 m-8 h-screen">
+            <form class="flex flex-col items-center justify-evenly w-4/5" id="submitSnack">
                 <h2 class="text-3xl font-bold">Snack Submission</h2>
                 <div class="flex flex-col items-center">
                     <h3 class="text-xl font-bold mb-3">Product Name</h3>
@@ -20,9 +21,9 @@
                 </div>
                 <div class="flex flex-col justify-center items-center">
                     <h3 class="text-xl font-bold mb-3">What country do you find this product?</h3>
-                    <input type="text" id="product_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-                    <select id="ListOfCountries"
+                    <select id="product_country"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Choose a country</option>
                         <option value="US">United States</option>
@@ -49,13 +50,13 @@
                             </ul>
                         </div>
                 </div>
-                <div class="flex flex-col items-center">
+                <div class="flex flex-col items-center" style="height: 250px;">
                     <h3 class="text-xl font-bold mb-3">Image to use</h3>
                     <p>If you would like to use a seperate image than the one shown, submit an img link here</p>
                     <input type="text" id="imgLink" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <img id="formImg" style="height: 250px;">
+                    <img id="formImg" style=" max-height: 100%; max-width: 100%; width: auto; height: auto;">
                 </div>
-                <button type="submit" class="bg-orange-400 text-slate-100 p-3 rounded-full">Submit Product</button>
+                <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 ">Submit Product</button>
             </form>
         </div>
     </div>

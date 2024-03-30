@@ -38,7 +38,7 @@ router.post('/signup', async (req,res) => {
 
 });
 
-  router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
       const userData = await User.findOne({ where: { email: req.body.email } });
   
@@ -63,8 +63,28 @@ router.post('/signup', async (req,res) => {
       console.error(err);
       res.status(500).json(err);
     }
-  });
+});
   
+
+router.put('/update', async(req, res) => {
+  try{
+
+    let image = req.body.newUrl;
+
+    let user = await User.findByPk(1);
+
+    if(!user){
+      return res.status(404).json("User not found")
+    }
+    
+    await user.update({profile_picture: image});
+
+    res.status(200).json(user)
+  } catch(err){
+    console.error(err);
+    res.status(500).json(err)
+  }
+})
 
   module.exports = router;
 

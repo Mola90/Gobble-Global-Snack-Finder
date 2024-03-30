@@ -60,15 +60,23 @@ router.post('/', async (req, res) => {
         let allCategories = await Category.findAll();
         let categoryAssociations = [];
         const categories = req.body.productCategoriesArr;
-        allCategories.forEach((category) => {
+        allCategories.forEach(async (category) => {
             let serialisedCategory = category.get({ plain:true });
             let categoryName = serialisedCategory.category_name.toLowerCase();
+            let association;
             if(categories.includes(categoryName)){
-                let association = {
+                association = {
                     category_id: serialisedCategory.id,
                     snack_id: addSnack.id
                 }
                 categoryAssociations.push(association);
+            } else{
+                let newCategory = await Category.create({category_name: categoryName});
+                association = {
+                    category_id: newCategory.id,
+                    snack_id: addSnack.id
+                }
+                console.log(newCategory);
             }
         });
 
