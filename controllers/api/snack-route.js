@@ -10,6 +10,7 @@ router.get('/', async (res,req) => {
     }
 });
 
+// Route Handler for POST Request to add a new snack to a database. 
 router.post('/', async (req, res) => {
     try{
         const snackData = {

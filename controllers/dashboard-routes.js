@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like, Snack} = require('../Models');
+const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category } = require('../Models');
 
 
 router.get('/', async(req,res) => {
@@ -115,8 +115,8 @@ router.get('/likes', async (req, res) => {
     }
 });
 
-
-router.get('/:userId', async (req, res) => {
+// Route handler for GET request to find snacks reviewed by a user
+router.get('/review/:userId', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
         const userId = req.session.userId; 
@@ -131,7 +131,7 @@ router.get('/:userId', async (req, res) => {
         const reviews = reviewData.map((reviews) => reviews.get({plain: true}));
     
         // Render the 'dashboard_review' template and pass the review data to it
-        res.render('dashboard_review', { reviews});
+        res.render('dashboard_review', {reviews});
         // res.json(reviewData);
     } catch (err) {
         console.error(err);
@@ -139,7 +139,33 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-  
+// Route handler for GET request to find snacks added by a user
+router.get('/submission/:userId', async (req, res) => {
+    try {
+        // Extract the user ID from the request parameters
+        const userId = req.params.userId; 
+        
+        // Query the database for snacks added by the specified user
+        const submissionData = await Snack.findAll({
+            where: { user_id: 1 }, // Filter by user ID
+            attributes: ['snack_name', 'brand_name', 'snack_image'],
+            // include: [
+            //     { model: Country, attributes: ['country_name'] }, // Include country name
+            //     { model: Snack_Category, attributes: ['category_name'] } // Include category name
+            // ]
+        });
+
+        const submission = submissionData.map((submission) => submission.get({ plain: true }));
+    
+        // Render the data or send it as JSON response
+        res.render('dashboard_submission', {submission});
+        // res.json(submission);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json(err);
+    }
+});
+
 
 
 module.exports = router;
