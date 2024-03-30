@@ -32,13 +32,14 @@
         </div>
     </div>
     
+    <!-- Dashboard Navigation Section -->
     <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
         <ul class="flex space-x-12">
             <a href ="/dashboard/snacks">Snacks</a>
             <a href ="/dashboard/wishlist">WishList</a>
-            <a>Reviews</a>
+            <a href="/dashboard/review/1">Reviews</a>
             <a href="/dashboard/likes">Likes</a>
-            <a href="/dashboard/submission/1">Submissions</a>
+            <a>Submissions</a>
             <a href="/dashboard/edit">Edit Profile</a>
         </ul>
     </div>
@@ -46,27 +47,24 @@
 
 <div class="flex justify-center items-center min-h-screen">
     <div class="w-4/5 shadow-xl bg-stone-100 flex flex-col p-8 justify-evenly rounded-lg m-8">
-        <h1 class="text-xl font-bold mb-6 text-center">All Reviews</h1>
-        <div class="reviews">
-            {{#if reviews.length}}
+        <h1 class="text-xl font-bold mb-6 text-center">All Snacks Added</h1>
+        <div class="snacks">
+            {{#if submission.length}}
                 <ul>
-                    {{#each reviews as |review|}}
+                    {{#each submission as |snack|}}
                         <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center">
                             <div class="flex flex-col flex-grow">
-                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{review.Snack.snack_name}}  </h2>
-                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{review.Snack.brand_name}} </h2>
-                                <p class="text-xs text-gray-500"> Reviewed: {{format_date review.date_created}}</p>
-                                <div class="mb-2"></div>
-                                <h3 class="font-semibold text-gray-900">{{review.review_title}}</h3>
-                                <p class="mb-2 text-gray-500">{{review.text_review}}</p>
+                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{ snack.snack_name }} </h2>
+                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{ snack.brand_name }} </h2>
+                                <!-- Add other properties if needed -->
                             </div>
-                            <img src="{{review.Snack.snack_image}}" alt="{{review.Snack.snack_name}}" style="max-width: 200px; max-height: 200px;">
+                            <img src="{{ snack.snack_image }}" alt="{{ snack.snack_name }}" style="max-width: 200px; max-height: 200px;">
                         </div>
                     {{/each}}
                 </ul>
             {{else}}
-                <h2>0 Reviews</h2>
-                <p>No Reviews Found!</p>
+                <h2>0 Snacks</h2>
+                <p>No Snacks Added Yet</p>
             {{/if}}
         </div>
     </div>
