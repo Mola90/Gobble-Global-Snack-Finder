@@ -15,6 +15,7 @@ const searchAPI = async (event) => {
     let products = data.products;
 
     let resultsArea = document.querySelector('#resultsArea');
+    resultsArea.classList.add('h-dvh')
     resultsArea.innerHTML = ""
 
     products.forEach((product)=>{

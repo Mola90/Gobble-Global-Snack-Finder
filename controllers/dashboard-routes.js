@@ -14,6 +14,9 @@ router.get('/', async(req,res) => {
             },
             {
                 model: Like
+            },
+            {
+                model: Snack
             }
         ]});
 
@@ -26,10 +29,11 @@ router.get('/', async(req,res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
-            profile_picture: serialisedData.profile_picture
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length
+
         }
         res.render('dashboard', dashboardData)
-        res.render('dashboard_review', dashboardData)
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -47,7 +51,40 @@ router.get('/snacks', async(req,res) => {
 
 router.get('/wishlist', async(req,res) => {
     try{
-        res.render('dashboard')
+        res.render('')
+    } catch(err){
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
+router.get('/edit', async(req,res) => {
+    try{
+        let userDetails = await User.findByPk(1, {include: [
+            {
+            model: Country,
+            attributes: ["country_name", "country_emoji"],
+            },
+            {
+                model: Ratings,
+            },
+            {
+                model: Like
+            }
+        ]});
+
+        const serialisedData = userDetails.get({plain:true});
+        console.log(serialisedData)
+
+        let dashboardData = {
+            username: serialisedData.username,
+            user_country: serialisedData.country.country_name,
+            country_emoji: serialisedData.country.country_emoji,
+            numRatings: serialisedData.ratings.length,
+            numLikes: serialisedData.likes.length,
+            profile_picture: serialisedData.profile_picture
+        }
+        res.render('dashboard-edit-profile', dashboardData)
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -78,26 +115,6 @@ router.get('/likes', async (req, res) => {
     }
 });
 
-
-
-router.get('/likes', async(req,res) => {
-    try{
-        res.render('dashboard')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
-
-router.get('/likes', async(req,res) => {
-    try{
-        
-        res.render('dashboard')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
 
 router.get('/:userId', async (req, res) => {
     try {
