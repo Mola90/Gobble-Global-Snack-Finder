@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category } = require('../Models');
+const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category, List } = require('../models');
 
 
 router.get('/', async(req,res) => {

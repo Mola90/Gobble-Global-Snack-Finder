@@ -10,6 +10,7 @@ const User = require('./User');
 const Snack_Country = require('./Snack_Country');
 const Snack_Category = require('./Snack_Category');
 const Like = require('./Like');
+const WishList = require('./Wish-List');
 
 
 //Each user belongs to one country
@@ -156,10 +157,13 @@ Item.belongsTo(User, {
     foreignKey: "user_id"
 })
 
+//join table for User Lists
+Snack.belongsToMany(User, {through: WishList });
+User.belongsToMany(Snack, {through: WishList });
 
 
 
-module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category, Like};
+module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category, Like, WishList};
 
 
 

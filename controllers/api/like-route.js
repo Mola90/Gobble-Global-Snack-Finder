@@ -1,6 +1,25 @@
 router = require('express').Router();
-const Like = require('../../Models/Like');
+const Like = require('../../models/Like');
 
+//Get likes by user ID
+router.get('/:id', async (req, res) => {
+  try {
+    const likeData = await Like.findAll({
+      where:{
+        user_id: req.params.id
+      }
+    });
+
+    if (!likeData) {
+      res.status(404).json({ message: 'This user has no likes' });
+      return;
+    }
+
+    res.status(200).json(likeData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //Post a user Rating
 router.post('/', async (req, res) => {
