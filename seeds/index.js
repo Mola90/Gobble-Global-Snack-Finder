@@ -10,6 +10,8 @@ const seedSnacks = require('./snack-seed');
 const seedSnackCountry = require('./snack_country-seed');
 const seedSnackCategories = require('./snack_categories-seed');
 const seedRatings = require('./ratings-seed');
+const wishList = require('./Wish_List-seed');
+const seedLikes = require('./likes-seed');
 
 const seedAll = async () => {
   await sequelize.sync({ force: true });
@@ -27,6 +29,10 @@ const seedAll = async () => {
   await seedSnackCategories();
 
   await seedRatings();
+
+  await seedLikes();
+
+  await wishList();
 };
 
 seedAll();
