@@ -348,6 +348,26 @@ router.get('/signup', async (req, res) => {
       res.status(500).send('Internal Server Error');
     }
   });
+
+  router.get('/browse', async (req, res) => {
+    try {
+      let allCountries = await Country.findAll();
+      let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+      res.render('browse_snacks', { countries: serialisedCountries, logged_in: req.session.logged_in });
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+
+    try {
+        let allCategories = await Category.findAll();
+        let serialisedCategories = allCategories.map(Category => Category.get({ plain:true }));
+        res.render('browse_snacks', { categories: serialisedCategories, logged_in: req.session.logged_in});
+      } catch (err) {
+        console.error('Error fetching countries:', error);
+        res.status(500).send('Internal Server Error');
+      }
+  });
   
 
 router.get('/login', async(req,res) => {
@@ -359,13 +379,5 @@ router.get('/login', async(req,res) => {
     }
 });
 
-router.get('/browse', async(req,res) => {
-    try{
-        res.render('browse_snacks', {logged_in: req.session.logged_in})
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
 
 module.exports = router;
