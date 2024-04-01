@@ -2,26 +2,28 @@ const router = require('express').Router();
 const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category,WishList, List } = require('../Models');
 
 
-router.get('/', async(req,res) => {
-    try{
-        let userDetails = await User.findByPk(req.session.user_id, {include: [
-            {
-            model: Country,
-            attributes: ["country_name", "country_emoji"],
-            },
-            {
-                model: Ratings,
-            },
-            {
-                model: Like
-            },
-            {
-                model: Snack
-            }
-        ]});
+router.get('/', async (req, res) => {
+    try {
+        let userDetails = await User.findByPk(req.session.user_id, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                }
+            ]
+        });
 
-        const serialisedData = userDetails.get({plain:true});
-        console.log(serialisedData)
+        const serialisedData = userDetails.get({ plain: true });
+        console.log(serialisedData);
         //test
         let dashboardData = {
             username: serialisedData.username,
@@ -32,14 +34,15 @@ router.get('/', async(req,res) => {
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
+        };
 
-        }
-        res.render('dashboard', dashboardData)
-    } catch(err){
+        res.render('dashboard', dashboardData);
+    } catch (err) {
         console.log(err);
         res.status(400).json(err);
     }
 });
+
 
 router.get('/snacks', async(req,res) => {
     try{
@@ -82,26 +85,28 @@ router.get('/wishlist', async (req,res) => {
     }
 });
 
-router.get('/edit', async(req,res) => {
-    try{
-        let userDetails = await User.findByPk(req.session.user_id, {include: [
-            {
-            model: Country,
-            attributes: ["country_name", "country_emoji"],
-            },
-            {
-                model: Ratings,
-            },
-            {
-                model: Like
-            },
-            {
-                model: Snack
-            },
-        ]});
+router.get('/edit', async (req, res) => {
+    try {
+        let userDetails = await User.findByPk(req.session.user_id, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+            ]
+        });
 
-        const serialisedData = userDetails.get({plain:true});
-        console.log(serialisedData)
+        const serialisedData = userDetails.get({ plain: true });
+        console.log(serialisedData);
 
         let dashboardData = {
             username: serialisedData.username,
@@ -112,7 +117,7 @@ router.get('/edit', async(req,res) => {
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
-        }
+        };
         res.render('dashboard-edit-profile', dashboardData)
     } catch(err){
         console.log(err);
@@ -122,13 +127,14 @@ router.get('/edit', async(req,res) => {
 
 
 
+
 router.get('/likes', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.userId;
+        const userId = req.session.user_id;
 
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
@@ -163,13 +169,15 @@ router.get('/likes', async (req, res) => {
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length
+            submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in
         };
 
         const likesData = serialisedData.likes.map((likes) => ({
             snack_name: likes.Snack.snack_name,
             brand_name: likes.Snack.brand_name,
-            snack_image: likes.Snack.snack_image
+            snack_image: likes.Snack.snack_image,
+            logged_in: req.session.logged_in
         }));
 
         console.log('Checking the Likes', likesData);
@@ -188,10 +196,10 @@ router.get('/likes', async (req, res) => {
 router.get('/review', async (req, res) => {
     try {
         // Extract the user ID from the request parameters
-        const userId = req.params.userId;
+        const userId = req.session.user_id;
         
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
@@ -227,6 +235,7 @@ router.get('/review', async (req, res) => {
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in
         };
 
         // This initialises a variable name review and assigns it the result of mapping over the ratings array in the serialised data
@@ -236,7 +245,8 @@ router.get('/review', async (req, res) => {
             date_created: rating.date_created,
             snack_name: rating.Snack.snack_name,
             brand_name: rating.Snack.brand_name,
-            snack_image: rating.Snack.snack_image
+            snack_image: rating.Snack.snack_image,
+            logged_in: req.session.logged_in
         }));
 
         console.log('Reviews This is a check:', reviews);
@@ -257,10 +267,10 @@ router.get('/submission', async (req, res) => {
     try {
 
         // Extract the user ID from the request parameters
-        const userId = req.params.userId;
+        const userId = req.session.user_id;
         
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
@@ -296,12 +306,14 @@ router.get('/submission', async (req, res) => {
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in
         };
 
         const submission = serialisedData.Snacks.map((snack) => ({
             snack_name: snack.snack_name,
             brand_name: snack.brand_name,
-            snack_image: snack.snack_image
+            snack_image: snack.snack_image,
+            logged_in: req.session.logged_in
         }));
         
         console.log('Submission check:', submission);
