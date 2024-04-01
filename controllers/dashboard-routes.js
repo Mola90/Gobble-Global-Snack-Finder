@@ -117,7 +117,7 @@ router.get('/edit', async (req, res) => {
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in,
-        }; 
+        }; // Added closing curly brace here
 
         res.render('dashboard-edit-profile', dashboardData);
     } catch (err) {
