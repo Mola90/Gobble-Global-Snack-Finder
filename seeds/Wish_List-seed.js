@@ -1,4 +1,4 @@
-const Wishlist = require("../models/Wish-List");
+const Wishlist = require("../Models/Wish-List");
 // const  wishlist  = require("../models/Wish-List");
 
 const listData = [

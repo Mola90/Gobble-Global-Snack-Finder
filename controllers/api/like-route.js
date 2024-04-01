@@ -1,5 +1,6 @@
 router = require('express').Router();
-const Like = require('../../models/Like');
+
+const Like = require('../../Models/Like');
 
 //Get likes by user ID
 router.get('/:id', async (req, res) => {

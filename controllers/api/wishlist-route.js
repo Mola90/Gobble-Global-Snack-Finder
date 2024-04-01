@@ -1,5 +1,5 @@
 router = require('express').Router();
-const Wishlist = require('../../models/Wish-List');
+const Wishlist = require('../../Models/Wish-List');
 
 
 router.get('/', async (req, res) => {

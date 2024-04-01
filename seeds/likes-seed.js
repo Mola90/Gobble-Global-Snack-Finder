@@ -1,4 +1,4 @@
-const { Like } = require('../models'); // Import the Like model
+const { Like } = require('../Models'); // Import the Like model
 
 const likesData = [
   {

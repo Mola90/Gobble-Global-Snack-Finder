@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Handlebars = require('handlebars');
-const { Country } = require('../models');
+const { Country } = require('../../Models');
 
 async function renderCountries() {
     try {

@@ -1,10 +1,10 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category,WishList, List } = require('../models');
+const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category,WishList, List } = require('../Models');
 
 
 router.get('/', async(req,res) => {
     try{
-        let userDetails = await User.findByPk(1, {include: [
+        let userDetails = await User.findByPk(req.session.user_id, {include: [
             {
             model: Country,
             attributes: ["country_name", "country_emoji"],
@@ -22,7 +22,7 @@ router.get('/', async(req,res) => {
 
         const serialisedData = userDetails.get({plain:true});
         console.log(serialisedData)
-
+        //test
         let dashboardData = {
             username: serialisedData.username,
             user_country: serialisedData.country.country_name,
@@ -30,7 +30,8 @@ router.get('/', async(req,res) => {
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length
+            submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in
 
         }
         res.render('dashboard', dashboardData)
@@ -52,7 +53,7 @@ router.get('/snacks', async(req,res) => {
 router.get('/wishlist', async (req,res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.userId || 1; // Fallback to 1 for testing
+        const userId = req.session.user_id; // Fallback to 1 for testing
 
         const wishData = await User.findAll({
             where: { id: userId },
@@ -69,7 +70,7 @@ router.get('/wishlist', async (req,res) => {
         const newData = wishData.map(wishdata => wishdata.get({ plain: true }));
         
         const wdata = newData[0].FavouriteSnacks;
-        res.render('dashboard_wishes', {wdata});
+        res.render('dashboard_wishes', {wdata, logged_in: req.session.logged_in});
 
         
 
@@ -83,7 +84,7 @@ router.get('/wishlist', async (req,res) => {
 
 router.get('/edit', async(req,res) => {
     try{
-        let userDetails = await User.findByPk(1, {include: [
+        let userDetails = await User.findByPk(req.session.user_id, {include: [
             {
             model: Country,
             attributes: ["country_name", "country_emoji"],
@@ -110,7 +111,9 @@ router.get('/edit', async(req,res) => {
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length
-        }
+
+            logged_in: req.session.logged_in
+
         res.render('dashboard-edit-profile', dashboardData)
     } catch(err){
         console.log(err);
@@ -174,6 +177,7 @@ router.get('/likes', async (req, res) => {
 
 
         res.render('dashboard_likes', {dashboardData, likesData});
+
         // res.json(likeData);
     } catch (err) {
         console.log(err);
@@ -206,6 +210,7 @@ router.get('/review', async (req, res) => {
                     model: Snack
                 },
             ]
+
         });
 
         // If userDetails is null, handle the case when the user is not found
@@ -239,6 +244,8 @@ router.get('/review', async (req, res) => {
     
         // Render the 'dashboard_review' template and pass the review data to it
         res.render('dashboard_review', { dashboardData, reviews });
+
+        // res.json(reviewData);
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
@@ -272,6 +279,7 @@ router.get('/submission', async (req, res) => {
                     model: Snack
                 },
             ]
+
         });
 
         // If userDetails is null, handle the case when the user is not found
@@ -302,6 +310,7 @@ router.get('/submission', async (req, res) => {
     
         // Render the data or send it as JSON response
         res.render('dashboard_submission', {dashboardData, submission});
+
         // res.json(submission);
     } catch (err) {
         console.error(err);

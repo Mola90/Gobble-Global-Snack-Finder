@@ -7,31 +7,42 @@ const signupFormHandler = async (event) => {
     const country = document.querySelector('#country-signup').value.trim();
     const DOB = document.querySelector('#DOB-signup').value.trim();
 
+    console.log(country)
+
     if (email && username && password && country && DOB) {
-        const emailChecker = await fetch('/api/users/check-email', {
+
+        const emailData = await fetch('/api/user/email', {
             method: 'POST',
             body: JSON.stringify({email}),
-            headers: {'Content-Type': 'application/json'},
-        });
+            headers: {'Content-Type': 'application/json'}
+        })
 
-        const usernameChecker = await fetch('/user/api/check-username', {
+        if(!emailData.ok){
+            alert('This email already has an account linked, try logging in or signing up with a different email.');
+            return;
+        }
+        
+
+        const usernameData = await fetch('/api/user/username', {
             method: 'POST',
-            body: JSON.stringify({ username }),
+            body: JSON.stringify({username}),
+            headers: {'Content-Type': 'application/json'}
+        })
+        if (!usernameData.ok) {
+            alert('This user name is taken, try a different one.');
+            return;
+        }
+
+        const response = await fetch('/api/user/sign-up', {
+            method: 'POST',
+            body: JSON.stringify({email, username, password, country, DOB}),
             headers: {'Content-Type': 'application/json'},
         });
 
-        const emailData = await emailChecker.json();
-        if(emailChecker.ok && emailData.exists) {
-            alert('This email already has an account linked, try logginh in or sign up with a different email.');
-        }
-
-        const userData = await usernameChecker.json();
-        if (usernameChecker.ok && userData.exists) {
-            alert('This user name is taken, try a different one.');
-        }
+        
 
         if(response.ok) {
-            document.location.replace('/');
+            document.location.replace('/dashboard');
         } else {
             alert('Sign up failed, try again.');
         }
@@ -39,6 +50,4 @@ const signupFormHandler = async (event) => {
 
 };
 
-document
-  .querySelector('.signup-form')
-  .addEventListener('submit', signupFormHandler);
+let signUpForm = document.querySelector('#signup-form').addEventListener('submit', signupFormHandler);
