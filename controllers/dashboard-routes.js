@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category } = require('../Models');
+const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category,WishList, List } = require('../models');
 
 
 router.get('/', async(req,res) => {
@@ -49,10 +49,33 @@ router.get('/snacks', async(req,res) => {
     }
 });
 
-router.get('/wishlist', async(req,res) => {
-    try{
-        res.render('')
-    } catch(err){
+router.get('/wishlist', async (req,res) => {
+    try {
+        // Retrieve the logged-in user's ID from the session or request object
+        const userId = req.session.userId || 1; // Fallback to 1 for testing
+
+        const wishData = await User.findAll({
+            where: { id: userId },
+            attributes: ['id'], 
+            include: [{
+                model: Snack,
+                as: 'FavouriteSnacks',
+                attributes: ['snack_name', 'brand_name', 'snack_image'],
+                through: { attributes: ["user_id", ] } 
+            }]
+        });
+
+        // Mapping over wishData to get plain data
+        const newData = wishData.map(wishdata => wishdata.get({ plain: true }));
+        
+        const wdata = newData[0].FavouriteSnacks;
+        res.render('dashboard_wishes', {wdata});
+
+        
+
+
+        // res.json(newData[0].FavouriteSnacks);
+    } catch (err) {
         console.log(err);
         res.status(400).json(err);
     }

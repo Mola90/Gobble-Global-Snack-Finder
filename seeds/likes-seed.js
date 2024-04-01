@@ -9,8 +9,20 @@ const likesData = [
     user_id: 2, 
     snack_id: 2, 
   },
- 
+  {
+    user_id: 1, 
+    snack_id: 3, 
+  },
+  {
+    user_id: 2, 
+    snack_id: 1, 
+  },  {
+    user_id: 1, 
+    snack_id: 4, 
+  },
+
 ];
+
 
 const seedLikes = async () => {
   try {
