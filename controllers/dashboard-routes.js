@@ -22,7 +22,7 @@ router.get('/', async(req,res) => {
 
         const serialisedData = userDetails.get({plain:true});
         console.log(serialisedData)
-
+        //test
         let dashboardData = {
             username: serialisedData.username,
             user_country: serialisedData.country.country_name,
