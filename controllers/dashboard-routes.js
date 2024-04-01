@@ -1,9 +1,13 @@
 const router = require('express').Router();
-const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category,WishList, List } = require('../Models');
+const {User, Country, Ratings, Like, Snack, Snack_Country, Snack_Category, WishList} = require('../Models');
 
 
 router.get('/', async (req, res) => {
     try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
         let userDetails = await User.findByPk(req.session.user_id, {
             include: [
                 {
@@ -18,12 +22,15 @@ router.get('/', async (req, res) => {
                 },
                 {
                     model: Snack
+                },
+                {
+                    model: WishList
                 }
             ]
         });
 
         const serialisedData = userDetails.get({ plain: true });
-        console.log(serialisedData);
+        
         //test
         let dashboardData = {
             username: serialisedData.username,
@@ -31,6 +38,7 @@ router.get('/', async (req, res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
+            numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
@@ -43,50 +51,12 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-router.get('/snacks', async(req,res) => {
-    try{
-        res.render('dashboard')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
-
 router.get('/wishlist', async (req,res) => {
     try {
-        // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.user_id; // Fallback to 1 for testing
-
-        const wishData = await User.findAll({
-            where: { id: userId },
-            attributes: ['id'], 
-            include: [{
-                model: Snack,
-                as: 'FavouriteSnacks',
-                attributes: ['snack_name', 'brand_name', 'snack_image'],
-                through: { attributes: ["user_id", ] } 
-            }]
-        });
-
-        // Mapping over wishData to get plain data
-        const newData = wishData.map(wishdata => wishdata.get({ plain: true }));
-        
-        const wdata = newData[0].FavouriteSnacks;
-        res.render('dashboard_wishes', {wdata, logged_in: req.session.logged_in});
-
-        
-
-
-        // res.json(newData[0].FavouriteSnacks);
-    } catch (err) {
-        console.log(err);
-        res.status(400).json(err);
-    }
-});
-
-router.get('/edit', async (req, res) => {
-    try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
         let userDetails = await User.findByPk(req.session.user_id, {
             include: [
                 {
@@ -102,6 +72,75 @@ router.get('/edit', async (req, res) => {
                 {
                     model: Snack
                 },
+                {
+                    model: WishList
+                }
+            ]
+        });
+
+        const serialisedData = userDetails.get({ plain: true });
+        
+        //test
+        let dashboardData = {
+            username: serialisedData.username,
+            user_country: serialisedData.country.country_name,
+            country_emoji: serialisedData.country.country_emoji,
+            numRatings: serialisedData.ratings.length,
+            numLikes: serialisedData.likes.length,
+            numWishlist: serialisedData.wishlists.length,
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in
+        };
+        // Retrieve the logged-in user's ID from the session or request object
+        const userId = req.session.user_id; // Fallback to 1 for testing
+
+        const wishData = await User.findAll({
+            where: { id: userId },
+            attributes: ['id'], 
+            include: [{
+                model: Snack,
+                as: 'FavouriteSnacks',
+                attributes: ['snack_name', 'brand_name', 'snack_image', 'id'],
+                through: { attributes: ["user_id", ] } 
+            }]
+        });
+
+        // Mapping over wishData to get plain data
+        const newData = wishData.map(wishdata => wishdata.get({ plain: true }));
+        
+        const wdata = newData[0].FavouriteSnacks;
+        res.render('dashboard_wishes', {wdata, dashboardData, logged_in: req.session.logged_in});
+    } catch (err) {
+        console.log(err);
+        res.status(400).json(err);
+    }
+});
+
+router.get('/edit', async (req, res) => {
+    try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
+        let userDetails = await User.findByPk(req.session.user_id, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+                {
+                    model: WishList
+                }
             ]
         });
 
@@ -114,6 +153,7 @@ router.get('/edit', async (req, res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
+            numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
@@ -130,6 +170,10 @@ router.get('/edit', async (req, res) => {
 
 router.get('/likes', async (req, res) => {
     try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
         // Retrieve the logged-in user's ID from the session or request object
         const userId = req.session.user_id;
 
@@ -146,11 +190,15 @@ router.get('/likes', async (req, res) => {
                         attributes: ['snack_name', 'brand_name', 'snack_image'] }]
                 },
                 {
-                    model: Like
+                    model: Like, 
+                    include: [{model: Snack }]
                 },
                 {
                     model: Snack
                 },
+                {
+                    model: WishList
+                }
 
             ]
         });
@@ -168,16 +216,17 @@ router.get('/likes', async (req, res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
+            numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
         };
-
+        
         const likesData = serialisedData.likes.map((likes) => ({
             snack_name: likes.Snack.snack_name,
             brand_name: likes.Snack.brand_name,
             snack_image: likes.Snack.snack_image,
-            logged_in: req.session.logged_in
+            id: likes.Snack.id
         }));
 
         console.log('Checking the Likes', likesData);
@@ -195,6 +244,11 @@ router.get('/likes', async (req, res) => {
 // Route handler for GET request to find snacks reviewed by a user
 router.get('/review', async (req, res) => {
     try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
+        
         // Extract the user ID from the request parameters
         const userId = req.session.user_id;
         
@@ -208,7 +262,7 @@ router.get('/review', async (req, res) => {
                 {
                     model: Ratings,
                     include: [{ model: Snack, 
-                        attributes: ['snack_name', 'brand_name', 'snack_image'] }]
+                        attributes: ['snack_name', 'brand_name', 'snack_image', 'id'] }]
                 },
                 {
                     model: Like
@@ -216,6 +270,9 @@ router.get('/review', async (req, res) => {
                 {
                     model: Snack
                 },
+                {
+                    model: WishList
+                }
             ]
 
         });
@@ -233,6 +290,7 @@ router.get('/review', async (req, res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
+            numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in
@@ -246,7 +304,8 @@ router.get('/review', async (req, res) => {
             snack_name: rating.Snack.snack_name,
             brand_name: rating.Snack.brand_name,
             snack_image: rating.Snack.snack_image,
-            logged_in: req.session.logged_in
+            logged_in: req.session.logged_in,
+            id: rating.Snack.id
         }));
 
         console.log('Reviews This is a check:', reviews);
@@ -265,6 +324,10 @@ router.get('/review', async (req, res) => {
 // Route handler for GET request to find snacks added by a user
 router.get('/submission', async (req, res) => {
     try {
+        if(!req.session.logged_in){
+            res.redirect('/login');
+            return;
+        }
 
         // Extract the user ID from the request parameters
         const userId = req.session.user_id;
@@ -279,7 +342,7 @@ router.get('/submission', async (req, res) => {
                 {
                     model: Ratings,
                     include: [{ model: Snack, 
-                        attributes: ['snack_name', 'brand_name', 'snack_image'] }]
+                        attributes: ['snack_name', 'brand_name', 'snack_image', 'id'] }]
                 },
                 {
                     model: Like
@@ -287,6 +350,9 @@ router.get('/submission', async (req, res) => {
                 {
                     model: Snack
                 },
+                {
+                    model: WishList
+                }
             ]
 
         });
@@ -295,6 +361,7 @@ router.get('/submission', async (req, res) => {
         if (!userDetails) {
             return res.status(404).json({ error: 'User not found' });
         }
+        
 
         const serialisedData = userDetails.get({ plain: true });
 
@@ -303,6 +370,7 @@ router.get('/submission', async (req, res) => {
             user_country: serialisedData.country.country_name,
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
+            numWishlist: serialisedData.wishlists.length,
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
@@ -313,6 +381,7 @@ router.get('/submission', async (req, res) => {
             snack_name: snack.snack_name,
             brand_name: snack.brand_name,
             snack_image: snack.snack_image,
+            id: snack.id,
             logged_in: req.session.logged_in
         }));
         

@@ -9,17 +9,13 @@
                 <p class="ml-8 flex flex-row items-center">From {{user_country}} <span
                         class="text-3xl ml-4">{{country_emoji}}</span></p>
             </div>
-
+    
         </div>
-
+    
         <div id="stat-board" class="flex flex-row justify-self-end items-center ">
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
-                <p class="">Snacks</p>
-            </div>
-            <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">{{submittedSnacks}}</h3>
-                <p>Submissions</p>
+                <h3 class="font-bold text-2xl">{{numWishlist}}</h3>
+                <p class="">Wishlist</p>
             </div>
             <div class="flex flex-col m-8 items-center">
                 <h3 class="font-bold text-2xl">{{numRatings}}</h3>
@@ -29,18 +25,20 @@
                 <h3 class="font-bold text-2xl">{{numLikes}}</h3>
                 <p>Likes</p>
             </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">{{submittedSnacks}}</h3>
+                <p>Submissions</p>
+            </div>
         </div>
     </div>
-
+    
     <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
         <ul class="flex space-x-12">
-            <a href ="/dashboard/snacks">Snacks</a>
-            <a href ="/dashboard/wishlist">WishList</a>
+            <a href="/dashboard/wishlist">WishList</a>
             <a href="/dashboard/review">Reviews</a>
             <a href="/dashboard/likes">Likes</a>
             <a href="/dashboard/submission">Submissions</a>
-            <a>Edit Profile</a>
-        </ul>
+            <a href="/dashboard/edit">Edit Profile</a>
         </ul>
     </div>
 </div>

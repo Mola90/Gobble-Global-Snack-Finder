@@ -280,38 +280,7 @@ router.get('/snack/:id', async(req,res) => {
         for(let i = 0; i < blankStars; i++){
             overallRatingStars.push({color: "text-gray-300"});
         }
-        //Determine if user has like or saved this item to wishlist/likes
 
-        let userLike = await Like.findOne({
-            where: {
-                snack_id: serialisedSnack.id,
-                user_id: req.session.user_id
-            }
-        })
-
-        console.log(userLike)
-        
-        let userLikes;
-        if(userLike){
-            userLikes = true;
-        } else{
-            userLikes = false;
-        }
-        
-        let userSaved = await WishList.findOne({
-            where: {
-                snack_id: serialisedSnack.id,
-                user_id: req.session.user_id   
-            }
-        })
-        let userSave;
-        if(userSaved){
-            userSave = true;
-        } else{
-            userSave = false;
-        };
-
-        console.log(serialisedSnack)
         let snackData = {
             snack_name: serialisedSnack.snack_name,
             snack_brand: serialisedSnack.brand_name,
@@ -327,10 +296,39 @@ router.get('/snack/:id', async(req,res) => {
             numReviews: ratings.length,
             numLikes: serialisedSnack.likes.length,
             numWish: serialisedSnack.wishlists.length,
-            userLike: userLikes,
-            userSaved: userSaved,
             logged_in: req.session.logged_in
         }
+
+        //Determine if user has like or saved this item to wishlist/likes
+        if(req.session.logged_in){
+            let userLike = await Like.findOne({
+            where: {
+                snack_id: serialisedSnack.id,
+                user_id: req.session.user_id
+            }
+        })
+        
+        if(userLike){
+            snackData.userLikes = true;
+        } else{
+            snackData.userLikes = false;
+        }
+        
+        let userSaved = await WishList.findOne({
+            where: {
+                snack_id: serialisedSnack.id,
+                user_id: req.session.user_id   
+            }
+        })
+        
+        if(userSaved){
+            snackData.userSave = true;
+        } else{
+            snackData.userSave = false;
+        };
+        }
+        
+        
         
         res.render('single_snack', snackData)
      }catch(err){
