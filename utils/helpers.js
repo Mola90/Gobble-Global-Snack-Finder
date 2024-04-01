@@ -13,5 +13,14 @@ module.exports = {
     const formattedDate = `${day}/${month}/${year} at ${hour}:${minute}`;
 
     return formattedDate;
-}
+},
+
+  // Add slice helper function
+  slice(array, start, end) {
+    return (array || []).slice(start, end);
+  }
+
 };
+
+
+  
