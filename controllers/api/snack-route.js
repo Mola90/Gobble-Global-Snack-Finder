@@ -1,6 +1,6 @@
 router = require('express').Router();
-const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../Models');
-const { associations } = require('../../Models/Category');
+const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../models');
+const { associations } = require('../../models/Category');
 
 router.get('/', async (res,req) => {
     try{
@@ -9,6 +9,30 @@ router.get('/', async (res,req) => {
         
     }
 });
+
+//Get snacks by user who submited them.
+router.get('/:id', async (req, res) => {
+    try {
+      const snackData = await Snack.findAll({
+        where:{
+          user_id: req.params.id
+        }
+      });
+  
+      if (!snackData || snackData.length == 0) {
+        res.status(404).json({ message: 'This user has not submitted any snacks' });
+        console.log("this is an 404");
+        return;
+      }
+  
+      res.status(200).json(snackData);
+      console.log("this is an success");
+      console.log(snackData);
+    } catch (err) {
+      res.status(500).json(err);
+      console.log("this is an error");
+    }
+  });
 
 // Route Handler for POST Request to add a new snack to a database. 
 router.post('/', async (req, res) => {
