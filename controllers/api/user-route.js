@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User, Country} = require('../../Models');
+const {User, Country, Category} = require('../../Models');
 const bcrypt = require('bcrypt');
 
 router.get('/', async (req, res) => {
@@ -83,6 +83,26 @@ router.get('/signup', async (req, res) => {
     let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
     res.render('signup', { countries: serialisedCountries });
   } catch (error) {
+    console.error('Error fetching countries:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/browse', async (req, res) => {
+  try {
+    let allCountries = await Country.findAll();
+    let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+    res.render('browse_snacks', { countries: serialisedCountries });
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    res.status(500).send('Internal Server Error');
+  }
+
+  try {
+    let allCategories = await Category.findAll();
+    let serialisedCategories = allCategories.map(Category => Category.get({ plain:true }));
+    res.render('browse_snacks', { categories: serialisedCategories });
+  } catch (err) {
     console.error('Error fetching countries:', error);
     res.status(500).send('Internal Server Error');
   }
