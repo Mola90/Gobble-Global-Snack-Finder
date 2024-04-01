@@ -10,7 +10,7 @@ const updateProfilePic = async () => {
         console.log(response)
         if(response.ok){
             console.log('hi')
-            window.location.replace(`/`)
+            window.location.replace(`/dashboard`)
         } else {
             alert('Failed to update profile picture')
         }
