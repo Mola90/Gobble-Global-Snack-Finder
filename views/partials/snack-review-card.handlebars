@@ -12,14 +12,14 @@
             </div>
             <div class="flex flex-row items-center">
                 <img class="w-10 h-10 me-4 rounded-full" src={{User.profile_picture}} alt="">
-                <div class="font-medium dark:text-white">
+                <div class="font-medium ">
                     <p>{{User.username}}<time datetime="2014-08-16 19:00"
-                            class="block text-sm text-gray-500 dark:text-gray-400">{{!--Joined
+                            class="block text-sm text-gray-500 ">{{!--Joined
                             on August 2014--}}</time></p>
                 </div>
             </div>
             {{#if review_title}}
-            <h3 class="text-md font-semibold text-gray-900 dark:text-white">{{review_title}}</h3>
+            <h3 class="text-md font-semibold text-gray-900">{{review_title}}</h3>
             {{/if}}
             <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
                 {{#each starArr as |star|}}
@@ -31,10 +31,10 @@
                 {{/each}}
                 
             </div>
-            <footer class="mb-5 text-sm text-gray-500 dark:text-gray-400">
+            <footer class="mb-5 text-sm text-gray-500 ">
                 <p>Reviewed in {{User.country.country_name}} on {{format_date date_created}}</p>
             </footer>
-            <p class="mb-2 text-gray-500 dark:text-gray-400">{{text_review}}</p>
+            <p class="mb-2 text-gray-500 ">{{text_review}}</p>
         </div>
     </div>
     
