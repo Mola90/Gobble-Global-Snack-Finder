@@ -1,0 +1,38 @@
+{
+  "name": "gobble-global-snack-finder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "seed": "node seeds/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KLanger98/Gobble-Global-Snack-Finder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KLanger98/Gobble-Global-Snack-Finder/issues"
+  },
+  "homepage": "https://github.com/KLanger98/Gobble-Global-Snack-Finder#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "connect-session-sequelize": "^7.1.7",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-handlebars": "^7.1.2",
+    "express-session": "^1.18.0",
+    "express-session-sequelize": "^2.3.0",
+    "handlebars": "^4.7.8",
+    "mysql2": "^3.9.2",
+    "sequelize": "^6.37.1"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
