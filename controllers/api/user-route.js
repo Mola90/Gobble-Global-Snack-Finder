@@ -92,20 +92,20 @@ router.get('/browse', async (req, res) => {
   try {
     let allCountries = await Country.findAll();
     let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
-    res.render('browse_snacks', { countries: serialisedCountries });
+
+    let allCategories = await Category.findAll();
+    let serialisedCategories = allCategories.map(category => category.get({ plain:true }));
+
+    res.render('browse_snacks', { 
+      countries: serialisedCountries, 
+      categories: serialisedCategories,
+      logged_in: req.session.logged_in 
+  });
   } catch (error) {
     console.error('Error fetching countries:', error);
     res.status(500).send('Internal Server Error');
   }
 
-  try {
-    let allCategories = await Category.findAll();
-    let serialisedCategories = allCategories.map(Category => Category.get({ plain:true }));
-    res.render('browse_snacks', { categories: serialisedCategories });
-  } catch (err) {
-    console.error('Error fetching countries:', error);
-    res.status(500).send('Internal Server Error');
-  }
 });
 
 

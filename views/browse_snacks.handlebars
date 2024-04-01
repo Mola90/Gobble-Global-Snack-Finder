@@ -5,7 +5,7 @@
                 <label for="default-search" class="">
                 </label>
                 <div class="">
-                    <div class="inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <div class="inset-y-0 start-0 flex items-center ps-3">
                         <svg class=" w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -38,8 +38,8 @@
                     <label for="categories">Choose a Catagory: </label>
                     <select id="categories" class="p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 ">
                         <option selecteḏ>Category</option>
-                        {{#each categories as |category|}}
-                        <option value="{{Category_name}}">{{Category_name}}</option>
+                        {{#each categories as |Category|}}
+                        <option value="{{category_name}}">{{category_name}}</option>
                         {{/each}}
                     </select>
                 </form>
