@@ -37,23 +37,23 @@ router.get('/:id', async (req, res) => {
 
 
 
-// //Post a user Rating
-// router.post('/', async (req, res) => {
-//   try{
+//Post a user Rating
+router.post('/', async (req, res) => {
+  try{
     
-//     const listData = {
-//         snack_id: req.body.snack_id,
-//         user_id: 1
-//     }
+    const listData = {
+        snack_id: req.body.snack_id,
+        user_id: req.session.user_id
+    }
 
-//     const newList = await Item.create(listData)
+    const newList = await Wishlist.create(listData)
 
-//     res.status(200).json(newList)
-//   } catch(err){
-//     console.log(err);
-//     res.status(400).json(err);
-//   }
-// });
+    res.status(200).json(newList)
+  } catch(err){
+    console.log(err);
+    res.status(400).json(err);
+  }
+});
 
 
 
@@ -61,18 +61,18 @@ router.get('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try{
 
-    const item = await Item.findOne({
+    const wishlist = await Wishlist.findOne({
         where: {
             snack_id: req.params.id,
-            user_id: 1
+            user_id: req.session.user_id
         }
     })
 
-    if(!item){
+    if(!wishlist){
         res.status(404).json("Snack not found")
     };
 
-    let deleteItem = await item.destroy();
+    let deleteItem = await wishlist.destroy();
 
     res.status(200).json(deleteItem)
   } catch(err){

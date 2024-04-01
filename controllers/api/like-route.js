@@ -22,13 +22,13 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-//Post a user Rating
+//Post a user Like
 router.post('/', async (req, res) => {
   try{
     
     const LikeData = {
         snack_id: req.body.snack_id,
-        user_id: 1
+        user_id: req.session.user_id
     }
 
     const newLike = await Like.create(LikeData)
@@ -47,7 +47,7 @@ router.post('/', async (req, res) => {
     const like = await Like.findOne({
         where: {
             snack_id: req.params.id,
-            user_id: 1
+            user_id: req.session.user_id
         }
     })
 

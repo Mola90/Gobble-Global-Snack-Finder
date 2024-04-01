@@ -1,6 +1,8 @@
-
+//Search API for similar snacks
 const searchAPI = async (event) => {
     event.preventDefault();
+
+    document.querySelector('#spinner').style.display = 'block';
 
     let searchTerm = document.querySelector('#searchTerm').value;
 
@@ -15,8 +17,9 @@ const searchAPI = async (event) => {
     let products = data.products;
 
     let resultsArea = document.querySelector('#resultsArea');
-    resultsArea.classList.add('h-dvh')
-    resultsArea.innerHTML = ""
+    resultsArea.innerHTML = "";
+
+    document.querySelector('#spinner').style.display = 'none';
 
     products.forEach((product)=>{
         let productDiv = document.createElement('div');
@@ -56,11 +59,14 @@ const searchAPI = async (event) => {
         resultsArea.append(productDiv);
     })
     
+    
 } catch(err){
     console.log(err);
 }
 }
+document.querySelector('#search-form').addEventListener('submit', searchAPI);
 
+//Fill form with data from chosen snack
 const fillForm = (event) => {
     let productData = JSON.parse(event.target.closest('#parentDiv').getAttribute('data-product'));
 
@@ -97,7 +103,8 @@ const fillForm = (event) => {
     let categories = productData.categories
     let categoriesDiv = document.querySelector('#generatedCategories');
     categoriesDiv.innerHTML = ""
-    categories.forEach((category) => {
+    if(categories){
+        categories.forEach((category) => {
         let categorySingular = document.createElement('li');
         let str = category.slice(3);
         categorySingular.setAttribute('data-category', str);
@@ -113,6 +120,8 @@ const fillForm = (event) => {
 
         categoriesDiv.append(categorySingular);
     })
+    }
+    
 
 
     let form = document.querySelector('#submitSnack');
@@ -120,13 +129,72 @@ const fillForm = (event) => {
 
 
 }
+
+//Add selected country to list 
+const addCountry = () => {
+    let countryChoice = document.querySelector('#product_country').value;
+
+    let countriesDiv = document.querySelector('#generatedCountries');
+    
+    let countrySingular = document.createElement('li');
+    countrySingular.classList.add("m-2", "cursor-pointer");
+    countrySingular.setAttribute('data-country', countryChoice);
+    countrySingular.id = "formCountry"
+    countrySingular.innerText = countryChoice + ", ";
+
+    countrySingular.addEventListener('click', (event) => {
+        if(event.target.tagName === "LI"){
+            event.target.remove();
+        }
+    });
+
+    countriesDiv.append(countrySingular);
+}
+
+let addCountryBtn = document.querySelector('#addCountry').addEventListener('click', addCountry);
+
+const addCategory = () => {
+    let categoryChoice = document.querySelector('#product_category').value;
+
+    let categoryDiv = document.querySelector('#generatedCategories');
+    
+    let categorySingular = document.createElement('li');
+    categorySingular.classList.add("m-2", "cursor-pointer");
+    categorySingular.setAttribute('data-category', categoryChoice);
+    categorySingular.id = "formCategory"
+    categorySingular.innerText = categoryChoice + ", ";
+
+    categorySingular.addEventListener('click', (event) => {
+        if(event.target.tagName === "LI"){
+            event.target.remove();
+        }
+    });
+
+    categoryDiv.append(categorySingular);
+}
+
+let addCategoryBtn = document.querySelector('#addCategory').addEventListener('click', addCategory)
+
+const imgForm = document.querySelector('#imgLink');
+
+//Render new image if image link is changed
+function handleInputChange(event){
+    let newLink = event.target.value;
+
+    let img = document.querySelector('#formImg');
+    img.src = newLink;
+}
+imgForm.addEventListener('input', handleInputChange)
+
+//Submit form
 const submitForm = async (event) => {
     event.preventDefault();
+
+    document.querySelector('#submitSpinner').style.display = "block";
 
     const productName = document.querySelector('#product_name').value;
     const productBrand = document.querySelector('#product_brand').value;
     const productData = JSON.parse(document.querySelector('#submitSnack').getAttribute('data-product'));
-    const productCode = productData.code;
     const productImage = document.querySelector('#imgLink').value;
 
     const productCountries = document.querySelectorAll('#formCountry');
@@ -141,12 +209,10 @@ const submitForm = async (event) => {
         productCategoriesArr.push(category.getAttribute('data-category'))
     });
 
-    console.log({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr})
-
-    if(productName && productBrand && productData && productCountriesArr && productCode && productCategoriesArr && productImage){
+    if(productName && productBrand && productData && productCountriesArr && productCategoriesArr && productImage){
         const response = await fetch('/api/snack', {
             method: 'POST',
-            body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCode, productCountriesArr, productImage}),
+            body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCountriesArr, productImage}),
             headers: {'Content-Type': 'application/json'}
         });
 
@@ -158,32 +224,4 @@ const submitForm = async (event) => {
 
     }
 }
-
-const imgForm = document.querySelector('#imgLink');
-
-function handleInputChange(event){
-    let newLink = event.target.value;
-
-    let img = document.querySelector('#formImg');
-    img.src = newLink;
-}
-
-imgForm.addEventListener('input', handleInputChange)
-
-document.querySelector('#search-form').addEventListener('submit', searchAPI);
 document.querySelector('#submitSnack'). addEventListener('submit', submitForm);
-
-const loadDropdownChoices = async () => {
-    let allCountriesInDB = await fetch('/api/country');
-
-    for(let i = 0; i < allCountriesInDB.length; i++){
-        let countryOption = document.createElement('option');
-    }
-
-
-
-    let allCategoriesInDB = await fetch('/api/category');
-
-}
-
-loadDropdownChoices();

@@ -3,7 +3,7 @@ const Category = require('./Category');
 // const Comment = require('./Comment');
 
 const Country = require('./Country');
-const Item = require('./Item');
+//const Item = require('./Item');
 const Ratings = require('./Ratings');
 const Snack = require('./Snack');
 const User = require('./User');
@@ -83,10 +83,10 @@ Snack_Category.belongsTo(Snack, {
 // })
 
 //User and list item relation
-User.hasMany(Item, {
+User.hasMany(WishList, {
     foreignKey: "user_id"
 })
-Item.belongsTo(User, {
+WishList.belongsTo(User, {
     foreignKey: "user_id"
 })
 
@@ -138,22 +138,22 @@ Snack.hasMany(Like, {
 
 //ITEM IS A THROUGH TABLE
 
-User.belongsToMany(Snack, { through: Item });
-Snack.belongsToMany(User, { through: Item });
+User.belongsToMany(Snack, { through: WishList });
+Snack.belongsToMany(User, { through: WishList });
 
 //Item snack relations
-Item.belongsTo(Snack, {
+WishList.belongsTo(Snack, {
     foreignKey: "snack_id"
 })
-Snack.hasMany(Item, {
+Snack.hasMany(WishList, {
     foreignKey: "snack_id"
 })
 
 //Item user relations
-User.hasMany(Item, {
+User.hasMany(WishList, {
     foreignKey: "user_id"
 })
-Item.belongsTo(User, {
+WishList.belongsTo(User, {
     foreignKey: "user_id"
 })
 
@@ -172,7 +172,7 @@ Snack.belongsToMany(User, {
 });
 
 
-module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category, Like, WishList};
+module.exports = {Category, Country, Ratings, Snack, User, Snack_Country, Snack_Category, Like, WishList};
 
 
 
