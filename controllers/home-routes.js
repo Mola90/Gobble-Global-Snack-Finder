@@ -110,8 +110,6 @@ router.get('/', async(req, res) =>{
                 }
             
         })
-
-        console.log(seriealisedRecent)
         //Fetch all reviews to render most recent reviews on front page
         let allReviews = await Ratings.findAll({
             order: [['date_created', 'DESC']],
@@ -138,7 +136,6 @@ router.get('/', async(req, res) =>{
         })
 
         let reviewArr = allReviews.map((review) => review.get({plain:true}))
-
         reviewArr.forEach((rating) => {
             rating.starArr = [];
             let goldStars = rating.user_rating;
@@ -157,7 +154,8 @@ router.get('/', async(req, res) =>{
             reviewData: reviewArr,
             snackFromCountry: countriesOrdered,
             country: serialisedCountry,
-            snackFromRecent: seriealisedRecent
+            snackFromRecent: seriealisedRecent,
+            logged_in: req.session.logged_in
         }
 
         res.render('landing-page', pageData);
@@ -169,7 +167,7 @@ router.get('/', async(req, res) =>{
 
 router.get('/add', async(req,res) => {
     try{
-        res.render('add_snack')
+        res.render('add_snack', {logged_in: req.session.logged_in})
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -297,6 +295,7 @@ router.get('/snack/:id', async(req,res) => {
             numWish: serialisedSnack.items.length,
             userLike: userLikes,
             userSaved: userSaved,
+            logged_in: req.session.logged_in
         }
         
         res.render('single_snack', snackData)
@@ -306,23 +305,12 @@ router.get('/snack/:id', async(req,res) => {
 
     }});
 
-      
-
-
-router.get('/signup', async(req,res) => {
-    try{
-        res.render('signup')
-    } catch(err){
-        console.log(err);
-        res.status(400).json(err);
-    }
-})
 
 router.get('/signup', async (req, res) => {
     try {
       let allCountries = await Country.findAll();
       let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
-      res.render('signup', { countries: serialisedCountries });
+      res.render('signup', { countries: serialisedCountries, logged_in: req.session.logged_in });
     } catch (error) {
       console.error('Error fetching countries:', error);
       res.status(500).send('Internal Server Error');
@@ -341,7 +329,7 @@ router.get('/login', async(req,res) => {
 
 router.get('/browse', async(req,res) => {
     try{
-        res.render('browse_snacks')
+        res.render('browse_snacks', {logged_in: req.session.logged_in})
     } catch(err){
         console.log(err);
         res.status(400).json(err);

@@ -1,7 +1,7 @@
 <div class="flex flex-row w-screen justify-evenly h-4/5 m-8">
     <div class="w-2/5 shadow-md bg-stone-100 flex flex-col items-center h-4/5 p-5 m-8">
         <h1 class="text-xl font-bold my-4 self-start ml-10 mb-6">Sign Up Here!</h1>
-        <form class=" signup-form space-y-8">
+        <form id="signup-form" class="space-y-8">
             <div class="my-2 p-6 flex flex-col mb-3">
                 {{!-- <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Country of
                     Birth:</label>
@@ -11,35 +11,33 @@
                     <option value="{{this.id}}">{{this.name}}</option>
                     {{/each}}
                 </select> --}}
-                <form class="max-w-sm mx-auto">
-                    <label for="countries"
+                 <label for="countries"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white self-start">Country
                         of Birth:</label>
-                    <select name="country"
+                <select name="country" id="country-signup"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Select a country</option>
-                        {{#each countries as |countries|}}
-                        <option value="{{this.country_name}}">{{this.country_name}}</option>
+                    <option selected>Select a country</option>
+                        {{#each countries as |country|}}
+                        <option value="{{country_name}}">{{country_name}}</option>
                         {{/each}}
-                    </select>
-                </form>
+                </select>
             </div>
             <div class="my-2 flex flex-col mb-3">
                 <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Date of
                     Birth:</label>
-                <input type="date" name="DOB" class="form-input mt-1 block w-full p-2">
+                <input type="date" id="DOB-signup" name="DOB" class="form-input mt-1 block w-full p-2">
             </div>
             <div class="my-2 flex flex-col mb-3">
                 <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Username:</label>
-                <input type="text" name="Username" class="form-input mt-1 block w-full p-2" required>
+                <input type="text" id="username-signup" name="Username" class="form-input mt-1 block w-full p-2" required>
             </div>
             <div class="my-2 flex flex-col mb-3">
                 <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Email:</label>
-                <input type="email" name="Email" class="form-input mt-1 block w-full p-2" required>
+                <input type="email" id="email-signup" name="Email" class="form-input mt-1 block w-full p-2" required>
             </div>
             <div class="my-2 flex flex-col mb-3">
                 <label class="mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 self-start">Password:</label>
-                <input type="password" name="Password" class="form-input mt-1 block w-full p-2" required>
+                <input type="password" id="password-signup" name="Password" class="form-input mt-1 block w-full p-2" required>
             </div>
             <div class="flex justify-center my-4 mb-3">
                 <button type="submit"
@@ -57,6 +55,6 @@
 </div>
 
 <script src="/js/signup.js"></script>
-<script src="/js/country-dropdown.js"></script>
+{{!-- <script src="/js/country-dropdown.js"></script> --}}
 {{!--
 <script src="../controllers/api/country-route.js"></script> --}}

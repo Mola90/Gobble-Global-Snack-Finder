@@ -1,6 +1,5 @@
 router = require('express').Router();
-const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../models');
-const { associations } = require('../../models/Category');
+const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../Models');
 
 router.get('/', async (res,req) => {
     try{
