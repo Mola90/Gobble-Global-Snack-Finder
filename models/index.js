@@ -158,9 +158,18 @@ Item.belongsTo(User, {
 })
 
 //join table for User Lists
-Snack.belongsToMany(User, {through: WishList });
-User.belongsToMany(Snack, {through: WishList });
+// Snack.belongsToMany(User, {through: WishList });
+// User.belongsToMany(Snack, {through: WishList });
 
+User.belongsToMany(Snack, { 
+    through: WishList,
+    as: 'FavouriteSnacks' 
+});
+
+Snack.belongsToMany(User, {
+    through: WishList,
+    as: 'FavouriteSnacks' 
+});
 
 
 module.exports = {Category, Country, Item, Ratings, Snack, User, Snack_Country, Snack_Category, Like, WishList};

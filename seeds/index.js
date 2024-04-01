@@ -30,9 +30,9 @@ const seedAll = async () => {
 
   await seedRatings();
 
-  await wishList();
-
   await seedLikes();
+
+  await wishList();
 };
 
 seedAll();
