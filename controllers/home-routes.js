@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, Item} = require('../Models')
+const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, WishList} = require('../Models')
 
 
 
@@ -66,6 +66,15 @@ router.get('/', async(req, res) =>{
 
         countriesOrdered.sort((a,b) => b.likes.length - a.likes.length);
 
+        let topFiveSnacks = [];
+        
+        for(let i = 0; i < 5; i++){
+            if(countriesOrdered[i]){
+                topFiveSnacks.push(countriesOrdered[i])
+            }
+            
+        }
+
         //Fetch most recent 
         let allSnacks = await Snack.findAll({
                 order: [['date_created', 'DESC']],
@@ -110,6 +119,15 @@ router.get('/', async(req, res) =>{
                 }
             
         })
+
+        let mostRecentFive = [];
+
+        for(let i = 0; i < 5; i++){
+            if(seriealisedRecent[i]){
+                mostRecentFive.push(seriealisedRecent[i])
+            }
+        }
+
         //Fetch all reviews to render most recent reviews on front page
         let allReviews = await Ratings.findAll({
             order: [['date_created', 'DESC']],
@@ -152,9 +170,9 @@ router.get('/', async(req, res) =>{
         
         let pageData = {
             reviewData: reviewArr,
-            snackFromCountry: countriesOrdered,
+            snackFromCountry: topFiveSnacks,
             country: serialisedCountry,
-            snackFromRecent: seriealisedRecent,
+            snackFromRecent: mostRecentFive,
             logged_in: req.session.logged_in
         }
 
@@ -167,7 +185,18 @@ router.get('/', async(req, res) =>{
 
 router.get('/add', async(req,res) => {
     try{
-        res.render('add_snack', {logged_in: req.session.logged_in})
+        let allCountries = await Country.findAll();
+        let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+
+        let allCategories = await Category.findAll();
+        let serialisedCategories = allCategories.map(category => category.get({ plain: true }));
+
+        let optionsData = {
+            countries: serialisedCountries,
+            categories: serialisedCategories
+        }
+
+        res.render('add_snack', {optionsData, logged_in: req.session.logged_in})
     } catch(err){
         console.log(err);
         res.status(400).json(err);
@@ -206,7 +235,7 @@ router.get('/snack/:id', async(req,res) => {
                 model: Like
             },
             {
-                model: Item
+                model: WishList
             }
         ]});
 
@@ -252,24 +281,27 @@ router.get('/snack/:id', async(req,res) => {
             overallRatingStars.push({color: "text-gray-300"});
         }
         //Determine if user has like or saved this item to wishlist/likes
+
         let userLike = await Like.findOne({
             where: {
                 snack_id: serialisedSnack.id,
-                user_id: 1
+                user_id: req.session.user_id
             }
         })
+
         console.log(userLike)
+        
         let userLikes;
         if(userLike){
             userLikes = true;
         } else{
             userLikes = false;
         }
-        console.log(userLikes)
-        let userSaved = await Item.findOne({
+        
+        let userSaved = await WishList.findOne({
             where: {
                 snack_id: serialisedSnack.id,
-                user_id: 1
+                user_id: req.session.user_id   
             }
         })
         let userSave;
@@ -278,6 +310,8 @@ router.get('/snack/:id', async(req,res) => {
         } else{
             userSave = false;
         };
+
+        console.log(serialisedSnack)
         let snackData = {
             snack_name: serialisedSnack.snack_name,
             snack_brand: serialisedSnack.brand_name,
@@ -292,7 +326,7 @@ router.get('/snack/:id', async(req,res) => {
             overallStarArr: overallRatingStars,
             numReviews: ratings.length,
             numLikes: serialisedSnack.likes.length,
-            numWish: serialisedSnack.items.length,
+            numWish: serialisedSnack.wishlists.length,
             userLike: userLikes,
             userSaved: userSaved,
             logged_in: req.session.logged_in

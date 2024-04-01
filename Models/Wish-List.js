@@ -38,7 +38,7 @@ Wishlist.init(
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: 'list',
+    modelName: 'wishlist',
   }
 );
 

@@ -136,7 +136,7 @@ const addListItem = async () => {
 
 
     if(snack_id){
-        const response = await fetch('/api/wishlist', {
+        const response = await fetch('/api/wishlist/', {
             method: 'POST',
             body: JSON.stringify({snack_id}),
             headers: {'Content-Type': 'application/json'}
