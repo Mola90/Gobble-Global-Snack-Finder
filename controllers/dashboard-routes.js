@@ -70,7 +70,10 @@ router.get('/edit', async(req,res) => {
             },
             {
                 model: Like
-            }
+            },
+            {
+                model: Snack
+            },
         ]});
 
         const serialisedData = userDetails.get({plain:true});
@@ -82,7 +85,8 @@ router.get('/edit', async(req,res) => {
             country_emoji: serialisedData.country.country_emoji,
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
-            profile_picture: serialisedData.profile_picture
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length
         }
         res.render('dashboard-edit-profile', dashboardData)
     } catch(err){
@@ -98,16 +102,55 @@ router.get('/likes', async (req, res) => {
         // Retrieve the logged-in user's ID from the session or request object
         const userId = req.session.userId;
 
-        // Query the database for likes associated with the logged-in user
-        const likeData = await Like.findAll({
-            where: { user_id: 1 }, 
-            attributes: ['user_id'], 
-            include: [{ model: Snack, attributes: ['snack_name', 'brand_name', 'snack_image'] }] 
+        // Retrieve user details for the specified user
+        const userDetails = await User.findByPk(1, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                    include: [{ model: Snack, 
+                        attributes: ['snack_name', 'brand_name', 'snack_image'] }]
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+
+            ]
         });
 
-        const likes = likeData.map((like) => like.get({ plain: true }));
+        // If userDetails is null, handle the case when the user is not found
+        if (!userDetails) {
+            return res.status(404).json({ error: 'User not found' });
+        }
 
-        res.render('dashboard_likes', {likes});
+        const serialisedData = userDetails.get({ plain: true });
+
+        const dashboardData = {
+            username: serialisedData.username,
+            user_country: serialisedData.country.country_name,
+            country_emoji: serialisedData.country.country_emoji,
+            numRatings: serialisedData.ratings.length,
+            numLikes: serialisedData.likes.length,
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length
+        };
+
+        const likesData = serialisedData.likes.map((likes) => ({
+            snack_name: likes.Snack.snack_name,
+            brand_name: likes.Snack.brand_name,
+            snack_image: likes.Snack.snack_image
+        }));
+
+        console.log('Checking the Likes', likesData);
+
+
+        res.render('dashboard_likes', {dashboardData, likesData});
         // res.json(likeData);
     } catch (err) {
         console.log(err);
@@ -116,49 +159,126 @@ router.get('/likes', async (req, res) => {
 });
 
 // Route handler for GET request to find snacks reviewed by a user
-router.get('/review/:userId', async (req, res) => {
+router.get('/review', async (req, res) => {
     try {
-        // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.userId; 
-    
-        // Query the database for ratings associated with the logged-in user
-        const reviewData = await Ratings.findAll({
-            where: { user_id: 1 },
-            attributes: ['text_review', 'review_title', 'date_created'], // Specify the required fields
-            include: [{ model: Snack, attributes: ['snack_name', 'brand_name', 'snack_image'] }] // Include the User model to access user-related attributes
+        // Extract the user ID from the request parameters
+        const userId = req.params.userId;
+        
+        // Retrieve user details for the specified user
+        const userDetails = await User.findByPk(1, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                    include: [{ model: Snack, 
+                        attributes: ['snack_name', 'brand_name', 'snack_image'] }]
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+            ]
         });
 
-        const reviews = reviewData.map((reviews) => reviews.get({plain: true}));
+        // If userDetails is null, handle the case when the user is not found
+        if (!userDetails) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const serialisedData = userDetails.get({ plain: true });
+
+        const dashboardData = {
+            username: serialisedData.username,
+            user_country: serialisedData.country.country_name,
+            country_emoji: serialisedData.country.country_emoji,
+            numRatings: serialisedData.ratings.length,
+            numLikes: serialisedData.likes.length,
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length,
+        };
+
+        // This initialises a variable name review and assigns it the result of mapping over the ratings array in the serialised data
+        const reviews = serialisedData.ratings.map((rating) => ({
+            text_review: rating.text_review,
+            review_title: rating.review_title,
+            date_created: rating.date_created,
+            snack_name: rating.Snack.snack_name,
+            brand_name: rating.Snack.brand_name,
+            snack_image: rating.Snack.snack_image
+        }));
+
+        console.log('Reviews This is a check:', reviews);
     
         // Render the 'dashboard_review' template and pass the review data to it
-        res.render('dashboard_review', {reviews});
-        // res.json(reviewData);
+        res.render('dashboard_review', { dashboardData, reviews });
     } catch (err) {
         console.error(err);
         res.status(500).json(err);
     }
 });
 
+
 // Route handler for GET request to find snacks added by a user
-router.get('/submission/:userId', async (req, res) => {
+router.get('/submission', async (req, res) => {
     try {
+
         // Extract the user ID from the request parameters
-        const userId = req.params.userId; 
+        const userId = req.params.userId;
         
-        // Query the database for snacks added by the specified user
-        const submissionData = await Snack.findAll({
-            where: { user_id: 1 }, // Filter by user ID
-            attributes: ['snack_name', 'brand_name', 'snack_image'],
-            // include: [
-            //     { model: Country, attributes: ['country_name'] }, // Include country name
-            //     { model: Snack_Category, attributes: ['category_name'] } // Include category name
-            // ]
+        // Retrieve user details for the specified user
+        const userDetails = await User.findByPk(1, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                    include: [{ model: Snack, 
+                        attributes: ['snack_name', 'brand_name', 'snack_image'] }]
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+            ]
         });
 
-        const submission = submissionData.map((submission) => submission.get({ plain: true }));
+        // If userDetails is null, handle the case when the user is not found
+        if (!userDetails) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const serialisedData = userDetails.get({ plain: true });
+
+        const dashboardData = {
+            username: serialisedData.username,
+            user_country: serialisedData.country.country_name,
+            country_emoji: serialisedData.country.country_emoji,
+            numRatings: serialisedData.ratings.length,
+            numLikes: serialisedData.likes.length,
+            profile_picture: serialisedData.profile_picture,
+            submittedSnacks: serialisedData.Snacks.length,
+        };
+
+        const submission = serialisedData.Snacks.map((snack) => ({
+            snack_name: snack.snack_name,
+            brand_name: snack.brand_name,
+            snack_image: snack.snack_image
+        }));
+        
+        console.log('Submission check:', submission);
+
     
         // Render the data or send it as JSON response
-        res.render('dashboard_submission', {submission});
+        res.render('dashboard_submission', {dashboardData, submission});
         // res.json(submission);
     } catch (err) {
         console.error(err);

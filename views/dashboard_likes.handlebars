@@ -2,12 +2,12 @@
     <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
         <div class="flex justify-self-start flex-row items-center">
             <div>
-                <img class="shadow-md h-36 w-36 rounded-full bg-stone-100" src={{profile_picture}}>
+                <img class="shadow-md h-36 w-36 rounded-full bg-stone-100" src={{dashboardData.profile_picture}}>
             </div>
             <div>
-                <h2 class="text-2xl ml-8">{{username}}</h2>
-                <p class="ml-8 flex flex-row items-center">From {{user_country}} <span
-                        class="text-3xl ml-4">{{country_emoji}}</span></p>
+                <h2 class="text-2xl ml-8">{{dashboardData.username}}</h2>
+                <p class="ml-8 flex flex-row items-center">From {{dashboardData.user_country}} <span
+                        class="text-3xl ml-4">{{dashboardData.country_emoji}}</span></p>
             </div>
 
         </div>
@@ -18,15 +18,15 @@
                 <p class="">Snacks</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
-                <p>This Year</p>
+                <h3 class="font-bold text-2xl">{{dashboardData.submittedSnacks}}</h3>
+                <p>Submissions</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">{{numRatings}}</h3>
+                <h3 class="font-bold text-2xl">{{dashboardData.numRatings}}</h3>
                 <p>Reviews</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">{{numLikes}}</h3>
+                <h3 class="font-bold text-2xl">{{dashboardData.numLikes}}</h3>
                 <p>Likes</p>
             </div>
         </div>
@@ -36,9 +36,9 @@
         <ul class="flex space-x-12">
             <a href ="/dashboard/snacks">Snacks</a>
             <a href ="/dashboard/wishlist">WishList</a>
-            <a href="/dashboard/review/1">Reviews</a>
+            <a href="/dashboard/review">Reviews</a>
             <a>Likes</a>
-            <a href="/dashboard/submission/1">Submissions</a>
+            <a href="/dashboard/submission">Submissions</a>
             <a href="/dashboard/edit">Edit Profile</a>
         </ul>
     </div>
