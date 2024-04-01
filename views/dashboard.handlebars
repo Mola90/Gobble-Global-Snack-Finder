@@ -1,6 +1,4 @@
 <div class="w-screen flex flex-col items-center">
-
-    {{!-- User Profile Section --}}
     <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
         <div class="flex justify-self-start flex-row items-center">
             <div>
@@ -13,7 +11,6 @@
             
         </div>
         
-        {{!-- Dashboard Navigation Section --}}
         <div id="stat-board" class="flex flex-row justify-self-end items-center ">
             <div class="flex flex-col m-8 items-center">
                 <h3 class="font-bold text-2xl">{{numWishlist}}</h3>
@@ -34,8 +31,7 @@
         </div>
     </div>
     
-    {{!-- Commented this out to trial the cards still work in progress -SS --}}
-    {{!-- <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
+    <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
         <ul class="flex space-x-12">
             <a href ="/dashboard/wishlist">WishList</a>
             <a href="/dashboard/review">Reviews</a>
@@ -43,68 +39,5 @@
             <a href="/dashboard/submission">Submissions</a>
             <a href="/dashboard/edit">Edit Profile</a>
         </ul>
-    </div> --}}
-
-</div>
-<body>
-
-<!-- Cards Section -->
-<div class="mt-8 grid grid-cols-2 grid-rows-2 gap-8">
-    <!-- Wishlist Card -->
-    <div class="bg-gray-50 border border-gray-300 rounded-lg shadow-md p-6 mb-15 h-23 w-23">
-        <h3 class="text-lg font-semibold mb-4">
-            <a href="/dashboard/wishlist" class="text-blue-500 hover:underline mt-2">Wishlist</a>
-        </h3>
-        <ul>
-                <li>
-                    <button onclick="editWish({{wish.id}})">Edit</button>
-                    <button onclick="deleteWish({{wish.id}})">Delete</button>
-                    <button onclick="updateWish({{wish.id}})">Update</button>
-                </li>
-        </ul>
-    </div>
-
-    <!-- Reviews Card -->
-    <div class="bg-gray-50 border border-gray-300 rounded-lg shadow-md h-23 w-23 p-6 mb-15">
-        <h3 class="text-lg font-semibold mb-4">
-            <a href="/dashboard/review" class="text-blue-500 hover:underline">Reviews</a>
-        </h3>
-        <ul>
-                <li>
-                    <button onclick="edit({{wish.id}})">Edit</button>
-                    <button onclick="delete({{wish.id}})">Delete</button>
-                    <button onclick="update({{wish.id}})">Update</button>
-                </li>
-        </ul>
-    </div>
-
-    <!-- Likes Card -->
-    <div class="bg-gray-50 border border-gray-300 rounded-lg shadow-md h-23 w-23 p-6 mb-15">
-        <h3 class="text-lg font-semibold mb-4">
-            <a href="/dashboard/likes" class="text-blue-500 hover:underline mt-2">Likes</a>
-        </h3>
-        <ul>
-                <li>
-                    <button onclick="edit({{wish.id}})">Edit</button>
-                    <button onclick="delete({{wish.id}})">Delete</button>
-                    <button onclick="update({{wish.id}})">Update</button>
-                </li>
-        </ul>
-    </div>
-
-    <!-- Submissions Card -->
-    <div class="bg-gray-50 border border-gray-300 rounded-lg shadow-md h-23 w-23 p-6 mb-15">
-        <h3 class="text-lg font-semibold mb-4">
-            <a href="/dashboard/submission" class="text-blue-500 hover:underline mt-2">Submissions</a>
-        </h3>
-        <ul>
-                <li>
-                    <button onclick="edit({{wish.id}})">Edit</button>
-                    <button onclick="delete({{wish.id}})">Delete</button>
-                    <button onclick="update({{wish.id}})">Update</button>
-                </li>
-        </ul>
     </div>
 </div>
-
-</body>

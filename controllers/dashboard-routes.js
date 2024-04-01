@@ -117,7 +117,6 @@ router.get('/wishlist', async (req,res) => {
     }
 });
 
-
 router.get('/edit', async (req, res) => {
     try {
         if(!req.session.logged_in){
@@ -399,89 +398,6 @@ router.get('/submission', async (req, res) => {
     }
 });
 
-// Testing 
-
-// Route handler for GET request to display the dashboard with only three reviews
-router.get('/dashboard', async (req, res) => {
-    try {
-        if (!req.session.logged_in) {
-            res.redirect('/login');
-            return;
-        }
-
-        // Extract the user ID from the request session
-        const userId = req.session.user_id;
-
-        // Retrieve user details including ratings
-        const userDetails = await User.findByPk(userId, {
-            include: [
-                {
-                    model: Country,
-                    attributes: ["country_name", "country_emoji"],
-                },
-                {
-                    model: Ratings,
-                    include: [
-                        {
-                            model: Snack,
-                            attributes: ['snack_name', 'brand_name', 'snack_image', 'id']
-                        }
-                    ]
-                },
-                {
-                    model: Like
-                },
-                {
-                    model: Snack
-                },
-                {
-                    model: WishList
-                }
-            ]
-        });
-
-        // If userDetails is null, handle the case when the user is not found
-        if (!userDetails) {
-            return res.status(404).json({ error: 'User not found' });
-        }
-
-        const serialisedData = userDetails.get({ plain: true });
-
-        const dashboardData = {
-            username: serialisedData.username,
-            user_country: serialisedData.country.country_name,
-            country_emoji: serialisedData.country.country_emoji,
-            numRatings: serialisedData.ratings.length,
-            numLikes: serialisedData.likes.length,
-            numWishlist: serialisedData.wishlists.length,
-            profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
-            logged_in: req.session.logged_in
-        };
-
-        // Map over the ratings array and format the data for each review
-        const reviews = serialisedData.ratings.map((rating) => ({
-            text_review: rating.text_review,
-            review_title: rating.review_title,
-            date_created: rating.date_created,
-            snack_name: rating.Snack.snack_name,
-            brand_name: rating.Snack.brand_name,
-            snack_image: rating.Snack.snack_image,
-            logged_in: req.session.logged_in,
-            id: rating.Snack.id
-        }));
-
-        // Slice the reviews array to include only the first three reviews
-        const slicedReviews = reviews.slice(0, 3);
-
-        // Render the 'dashboard_review' template and pass the dashboard data and sliced reviews to it
-        res.render('dashboard_review', { dashboardData, reviews: slicedReviews });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
-    }
-});
 
 
 module.exports = router;
