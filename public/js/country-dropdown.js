@@ -1,4 +1,6 @@
-const Country = require('../../seeds/country-seed');
+const fs = require('fs');
+const Handlebars = require('handlebars');
+const { Country } = require('../models');
 
 async function renderCountries() {
     try {

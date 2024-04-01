@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {User } = require('../../models');
+const {User, Country} = require('../../Models');
 const bcrypt = require('bcrypt');
 
 router.get('/', async (req, res) => {
@@ -26,6 +26,7 @@ router.post('/signup', async (req,res) => {
       password: hashedPassword,
     });
 
+
     req.session.save(() => {
       req.session.loggedIn = true;
 
@@ -37,6 +38,28 @@ router.post('/signup', async (req,res) => {
   }
 
 });
+
+router.get('/signup', async (req, res) => {
+  try {
+    let allCountries = await Country.findAll();
+    let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+    res.render('signup', { countries: serialisedCountries });
+  } catch (error) {
+    console.error('Error fetching countries:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+router.get('/login', async(req,res) => {
+  try{
+      res.render('login')
+  } catch(err){
+      console.log(err);
+      res.status(400).json(err);
+  }
+});
+
 
 router.post('/login', async (req, res) => {
     try {

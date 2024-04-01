@@ -318,6 +318,17 @@ router.get('/signup', async(req,res) => {
     }
 })
 
+router.get('/signup', async (req, res) => {
+    try {
+      let allCountries = await Country.findAll();
+      let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+      res.render('signup', { countries: serialisedCountries });
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+  
 
 router.get('/login', async(req,res) => {
     try{
