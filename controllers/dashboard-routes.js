@@ -82,26 +82,28 @@ router.get('/wishlist', async (req,res) => {
     }
 });
 
-router.get('/edit', async(req,res) => {
-    try{
-        let userDetails = await User.findByPk(req.session.user_id, {include: [
-            {
-            model: Country,
-            attributes: ["country_name", "country_emoji"],
-            },
-            {
-                model: Ratings,
-            },
-            {
-                model: Like
-            },
-            {
-                model: Snack
-            },
-        ]});
+router.get('/edit', async (req, res) => {
+    try {
+        let userDetails = await User.findByPk(req.session.user_id, {
+            include: [
+                {
+                    model: Country,
+                    attributes: ["country_name", "country_emoji"],
+                },
+                {
+                    model: Ratings,
+                },
+                {
+                    model: Like
+                },
+                {
+                    model: Snack
+                },
+            ]
+        });
 
-        const serialisedData = userDetails.get({plain:true});
-        console.log(serialisedData)
+        const serialisedData = userDetails.get({ plain: true });
+        console.log(serialisedData);
 
         let dashboardData = {
             username: serialisedData.username,
@@ -110,12 +112,12 @@ router.get('/edit', async(req,res) => {
             numRatings: serialisedData.ratings.length,
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length
+            submittedSnacks: serialisedData.Snacks.length,
+            logged_in: req.session.logged_in,
+        }; 
 
-            logged_in: req.session.logged_in
-
-        res.render('dashboard-edit-profile', dashboardData)
-    } catch(err){
+        res.render('dashboard-edit-profile', dashboardData);
+    } catch (err) {
         console.log(err);
         res.status(400).json(err);
     }
