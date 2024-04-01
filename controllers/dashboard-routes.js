@@ -114,7 +114,7 @@ router.get('/edit', async (req, res) => {
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
             logged_in: req.session.logged_in,
-        }; 
+        }; // Added closing curly brace here
 
         res.render('dashboard-edit-profile', dashboardData);
     } catch (err) {
@@ -128,10 +128,10 @@ router.get('/edit', async (req, res) => {
 router.get('/likes', async (req, res) => {
     try {
         // Retrieve the logged-in user's ID from the session or request object
-        const userId = req.session.userId;
+        const userId = req.session.user_id;
 
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
@@ -191,10 +191,10 @@ router.get('/likes', async (req, res) => {
 router.get('/review', async (req, res) => {
     try {
         // Extract the user ID from the request parameters
-        const userId = req.params.userId;
+        const userId = req.session.user_id;
         
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
@@ -260,10 +260,10 @@ router.get('/submission', async (req, res) => {
     try {
 
         // Extract the user ID from the request parameters
-        const userId = req.params.userId;
+        const userId = req.session.user_id;
         
         // Retrieve user details for the specified user
-        const userDetails = await User.findByPk(1, {
+        const userDetails = await User.findByPk(userId, {
             include: [
                 {
                     model: Country,
