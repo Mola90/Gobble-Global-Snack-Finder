@@ -116,8 +116,8 @@ router.get('/edit', async (req, res) => {
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
             submittedSnacks: serialisedData.Snacks.length,
-            logged_in: req.session.logged_in
-        };
+            logged_in: req.session.logged_in,
+        }; 
 
         res.render('dashboard-edit-profile', dashboardData);
     } catch (err) {
