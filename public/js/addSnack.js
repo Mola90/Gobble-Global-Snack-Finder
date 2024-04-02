@@ -200,7 +200,7 @@ const submitForm = async (event) => {
     const productCountries = document.querySelectorAll('#formCountry');
     let productCountriesArr = [];
     productCountries.forEach((country) => {
-        productCountriesArr.push(country.getAttribute('data-country'))
+        productCountriesArr.push(country.getAttribute('data-country').toLowerCase());
     });
 
     const productCategories = document.querySelectorAll('#formCategory');
@@ -210,7 +210,7 @@ const submitForm = async (event) => {
     });
 
     if(productName && productBrand && productData && productCountriesArr && productCategoriesArr && productImage){
-        const response = await fetch('/api/snack', {
+        const response = await fetch('/api/snack/', {
             method: 'POST',
             body: JSON.stringify({productName, productCategoriesArr, productBrand, productData, productCountriesArr, productImage}),
             headers: {'Content-Type': 'application/json'}

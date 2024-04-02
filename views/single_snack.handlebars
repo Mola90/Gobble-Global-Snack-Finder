@@ -44,8 +44,8 @@
                         <i class="fa-solid fa-cookie-bite fa-2xl mb-4"></i>
                         <p>Eaten</p>
                     </div> --}}
-                    <div id={{#if userLike}}"removeLike"{{else}}"likeBtn"{{/if}} class="m-8 flex flex-col items-center">
-                        {{#if userLike}}
+                    <div id={{#if userLikes}}"removeLike"{{else}}"likeBtn"{{/if}} class="m-8 flex flex-col items-center">
+                        {{#if userLikes}}
                             <i class="fa-solid fa-heart fa-2xl mb-4 text-red-500"></i>
                         {{else}}
                             <i class="fa-solid fa-heart-circle-plus fa-2xl mb-4"></i>
@@ -53,8 +53,8 @@
                         <p>Like</p>
                         <p>{{numLikes}}</p>
                     </div>
-                    <div id={{#if userSaved}}"wishlistRemove"{{else}}"wishlistBtn"{{/if}} class="m-8 flex flex-col items-center">
-                        {{#if userSaved}}
+                    <div id={{#if userSave}}"wishlistRemove"{{else}}"wishlistBtn"{{/if}} class="m-8 flex flex-col items-center">
+                        {{#if userSave}}
                             <i class="fa-solid fa-clock-rotate-left fa-2xl mb-4 text-green-600"></i>
                         {{else}}
                             <i class="fa-solid fa-clock-rotate-left fa-2xl mb-4"></i>
