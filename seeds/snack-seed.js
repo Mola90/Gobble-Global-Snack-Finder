@@ -71,6 +71,42 @@ const snackData = [
         user_id: 1,
         date_created: new Date()
     },
+    {
+        snack_name: 'Sun Chips',
+        brand_name: 'Sun Chips',
+        snack_image: "https://helloomarket.com/image/cache/catalog/143810005-583x593.jpg",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Injera Chips',
+        brand_name: 'Tsionafoods',
+        snack_image: "https://static.wixstatic.com/media/fa00aa_db76335f7685456483b418a92cc8d11c~mv2_d_3024_4032_s_4_2.jpg/v1/fill/w_750,h_1000,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/fa00aa_db76335f7685456483b418a92cc8d11c~mv2_d_3024_4032_s_4_2.jpg",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Crunchy Ethiopian Teff Snacks',
+        brand_name: 'Mitmitta',
+        snack_image: "https://tefftasticeats.com/cdn/shop/products/TeffSnacks-Mitmitta-Front_d2883a8e-b60b-4660-9050-010b11312a0e_600x.png?v=1680799027",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'St. George Beer',
+        brand_name: 'St. George',
+        snack_image: "https://2.bp.blogspot.com/-ylSj-yzZMb0/VDJjgZFsfoI/AAAAAAAAMIo/QBBG8ySzxVE/s1600/1-st%2Bgeorge.jpg",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Novida ',
+        brand_name: 'Schweppes ',
+        snack_image: "https://ethiopianmonitor.com/wp-content/uploads/2020/02/unnamed.jpg",
+        user_id: 1,
+        date_created: new Date()
+    },
+
 ]
 
 const seedSnack = async () => {
