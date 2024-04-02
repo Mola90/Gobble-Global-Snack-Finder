@@ -106,6 +106,41 @@ const snackData = [
         user_id: 1,
         date_created: new Date()
     },
+    {
+        snack_name: 'Snax ',
+        brand_name: 'Lae Biscuit Co. Bikpela Na Strongpela ',
+        snack_image: "https://static.wixstatic.com/media/064c51_08954f26f0b847758679047740d04bf1~mv2.png/v1/fill/w_249,h_167,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Snax%20Beef.png",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Twisties ',
+        brand_name: 'Twisties',
+        snack_image: "https://goodmanfielder.com/assets/PNG-Pack-Shots/Twisties/HotAndSpicy_Shadow__FillWzU1MCw1MDBd.png",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Gold Nuggets',
+        brand_name: 'Paradise Foods. A Taste of Paradise',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJhq-SzIeGe9s05PhoKzvxDmVC2Z6x2aqO5QlUU8Tk6A&s",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'KOKONUT KINA Cookies',
+        brand_name: 'Paradise Foods. A Taste of Paradise',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVMTT1k0p18SxKrzeHElfNqZodUEFhvqkWr-LK-5P5Cg&s",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'rokrok',
+        brand_name: 'Paradise Foods. A Taste of Paradise',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIDpC2yFljAlBR5ji8FBghWaHMU1grqHCG12Hh93BdTw&s",
+        user_id: 1,
+        date_created: new Date()
+    },
 
 ]
 

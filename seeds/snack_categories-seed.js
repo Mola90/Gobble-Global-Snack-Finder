@@ -89,7 +89,26 @@ const snackCategoryData = [
         category_id: 5,
         snack_id: 15
     },
-  
+    {
+        category_id: 3,
+        snack_id: 16
+    },
+    {
+        category_id: 25,
+        snack_id: 17
+    },
+    {
+        category_id: 25,
+        snack_id: 18
+    },
+    {
+        category_id: 3,
+        snack_id: 19
+    },
+    {
+        category_id: 3,
+        snack_id: 20
+    },
 ]
 
 
