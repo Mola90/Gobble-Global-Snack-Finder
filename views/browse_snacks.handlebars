@@ -45,15 +45,15 @@
                 </form>
             </div>
 
-            <button type="button" id="submit-filters" class="p-2 m-2 text-sm text-white border border-gray-300 rounded-lg bg-blue-700 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">Search Snacks</button>
+            <button type="button" onClick="filterByCountry()" id="submit-filters" class="p-2 m-2 text-sm text-white border border-gray-300 rounded-lg bg-blue-700 focus:ring-blue-500 focus:border-blue-500 ">Search Snacks</button>
 
         </div>
     </div>
 
     <hr class="border-orange-300">
 
-    <div id="results">
-        <div id="snackResults" class="flex flex-row items-center">
+    <div id="results" class="w-full flex flex-col items-center">
+        <div id="snackResults" class="w-5/6 shadow-xl bg-stone-100 flex flex-row flex-wrap rounded-lg m-8 justify-evenly">
             {{#each snacks as |snack|}}
                 {{> snack-details}}
             {{/each}}

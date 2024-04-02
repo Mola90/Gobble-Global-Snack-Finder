@@ -1,12 +1,28 @@
 
 const filterByCountry = async () => {
-    let countryOfChoice = "Australia";
-    let categoryOfChoice = "Snacks"
+    let countryOfChoice = document.querySelector('#countries').value;
+    let categoryOfChoice = document.querySelector('#categories').value;
+
+    let data = {};
+
+    if(countryOfChoice != "Country"){
+        data.country = countryOfChoice
+    } else{
+        data.country = null;
+    }
+
+    if(categoryOfChoice != "Category"){
+        data.category = categoryOfChoice
+    } else{
+        data.category = null;
+    }
+
+    console.log(data)
 
     try {
         let response = await fetch('/browse', {
             method: 'POST',
-            body: JSON.stringify({ country: countryOfChoice, category: categoryOfChoice }),
+            body: JSON.stringify({country: data.country, category: data.category}),
             headers: { 'Content-Type': 'application/json' }
         });
 
@@ -24,4 +40,4 @@ const filterByCountry = async () => {
     }
 }
 
-let filter = document.querySelector('#search-btn').addEventListener('click', filterByCountry)
+//let filter = document.querySelector('#submit-filters').addEventListener('click', filterByCountry)
