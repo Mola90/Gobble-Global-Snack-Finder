@@ -174,12 +174,20 @@ router.get('/', async(req, res) =>{
             }
         });
 
+        let Countries = await Country.findAll();
+        let serialisedCountries = Countries.map(country => country.get({ plain: true }));
+  
+        let allCategories = await Category.findAll();
+        let serialisedCategories = allCategories.map(category => category.get({ plain:true }));  
+
         
         let pageData = {
             reviewData: reviewArr,
             snackFromCountry: topFiveSnacks,
             country: serialisedCountry,
             snackFromRecent: mostRecentFive,
+            countries: serialisedCountries, 
+            categories: serialisedCategories,
             logged_in: req.session.logged_in
         }
 
@@ -333,6 +341,28 @@ router.get('/snack/:id', async(req,res) => {
         } else{
             snackData.userSave = false;
         };
+
+        
+
+        console.log(serialisedSnack)
+        let snackData = {
+            snack_name: serialisedSnack.snack_name,
+            snack_brand: serialisedSnack.brand_name,
+            snack_image: serialisedSnack.snack_image,
+            snack_rating: serialisedSnack.rating,
+            snack_categories: serialisedSnack.snack_categories,
+            snack_countries: serialisedSnack.snack_countries,
+            ratings_average: ratingsAvg,
+            ratings_floor: ratingsFloor,
+            ratings: ratings,
+            snack_id: serialisedSnack.id,
+            overallStarArr: overallRatingStars,
+            numReviews: ratings.length,
+            numLikes: serialisedSnack.likes.length,
+            numWish: serialisedSnack.wishlists.length,
+            userLike: userLikes,
+            userSaved: userSaved,
+            logged_in: req.session.logged_in
         }
         
         console.log(snackData)
@@ -508,8 +538,7 @@ router.get('/signup', async (req, res) => {
         serialisedSnacks,
         countries: serialisedCountries,
         categories: serialisedCategories,
-        logged_in: req.session.logged_in 
-    });
+        logged_in: req.session.logged_in });
     } catch (error) {
       console.error('Error fetching countries:', error);
       res.status(500).send('Internal Server Error');

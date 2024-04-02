@@ -1,3 +1,4 @@
+
 const filterByCountry = async () => {
     let countryOfChoice = "Australia";
     let categoryOfChoice = "Snacks"
