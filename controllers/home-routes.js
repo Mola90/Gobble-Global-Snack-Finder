@@ -364,8 +364,149 @@ router.get('/signup', async (req, res) => {
       let allCategories = await Category.findAll();
       let serialisedCategories = allCategories.map(category => category.get({ plain:true }));
 
+      let allSnacks = await Snack.findAll(
+        {include: [
+                    {
+                        model: Snack_Country,
+                        include: [
+                            {
+                                model: Country,
+                            },
+                            
+                        ]
+                    },
+                    {
+                        model: Ratings
+                    },
+                ]}
+      );
+      let serialisedSnacks = allSnacks.map((snack) => snack.get({plain:true}));
+
+      serialisedSnacks.map((snack) => {
+            
+            let ratingsTotal = 0;
+
+            //Create an array with star rating for rendering user review star ratings
+            snack.ratings.forEach((rating) => {
+                ratingsTotal = ratingsTotal + rating.user_rating;
+            });
+            //Find ratings average
+            let ratingsAvg = parseFloat((ratingsTotal / snack.ratings.length).toFixed(2));
+            snack.ratingsAvg = ratingsAvg;
+            snack.starArr = [];
+            let goldStars = Math.floor(ratingsAvg);
+            let blankStars = 5 - goldStars;
+                for(let i = 0; i < goldStars; i++){
+                    snack.starArr.push({color: "text-yellow-300"});
+                }
+                for(let i = 0; i < blankStars; i++){
+                    snack.starArr.push({color: "text-gray-300"});
+                }
+            
+        })
+
+
       res.render('browse_snacks', { 
-        countries: serialisedCountries, 
+        serialisedSnacks,
+        countries: serialisedCountries,
+        categories: serialisedCategories,
+        logged_in: req.session.logged_in 
+    });
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+
+  });
+
+  router.post('/browse', async (req, res) => {
+    try {
+        let userRequest = {
+            category: req.body.category,
+            country: req.body.country
+        }
+
+        console.log(userRequest)
+
+      let allCountries = await Country.findAll();
+      let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+
+      let allCategories = await Category.findAll();
+      let serialisedCategories = allCategories.map(category => category.get({ plain:true }));
+
+      let allSnacks = await Snack.findAll(
+        {include: [
+                    {
+                        model: Snack_Country,
+                        include: [
+                            {
+                                model: Country,
+                            },
+                            
+                        ]
+                    },
+                    {
+                        model: Ratings
+                    },
+                    {
+                        model: Snack_Category,
+                        include: [{model: Category}]
+                    }
+                ]}
+      );
+      let serialisedSnacks = allSnacks.map((snack) => snack.get({plain:true}));
+                console.log(serialisedSnacks[0].snack_countries)
+                
+        if(userRequest.country){
+            serialisedSnacks = serialisedSnacks.filter((snack) => {
+                for(let i = 0 ; i < snack.snack_countries.length; i++){
+                    if(snack.snack_countries[i].country.country_name == userRequest.country){
+                        return true;
+                    }
+                }
+                return false;
+            })
+        }
+
+        if(userRequest.category){
+            serialisedSnacks = serialisedSnacks.filter((snack) => {
+                for(let i = 0 ; i < snack.snack_categories.length; i++){
+                    if(snack.snack_categories[i].category.category_name == userRequest.category){
+                        return true;
+                    }
+                }
+                return false;
+            })
+        }
+
+        serialisedSnacks.map((snack) => {
+            
+            let ratingsTotal = 0;
+
+            //Create an array with star rating for rendering user review star ratings
+            snack.ratings.forEach((rating) => {
+                ratingsTotal = ratingsTotal + rating.user_rating;
+            });
+            //Find ratings average
+            let ratingsAvg = parseFloat((ratingsTotal / snack.ratings.length).toFixed(2));
+            snack.ratingsAvg = ratingsAvg;
+            snack.starArr = [];
+            let goldStars = Math.floor(ratingsAvg);
+            let blankStars = 5 - goldStars;
+                for(let i = 0; i < goldStars; i++){
+                    snack.starArr.push({color: "text-yellow-300"});
+                }
+                for(let i = 0; i < blankStars; i++){
+                    snack.starArr.push({color: "text-gray-300"});
+                }
+            
+        })
+
+    console.log(serialisedSnacks)
+
+      res.render('browse_snacks', { 
+        serialisedSnacks,
+        countries: serialisedCountries,
         categories: serialisedCategories,
         logged_in: req.session.logged_in 
     });

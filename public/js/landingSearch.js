@@ -23,4 +23,4 @@ const filterByCountry = async () => {
     }
 }
 
-let filter = document.querySelector('#search-btn').addEventListener('click', filterByCountry)
+let filter = document.querySelector('#searchSnacks').addEventListener('click', filterByCountry)
