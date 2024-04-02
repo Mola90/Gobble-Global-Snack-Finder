@@ -6,10 +6,16 @@ const withAuth = require('../utils/auth')
 
 router.get('/', async(req, res) =>{
     try{
+        let availableCountries = ["Australia", "Germany"];
+
+        const randomIndex = Math.floor(Math.random() * availableCountries.length);
+
+        console.log(randomIndex)
+
         //Fetch top 5 liked snacks from a random Country
         let allCountries = await Country.findOne({
             where: {
-                country_name: "australia"
+                country_name: availableCountries[randomIndex]
             },
             include: [
                 {

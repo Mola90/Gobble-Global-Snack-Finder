@@ -115,7 +115,6 @@ router.get('/wishlist', withAuth, async (req,res) => {
         
         const wdata = newData[0].FavouriteSnacks;
 
-        console.log(wdata[0].snack_countries[0])
         res.render('dashboard_wishes', {wdata, dashboardData, logged_in: req.session.logged_in});
     } catch (err) {
         console.log(err);
