@@ -45,10 +45,7 @@ router.post('/', async (req, res) => {
   try{
 
     const like = await Like.findOne({
-        where: {
-            snack_id: req.params.id,
-            user_id: req.session.user_id
-        }
+        e
     })
 
     if(!like){
@@ -63,6 +60,7 @@ router.post('/', async (req, res) => {
     res.status(400).json(err);
   }
 })
+
 
 module.exports = router;
 

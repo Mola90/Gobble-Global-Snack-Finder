@@ -167,12 +167,20 @@ router.get('/', async(req, res) =>{
             }
         });
 
+        let Countries = await Country.findAll();
+        let serialisedCountries = Countries.map(country => country.get({ plain: true }));
+  
+        let allCategories = await Category.findAll();
+        let serialisedCategories = allCategories.map(category => category.get({ plain:true }));  
+
         
         let pageData = {
             reviewData: reviewArr,
             snackFromCountry: topFiveSnacks,
             country: serialisedCountry,
             snackFromRecent: mostRecentFive,
+            countries: serialisedCountries, 
+            categories: serialisedCategories,
             logged_in: req.session.logged_in
         }
 
@@ -311,6 +319,8 @@ router.get('/snack/:id', async(req,res) => {
             userSave = false;
         };
 
+        
+
         console.log(serialisedSnack)
         let snackData = {
             snack_name: serialisedSnack.snack_name,
@@ -362,8 +372,7 @@ router.get('/signup', async (req, res) => {
       res.render('browse_snacks', { 
         countries: serialisedCountries, 
         categories: serialisedCategories,
-        logged_in: req.session.logged_in 
-    });
+        logged_in: req.session.logged_in });
     } catch (error) {
       console.error('Error fetching countries:', error);
       res.status(500).send('Internal Server Error');
