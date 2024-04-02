@@ -71,9 +71,27 @@ const snackCategoryData = [
     },
     {
         category_id: 4,
-        snack_id: 10
+        snack_id: 11
     },
+    {
+        category_id: 4,
+        snack_id: 12
+    },
+    {
+        category_id: 4,
+        snack_id: 13
+    },
+    {
+        category_id: 12,
+        snack_id: 14
+    },
+    {
+        category_id: 5,
+        snack_id: 15
+    },
+  
 ]
+
 
 const seedSnackCategory = async () => {
     await Snack_Category.bulkCreate(snackCategoryData);
