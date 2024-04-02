@@ -6,7 +6,7 @@ const withAuth = require('../utils/auth')
 
 router.get('/', async(req, res) =>{
     try{
-        let availableCountries = ["Australia", "Germany"];
+        let availableCountries = ["Australia", "Germany", "Ethiopia", "Papua New Guinea"];
 
         const randomIndex = Math.floor(Math.random() * availableCountries.length);
 
@@ -315,13 +315,14 @@ router.get('/snack/:id', async(req,res) => {
         }
 
         //Determine if user has like or saved this item to wishlist/likes
+        let userLike;
         if(req.session.logged_in){
-            let userLike = await Like.findOne({
+            userLike = await Like.findOne({
             where: {
                 snack_id: serialisedSnack.id,
                 user_id: req.session.user_id
             }
-        })
+        })};
         
         if(userLike){
             snackData.userLikes = true;
@@ -345,34 +346,15 @@ router.get('/snack/:id', async(req,res) => {
         
 
         console.log(serialisedSnack)
-        let snackData = {
-            snack_name: serialisedSnack.snack_name,
-            snack_brand: serialisedSnack.brand_name,
-            snack_image: serialisedSnack.snack_image,
-            snack_rating: serialisedSnack.rating,
-            snack_categories: serialisedSnack.snack_categories,
-            snack_countries: serialisedSnack.snack_countries,
-            ratings_average: ratingsAvg,
-            ratings_floor: ratingsFloor,
-            ratings: ratings,
-            snack_id: serialisedSnack.id,
-            overallStarArr: overallRatingStars,
-            numReviews: ratings.length,
-            numLikes: serialisedSnack.likes.length,
-            numWish: serialisedSnack.wishlists.length,
-            userLike: userLikes,
-            userSaved: userSaved,
-            logged_in: req.session.logged_in
-        }
         
-        console.log(snackData)
         
         res.render('single_snack', snackData)
-     }catch(err){
+    } catch(err) {
         console.log(err);
         res.status(400).json(err);
 
-    }});
+    }
+});
 
 
 router.get('/signup', async (req, res) => {
@@ -437,7 +419,7 @@ router.get('/signup', async (req, res) => {
 
 
       res.render('browse_snacks', { 
-        serialisedSnacks,
+        snacks: serialisedSnacks,
         countries: serialisedCountries,
         categories: serialisedCategories,
         logged_in: req.session.logged_in 
@@ -535,7 +517,7 @@ router.get('/signup', async (req, res) => {
     console.log(serialisedSnacks)
 
       res.render('browse_snacks', { 
-        serialisedSnacks,
+        snacks: serialisedSnacks,
         countries: serialisedCountries,
         categories: serialisedCategories,
         logged_in: req.session.logged_in });
