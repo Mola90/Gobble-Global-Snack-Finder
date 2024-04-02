@@ -2,40 +2,39 @@
     <div class="container shadow-lg bg-stone-100 w-10/12 p-8 flex flex-row mt-8 justify-between">
         <div class="flex justify-self-start flex-row items-center">
             <div>
-                <img class="shadow-md h-36 w-36 rounded-full bg-stone-100" src={{profile_picture}}>
+                <img class="shadow-md h-36 w-36 rounded-full bg-stone-100" src={{dashboardData.profile_picture}}>
             </div>
             <div>
-                <h2 class="text-2xl ml-8">{{username}}</h2>
-                <p class="ml-8 flex flex-row items-center">From {{user_country}} <span
-                        class="text-3xl ml-4">{{country_emoji}}</span></p>
+                <h2 class="text-2xl ml-8">{{dashboardData.username}}</h2>
+                <p class="ml-8 flex flex-row items-center">From {{dashboardData.user_country}} <span
+                        class="text-3xl ml-4">{{dashboardData.country_emoji}}</span></p>
             </div>
-
+    
         </div>
-        
+    
         <div id="stat-board" class="flex flex-row justify-self-end items-center ">
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
-                <p class="">Snacks</p>
+                <h3 class="font-bold text-2xl">{{dashboardData.numWishlist}}</h3>
+                <p class="">Wishlist</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">Num</h3>
-                <p>This Year</p>
-            </div>
-            <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">{{numRatings}}</h3>
+                <h3 class="font-bold text-2xl">{{dashboardData.numRatings}}</h3>
                 <p>Reviews</p>
             </div>
             <div class="flex flex-col m-8 items-center">
-                <h3 class="font-bold text-2xl">{{numLikes}}</h3>
+                <h3 class="font-bold text-2xl">{{dashboardData.numLikes}}</h3>
                 <p>Likes</p>
+            </div>
+            <div class="flex flex-col m-8 items-center">
+                <h3 class="font-bold text-2xl">{{dashboardData.submittedSnacks}}</h3>
+                <p>Submissions</p>
             </div>
         </div>
     </div>
     
     <div id="dashboardNav" class="flex flex-row b w-10/12 mt-8 justify-center h-12 bg-stone-100 shadow-lg items-center">
         <ul class="flex space-x-12">
-            <a href ="/dashboard/snacks">Snacks</a>
-            <a >WishList</a>
+            <a href="/dashboard/wishlist">WishList</a>
             <a href="/dashboard/review">Reviews</a>
             <a href="/dashboard/likes">Likes</a>
             <a href="/dashboard/submission">Submissions</a>
@@ -44,26 +43,36 @@
     </div>
 </div>
 
-<div class="flex justify-center items-center min-h-screen">
+<div class="flex justify-center items-center w-full">
     <div class="w-4/5 shadow-xl bg-stone-100 flex flex-col p-8 justify-evenly rounded-lg m-8">
         <h1 class="text-xl font-bold mb-6 text-center">Wish List Items</h1>
-        <div class="reviews">
+        <div class="flex flex-row flex-wrap">
             {{#if wdata.length}}
-                <ul>
                     {{#each wdata as |wish|}}
-                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center">
-                            <div class="flex flex-col flex-grow">
-                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{wish.snack_name}} </h2>
-                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{wish.brand_name}} </h2>
+                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-col items-center w-2/6">
+                        <div class="flex flex-row items-center" onclick="window.location.replace('/snack/{{wish.id}}')">
+                            <div class="flex flex-col flex-grow ml-2">
+                                <h2 class="font-bold text-lg text-gray-900">{{wish.snack_name}} - {{wish.brand_name}}</h2>
+                                <h2 class="font-semibold text-md">Country of Origin:</h2>
+                                <ul>
+                                    {{#each wish.snack_countries as |country|}}
+                                    <li class="text-sm">{{country.country.country_name}}, {{country.country.country_emoji}}</li>
+                                    {{/each}}
+                                </ul>
                             </div>
-                            <img src="{{wish.snack_image}}" alt="{{wish.snack_name}}" style="max-width: 200px; max-height: 200px;">
+                            <img src="{{wish.snack_image}}" alt="{{wish.snack_name}}" class="ml-2" style="max-width: 200px; max-height: 200px;">
+                        </div>
+                            <button type="button" onclick="removeWishlist(event)" id="{{wish.id}}"
+                                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2">Remove</button>
                         </div>
                     {{/each}}
-                </ul>
+                
             {{else}}
                 <p>0 Items in wish list</p>
             {{/if}}
         </div>
     </div>
 </div>
+
+<script src="/js/removeWishlist.js"></script>
 

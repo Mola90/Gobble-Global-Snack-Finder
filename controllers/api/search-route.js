@@ -23,4 +23,16 @@ router.get('/', async (req, res) => {
 //   }
 //   });
 
+
+  router.post('/browse', async (req, res) => {
+    try {
+
+      
+
+    res.status(200).json(snackData);
+  } catch (err) {
+    console.error("Error occurred", err);
+    res.status(500).json(err);
+  }
+  })
   module.exports = router;

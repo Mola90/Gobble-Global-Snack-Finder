@@ -37,18 +37,29 @@ router.get('/', async (req, res) => {
     }
   });
 
-  router.get('/browse', async (req, res) => {
-    try {
-      const ratingData = await Ratings.findAll();
-      console.log("Ratings fetched successfully:", ratingData);
-      res.status(200).json(ratingData);
-    } catch (err) {
-      console.error("Error occurred while Ratings:", err);
-      res.status(500).json(err);
-    }
-  });
 
+  router.delete('/:id', async (req, res) => {
+  try{
 
+    const review = await Ratings.findOne({
+        where: {
+            snack_id: req.params.id,
+            user_id: req.session.user_id
+        }
+    })
+
+    if(!review){
+        res.status(404).json("Review not found")
+    };
+
+    let deleteReview = await review.destroy();
+
+    res.status(200).json(deleteReview)
+  } catch(err){
+    console.log(err);
+    res.status(400).json(err);
+  }
+})
   
 
   

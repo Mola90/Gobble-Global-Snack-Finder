@@ -1,14 +1,21 @@
 const router = require('express').Router();
-const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, WishList} = require('../Models')
+const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, WishList} = require('../Models');
+const withAuth = require('../utils/auth')
 
 
 
 router.get('/', async(req, res) =>{
     try{
+        let availableCountries = ["Australia", "Germany"];
+
+        const randomIndex = Math.floor(Math.random() * availableCountries.length);
+
+        console.log(randomIndex)
+
         //Fetch top 5 liked snacks from a random Country
         let allCountries = await Country.findOne({
             where: {
-                country_name: "australia"
+                country_name: availableCountries[randomIndex]
             },
             include: [
                 {
@@ -44,7 +51,7 @@ router.get('/', async(req, res) =>{
         let countriesOrdered = serialisedCountry.snack_countries.map((country) => {
             let singleSnack = country.Snack;
             let ratingsTotal = 0;
-            console.log(singleSnack)
+            
             //Create an array with star rating for rendering user review star ratings
             singleSnack.ratings.forEach((rating) => {
                 ratingsTotal = ratingsTotal + rating.user_rating;
@@ -191,7 +198,7 @@ router.get('/', async(req, res) =>{
     }
 })
 
-router.get('/add', async(req,res) => {
+router.get('/add', withAuth, async(req,res) => {
     try{
         let allCountries = await Country.findAll();
         let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
@@ -288,22 +295,38 @@ router.get('/snack/:id', async(req,res) => {
         for(let i = 0; i < blankStars; i++){
             overallRatingStars.push({color: "text-gray-300"});
         }
-        //Determine if user has like or saved this item to wishlist/likes
 
-        let userLike = await Like.findOne({
+        let snackData = {
+            snack_name: serialisedSnack.snack_name,
+            snack_brand: serialisedSnack.brand_name,
+            snack_image: serialisedSnack.snack_image,
+            snack_rating: serialisedSnack.rating,
+            snack_categories: serialisedSnack.snack_categories,
+            snack_countries: serialisedSnack.snack_countries,
+            ratings_average: ratingsAvg,
+            ratings_floor: ratingsFloor,
+            ratings: ratings,
+            snack_id: serialisedSnack.id,
+            overallStarArr: overallRatingStars,
+            numReviews: ratings.length,
+            numLikes: serialisedSnack.likes.length,
+            numWish: serialisedSnack.wishlists.length,
+            logged_in: req.session.logged_in
+        }
+
+        //Determine if user has like or saved this item to wishlist/likes
+        if(req.session.logged_in){
+            let userLike = await Like.findOne({
             where: {
                 snack_id: serialisedSnack.id,
                 user_id: req.session.user_id
             }
         })
-
-        console.log(userLike)
         
-        let userLikes;
         if(userLike){
-            userLikes = true;
+            snackData.userLikes = true;
         } else{
-            userLikes = false;
+            snackData.userLikes = false;
         }
         
         let userSaved = await WishList.findOne({
@@ -312,11 +335,11 @@ router.get('/snack/:id', async(req,res) => {
                 user_id: req.session.user_id   
             }
         })
-        let userSave;
+        
         if(userSaved){
-            userSave = true;
+            snackData.userSave = true;
         } else{
-            userSave = false;
+            snackData.userSave = false;
         };
 
         
@@ -341,6 +364,8 @@ router.get('/snack/:id', async(req,res) => {
             userSaved: userSaved,
             logged_in: req.session.logged_in
         }
+        
+        console.log(snackData)
         
         res.render('single_snack', snackData)
      }catch(err){
@@ -369,8 +394,149 @@ router.get('/signup', async (req, res) => {
       let allCategories = await Category.findAll();
       let serialisedCategories = allCategories.map(category => category.get({ plain:true }));
 
+      let allSnacks = await Snack.findAll(
+        {include: [
+                    {
+                        model: Snack_Country,
+                        include: [
+                            {
+                                model: Country,
+                            },
+                            
+                        ]
+                    },
+                    {
+                        model: Ratings
+                    },
+                ]}
+      );
+      let serialisedSnacks = allSnacks.map((snack) => snack.get({plain:true}));
+
+      serialisedSnacks.map((snack) => {
+            
+            let ratingsTotal = 0;
+
+            //Create an array with star rating for rendering user review star ratings
+            snack.ratings.forEach((rating) => {
+                ratingsTotal = ratingsTotal + rating.user_rating;
+            });
+            //Find ratings average
+            let ratingsAvg = parseFloat((ratingsTotal / snack.ratings.length).toFixed(2));
+            snack.ratingsAvg = ratingsAvg;
+            snack.starArr = [];
+            let goldStars = Math.floor(ratingsAvg);
+            let blankStars = 5 - goldStars;
+                for(let i = 0; i < goldStars; i++){
+                    snack.starArr.push({color: "text-yellow-300"});
+                }
+                for(let i = 0; i < blankStars; i++){
+                    snack.starArr.push({color: "text-gray-300"});
+                }
+            
+        })
+
+
       res.render('browse_snacks', { 
-        countries: serialisedCountries, 
+        serialisedSnacks,
+        countries: serialisedCountries,
+        categories: serialisedCategories,
+        logged_in: req.session.logged_in 
+    });
+    } catch (error) {
+      console.error('Error fetching countries:', error);
+      res.status(500).send('Internal Server Error');
+    }
+
+  });
+
+  router.post('/browse', async (req, res) => {
+    try {
+        let userRequest = {
+            category: req.body.category,
+            country: req.body.country
+        }
+
+        console.log(userRequest)
+
+      let allCountries = await Country.findAll();
+      let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
+
+      let allCategories = await Category.findAll();
+      let serialisedCategories = allCategories.map(category => category.get({ plain:true }));
+
+      let allSnacks = await Snack.findAll(
+        {include: [
+                    {
+                        model: Snack_Country,
+                        include: [
+                            {
+                                model: Country,
+                            },
+                            
+                        ]
+                    },
+                    {
+                        model: Ratings
+                    },
+                    {
+                        model: Snack_Category,
+                        include: [{model: Category}]
+                    }
+                ]}
+      );
+      let serialisedSnacks = allSnacks.map((snack) => snack.get({plain:true}));
+                console.log(serialisedSnacks[0].snack_countries)
+                
+        if(userRequest.country){
+            serialisedSnacks = serialisedSnacks.filter((snack) => {
+                for(let i = 0 ; i < snack.snack_countries.length; i++){
+                    if(snack.snack_countries[i].country.country_name == userRequest.country){
+                        return true;
+                    }
+                }
+                return false;
+            })
+        }
+
+        if(userRequest.category){
+            serialisedSnacks = serialisedSnacks.filter((snack) => {
+                for(let i = 0 ; i < snack.snack_categories.length; i++){
+                    if(snack.snack_categories[i].category.category_name == userRequest.category){
+                        return true;
+                    }
+                }
+                return false;
+            })
+        }
+
+        serialisedSnacks.map((snack) => {
+            
+            let ratingsTotal = 0;
+
+            //Create an array with star rating for rendering user review star ratings
+            snack.ratings.forEach((rating) => {
+                ratingsTotal = ratingsTotal + rating.user_rating;
+            });
+            //Find ratings average
+            let ratingsAvg = parseFloat((ratingsTotal / snack.ratings.length).toFixed(2));
+            snack.ratingsAvg = ratingsAvg;
+            snack.starArr = [];
+            let goldStars = Math.floor(ratingsAvg);
+            let blankStars = 5 - goldStars;
+                for(let i = 0; i < goldStars; i++){
+                    snack.starArr.push({color: "text-yellow-300"});
+                }
+                for(let i = 0; i < blankStars; i++){
+                    snack.starArr.push({color: "text-gray-300"});
+                }
+            
+        })
+
+    console.log(serialisedSnacks)
+
+      res.render('browse_snacks', { 
+        serialisedSnacks,
+        countries: serialisedCountries,
         categories: serialisedCategories,
         logged_in: req.session.logged_in });
     } catch (error) {
