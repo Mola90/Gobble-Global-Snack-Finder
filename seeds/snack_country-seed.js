@@ -81,6 +81,49 @@ const snackCountryData = [
         country_id: 131,
         snack_id: 20
     },
+    {
+        country_id: 182,
+        snack_id: 21
+    },
+    {
+        country_id: 182,
+        snack_id: 22
+    },
+    {
+        country_id: 182,
+        snack_id: 23
+    },
+    {
+        country_id: 182,
+        snack_id: 24
+    },
+    {
+        country_id: 182,
+        snack_id: 25
+    },
+    {
+        country_id: 182,
+        snack_id: 26
+    },
+    {
+        country_id: 182,
+        snack_id: 27
+    },
+    {
+        country_id: 182,
+        snack_id: 28
+    },
+    {
+        country_id: 182,
+        snack_id: 29
+    },
+    {
+        country_id: 182,
+        snack_id: 30
+    },
+    
+
+
 
 ]
 

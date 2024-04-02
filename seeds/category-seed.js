@@ -100,6 +100,9 @@ const categoryData = [
     {
         category_name: 'Creams',
     },
+    {
+        category_name: 'Cereals',
+    },
 
 ];
 
