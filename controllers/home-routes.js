@@ -330,12 +330,15 @@ router.get('/snack/:id', async(req,res) => {
             snackData.userLikes = false;
         }
         
-        let userSaved = await WishList.findOne({
+        let userSaved;
+        if(req.session.logged_in){
+            userSaved = await WishList.findOne({
             where: {
                 snack_id: serialisedSnack.id,
                 user_id: req.session.user_id   
             }
         })
+        }
         
         if(userSaved){
             snackData.userSave = true;
