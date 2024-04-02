@@ -61,6 +61,26 @@ const snackCountryData = [
         country_id: 58,
         snack_id: 15
     },
+    {
+        country_id: 131,
+        snack_id: 16
+    },
+    {
+        country_id: 131,
+        snack_id: 17
+    },
+    {
+        country_id: 131,
+        snack_id: 18
+    },
+    {
+        country_id: 131,
+        snack_id: 19
+    },
+    {
+        country_id: 131,
+        snack_id: 20
+    },
 
 ]
 

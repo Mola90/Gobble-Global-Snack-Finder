@@ -57,6 +57,54 @@ const ratingsData = [
         snack_id: 14,
         user_id: 1
     },
+    {
+        user_rating: 5,
+        text_review: "Can't stop having theses",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 15,
+        user_id: 1
+    },
+    {
+        user_rating: 4,
+        text_review: "Reminds me of my childhood",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 16,
+        user_id: 1
+    },
+    {
+        user_rating: 5,
+        text_review: "Obsessed with this!",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 17,
+        user_id: 1
+    },
+    {
+        user_rating: 5,
+        text_review: "Love this!",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 18,
+        user_id: 1
+    },
+    {
+        user_rating: 4,
+        text_review: "So Delicious",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 19,
+        user_id: 1
+    },
+    {
+        user_rating: 5,
+        text_review: "Chocolate frog biscuits are the best!",
+        review_title: "Why I love this!",
+        date_created: new Date(),
+        snack_id: 20,
+        user_id: 1
+    },
 ]
 
 const seedRatings = async () => {
