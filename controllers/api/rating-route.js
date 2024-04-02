@@ -37,7 +37,28 @@ router.get('/', async (req, res) => {
     }
   });
 
+  router.delete('/:id', async (req, res) => {
+  try{
 
+    const review = await Ratings.findOne({
+        where: {
+            snack_id: req.params.id,
+            user_id: req.session.user_id
+        }
+    })
+
+    if(!review){
+        res.status(404).json("Review not found")
+    };
+
+    let deleteReview = await review.destroy();
+
+    res.status(200).json(deleteReview)
+  } catch(err){
+    console.log(err);
+    res.status(400).json(err);
+  }
+})
   
 
   

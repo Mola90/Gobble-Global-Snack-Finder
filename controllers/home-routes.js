@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, WishList} = require('../Models')
+const {Snack, Ratings, Snack_Category, Snack_Country, Category, Country, User, Like, WishList} = require('../Models');
+const withAuth = require('../utils/auth')
 
 
 
@@ -44,7 +45,7 @@ router.get('/', async(req, res) =>{
         let countriesOrdered = serialisedCountry.snack_countries.map((country) => {
             let singleSnack = country.Snack;
             let ratingsTotal = 0;
-            console.log(singleSnack)
+            
             //Create an array with star rating for rendering user review star ratings
             singleSnack.ratings.forEach((rating) => {
                 ratingsTotal = ratingsTotal + rating.user_rating;
@@ -183,7 +184,7 @@ router.get('/', async(req, res) =>{
     }
 })
 
-router.get('/add', async(req,res) => {
+router.get('/add', withAuth, async(req,res) => {
     try{
         let allCountries = await Country.findAll();
         let serialisedCountries = allCountries.map(country => country.get({ plain: true }));
@@ -328,7 +329,7 @@ router.get('/snack/:id', async(req,res) => {
         };
         }
         
-        
+        console.log(snackData)
         
         res.render('single_snack', snackData)
      }catch(err){

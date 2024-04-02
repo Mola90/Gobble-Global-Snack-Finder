@@ -44,26 +44,50 @@
 </div>
 
 <div class="flex justify-center items-center">
-    <div class="w-4/5 shadow-xl bg-stone-100 flex flex-col p-8 justify-evenly rounded-lg m-8">
+    <div class="w-4/5 shadow-xl bg-stone-100 flex flex-col p-8 justify-evenly items-center rounded-lg m-8">
         <h1 class="text-xl font-bold mb-6 text-center">All Snacks Added</h1>
-        <div class="snacks">
+        <div class="w-full">
             {{#if submission.length}}
-                <ul>
+                <div class="w-full">
                     {{#each submission as |snack|}}
-                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center" onclick="window.location.replace('/snack/{{snack.id}}')">
-                            <div class="flex flex-col flex-grow">
-                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{ snack.snack_name }} </h2>
-                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{ snack.brand_name }} </h2>
-                                <!-- Add other properties if needed -->
+                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center justify-between" >
+                            <div class="flex flex-row items-center" onclick="window.location.replace('/snack/{{snack.id}}')">
+                                <div>
+                                    <h2 class="font-semibold text-lg text-gray-900">{{ snack.snack_name }} - {{snack.brand_name}}</h2>
+                                    <h2 class="text-md font-semibold">Countries:</h2>
+                                    <ul>
+                                        {{#each snack.snack_countries as |snack_country|}}
+                                            <li>{{snack_country.country.country_name}} {{snack_country.country.country_emoji}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h2 class="text-md font-semibold">Categories:</h2>
+                                    <ul>
+                                        {{#each snack.snack_categories as |snack_category|}}
+                                        <li>{{snack_category.category.category_name}}</li>
+                                        {{/each}}
+                                    </ul>
+                                </div>
+                                
+                                <img class="ml-8" src="{{ snack.snack_image }}" alt="{{ snack.snack_name }}" style="max-width: 200px; max-height: 200px;">
                             </div>
-                            <img src="{{ snack.snack_image }}" alt="{{ snack.snack_name }}" style="max-width: 200px; max-height: 200px;">
+                            
+                            <button type="button" onclick="removeSnack(event)" id="{{snack.id}}"
+                                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2">Remove</button>
                         </div>
                     {{/each}}
-                </ul>
+                </div>
             {{else}}
                 <h2>0 Snacks</h2>
                 <p>No Snacks Added Yet</p>
             {{/if}}
+                
         </div>
+        <a href="/add"
+            class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg px-5 py-2.5 text-center me-2 my-2">Add
+            Snack</a>
     </div>
 </div>
+
+<script src="/js/removeSnack.js"></script>

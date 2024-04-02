@@ -50,16 +50,20 @@
             {{#if reviews.length}}
                 <ul>
                     {{#each reviews as |review|}}
-                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center" onclick="window.location.replace('/snack/{{review.id}}')">
-                            <div class="flex flex-col flex-grow">
-                                <h2 class="font-semibold text-sm text-gray-900"> Snack: {{review.snack_name}}  </h2>
-                                <h2 class="font-semibold text-sm text-gray-900"> Brand: {{review.snack_name}} </h2>
-                                <p class="text-xs text-gray-500"> Reviewed: {{format_date review.date_created}}</p>
-                                <div class="mb-2"></div>
-                                <h3 class="font-semibold text-gray-900">{{review.review_title}}</h3>
-                                <p class="mb-2 text-gray-500">{{review.text_review}}</p>
+                        <div class="border border-gray-200 rounded-md p-4 mb-4 flex flex-row items-center" >
+                            <div onclick="window.location.replace('/snack/{{review.id}}')">
+                                <div class="flex flex-col flex-grow">
+                                    <h2 class="font-semibold text-sm text-gray-900"> Snack: {{review.snack_name}} </h2>
+                                    <h2 class="font-semibold text-sm text-gray-900"> Brand: {{review.snack_name}} </h2>
+                                    <p class="text-xs text-gray-500"> Reviewed: {{format_date review.date_created}}</p>
+                                    <div class="mb-2"></div>
+                                    <h3 class="font-semibold text-gray-900">{{review.review_title}}</h3>
+                                    <p class="mb-2 text-gray-500">{{review.text_review}}</p>
+                                </div>
+                                <img src="{{review.snack_image}}" alt="{{review.snack_image}}" style="max-width: 200px; max-height: 200px;">
                             </div>
-                            <img src="{{review.snack_image}}" alt="{{review.snack_image}}" style="max-width: 200px; max-height: 200px;">
+                            <button type="button" onclick="removeReview(event)" id="{{review.id}}"
+                                class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Remove</button>
                         </div>
                     {{/each}}
                 </ul>
@@ -70,3 +74,5 @@
         </div>
     </div>
 </div>
+
+<script src="/js/removeReview.js"></script>

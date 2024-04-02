@@ -138,8 +138,8 @@ Snack.hasMany(Like, {
 
 //ITEM IS A THROUGH TABLE
 
-User.belongsToMany(Snack, { through: WishList });
-Snack.belongsToMany(User, { through: WishList });
+//User.belongsToMany(Snack, { through: WishList });
+//Snack.belongsToMany(User, { through: WishList });
 
 //Item snack relations
 WishList.belongsTo(Snack, {

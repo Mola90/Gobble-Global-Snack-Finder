@@ -1,13 +1,7 @@
 router = require('express').Router();
 const {Snack, User, Category, Country, Snack_Country, Snack_Category} = require('../../Models');
 
-router.get('/', async (res,req) => {
-    try{
 
-    }catch(err){
-        
-    }
-});
 
 //Get snacks by user who submited them.
 router.get('/:id', async (req, res) => {
@@ -40,11 +34,10 @@ router.post('/', async (req, res) => {
             snack_name: req.body.productName,
             brand_name: req.body.productBrand,
             snack_image: req.body.productImage,
-            user_id: 1,
+            user_id: req.session.user_id,
             date_created: new Date()
         }
 
-        console.log(snackData)
         //Find all snacks, see if snack with the same name already exists
         let allSnacks = await Snack.findAll({
             attributes: ['snack_name']
@@ -61,7 +54,6 @@ router.post('/', async (req, res) => {
 
         //Find all countries that match categories list and their ids
         let allCountries = await Country.findAll();
-        console.log(allCountries);
         let countryAssociations = [];
         const countries = req.body.productCountriesArr;
         allCountries.forEach((country) => {
@@ -75,24 +67,31 @@ router.post('/', async (req, res) => {
                 countryAssociations.push(association);
             }
         });
-        console.log("associations", countryAssociations);
 
         //Create a country - snack association for each matching country
         let newCountryAssociation = await Snack_Country.bulkCreate(countryAssociations);
 
         //Find all categories that match countries list and their ids 
         let allCategories = await Category.findAll();
+        allCategories.map((category) => category.get({plain:true}));
+        let existingCategoryNames = allCategories.map((category) => category.category_name);
+
+        console.log(existingCategoryNames)
         let categoryAssociations = [];
         const categories = req.body.productCategoriesArr;
-        allCategories.forEach(async (category) => {
-            let serialisedCategory = category.get({ plain:true });
-            let categoryName = serialisedCategory.category_name.toLowerCase();
-            let association;
-            if(categories.includes(categoryName)){
+
+        categories.forEach(async (category) => {
+          let categoryName = category.toLowerCase();
+          console.log(categoryName)
+          let association;
+          if(existingCategoryNames.includes(categoryName)){
+                let matchingCategory = allCategories.find(item => item["category_name"] === categoryName);
+                console.log(matchingCategory)
                 association = {
-                    category_id: serialisedCategory.id,
+                    category_id: matchingCategory.id,
                     snack_id: addSnack.id
                 }
+                console.log("EXISTS",association)
                 categoryAssociations.push(association);
             } else{
                 let newCategory = await Category.create({category_name: categoryName});
@@ -100,18 +99,41 @@ router.post('/', async (req, res) => {
                     category_id: newCategory.id,
                     snack_id: addSnack.id
                 }
-                console.log(newCategory);
+                console.log("exists NOW",association)
+                categoryAssociations.push(association);
             }
-        });
+        })
 
         let newCategoryAssociation = await Snack_Category.bulkCreate(categoryAssociations);
 
-        console.log(newCountryAssociation, newCategoryAssociation, addSnack)
         res.status(200).json(snackData)
     }catch(err){
         console.log(err);
         res.status(400).json(err);
     }
+});
+
+router.delete('/:id', async (req, res) => {
+  try{
+
+    const snack = await Snack.findOne({
+        where: {
+            id: req.params.id,
+            user_id: req.session.user_id
+        }
+    })
+
+    if(!snack){
+        res.status(404).json("Snack not found")
+    };
+    console.log(snack);
+    let deleteSnack = await snack.destroy();
+
+    res.status(200).json(deleteSnack)
+  } catch(err){
+    console.log(err);
+    res.status(400).json(err);
+  }
 })
 
 module.exports = router;
