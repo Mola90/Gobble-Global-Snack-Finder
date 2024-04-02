@@ -62,9 +62,9 @@
 
     <hr class="border-orange-300">
 
-    <div class="snacksRen ">
-        <div class="flex flex-row items-center">
-            {{#each snackFromCountry as |snack|}}
+    <div class="snacksRen w-full flex flex-col items-center">
+        <div class="flex flex-row items-center w-5/6 shadow-xl bg-stone-100 rounded-lg flex-wrap my-4">
+            {{#each serialisedSnacks as |snack|}}
                 {{> snack-details}}
             {{/each}}
         </div>
