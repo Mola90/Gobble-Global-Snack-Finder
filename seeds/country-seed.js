@@ -147,7 +147,7 @@ const countryData = [
     { country_name: 'Rwanda', country_emoji: '🇷🇼' },
     { country_name: 'Saint Kitts and Nevis', country_emoji: '🇰🇳' },
     { country_name: 'Saint Lucia', country_emoji: '🇱🇨' },
-     { country_name: 'Saint Vincent and the Grenadines', country_emoji: '🇻🇨' },
+    { country_name: 'Saint Vincent and the Grenadines', country_emoji: '🇻🇨' },
     { country_name: 'Samoa', country_emoji: '🇼🇸' },
     { country_name: 'San Marino', country_emoji: '🇸🇲' },
     { country_name: 'Sao Tome and Principe', country_emoji: '🇸🇹' },
