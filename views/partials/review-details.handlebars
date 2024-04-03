@@ -1,8 +1,8 @@
 <article class="mb-4">
     <div class="flex items-center mb-4">
-        <img class="w-10 h-10 me-4 rounded-full" src={{User.profile_picture}} alt="">
+        <img class="w-10 h-10 me-4 rounded-full" src={{user.profile_picture}} alt="">
         <div class="font-medium ">
-            <p>{{User.username}} <span class="text-2xl">{{User.country.country_emoji}}</span></p>
+            <p>{{user.username}} <span class="text-2xl">{{user.country.country_emoji}}</span></p>
         </div>
     </div>
     <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
@@ -18,7 +18,7 @@
         {{/if}}
     </div>
     <footer class="mb-5 text-sm text-gray-500 ">
-        <p>Reviewed in {{User.country.country_name}} on {{format_date date_created}}</p>
+        <p>Reviewed in {{user.country.country_name}} on {{format_date date_created}}</p>
     </footer>
     <p class="mb-2 text-gray-500">{{text_review}}</p>
     <hr class="border-b-2 border-stone-400">

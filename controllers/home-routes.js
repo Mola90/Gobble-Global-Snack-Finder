@@ -179,7 +179,7 @@ router.get('/', async(req, res) =>{
         let allCategories = await Category.findAll();
         let serialisedCategories = allCategories.map(category => category.get({ plain:true }));  
 
-        
+        console.log(reviewArr)
         let pageData = {
             reviewData: reviewArr,
             snackFromCountry: topFiveSnacks,
