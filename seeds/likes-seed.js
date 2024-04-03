@@ -61,6 +61,46 @@ const likesData = [
     user_id: 1, 
     snack_id: 20, 
   },
+  {
+    user_id: 1, 
+    snack_id: 21, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 22, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 23, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 24, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 25, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 26, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 27, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 28, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 29, 
+  },
+  {
+    user_id: 1, 
+    snack_id: 30, 
+  },
 
 ];
 

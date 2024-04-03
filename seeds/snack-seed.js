@@ -141,7 +141,77 @@ const snackData = [
         user_id: 1,
         date_created: new Date()
     },
-
+    {
+        snack_name: 'Flaming Hot Cheetos',
+        brand_name: 'Cheetos',
+        snack_image: "https://i.ebayimg.com/images/g/IU4AAOSwKulevP6p/s-l1200.webp",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Oeros',
+        brand_name: 'Mondelez International',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVv4CF7oq1PpezzZKK8kbhXy1Hdw02gjCyfMqzuz0s6A&s",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Fritos',
+        brand_name: 'PepsiCo',
+        snack_image: "https://www.confectionerywarehouse.com.au/cdn/shop/files/US_CHIPS_Fritos_Original_311g_X_10_Bags_1024x1024__91240_1200x1200.jpg?v=1698353922",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Chips Ahoy',
+        brand_name: 'Mondelez International',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6c1_bF86TUZatru7I27MSIGnAz73Nx9bGs0nZwYc5A&s",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Goldfish',
+        brand_name: 'Campbell',
+        snack_image: "https://usafoods.com.au/cdn/shop/products/SKGFOR066.png?v=1689299264",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Almond Joy',
+        brand_name: 'The Hershey Company',
+        snack_image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaH6d_vGVDBYW8On4mAUsR9TY2Dzxwu6YNX77DvajsXA&s",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Reeses Peanut Butter Cups',
+        brand_name: 'The Hershey Company',
+        snack_image: "https://www.sweetas.net.au/cdn/shop/products/ScreenShot2023-04-24at4.20.30pm.png?v=1682317270&width=533",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Lucky Charms',
+        brand_name: 'General Mills',
+        snack_image: "https://i.ebayimg.com/images/g/HeAAAOSw7ptjhZLs/s-l1200.webp",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Hersheys',
+        brand_name: 'The Hershey Company',
+        snack_image: "https://cdn.i.haymarketmedia.asia/?n=campaign-asia%2Fcontent%2Fhersheys.jpg&h=570&w=855&q=100&v=20170226&c=1",
+        user_id: 1,
+        date_created: new Date()
+    },
+    {
+        snack_name: 'Lays Chips',
+        brand_name: 'Frito-Lay, Inc.',
+        snack_image: "https://eu-images.contentstack.com/v3/assets/blta023acee29658dfc/bltbe1ca50b4be02808/651d960c7370fc0b82c3d9a7/Lay_27s_202019_20Redesign_20-_20Classic_20front_20and_20back-72dpi.jpg?width=850&auto=webp&quality=95&format=jpg&disable=upscale",
+        user_id: 1,
+        date_created: new Date()
+    },
+    
 ]
 
 const seedSnack = async () => {
