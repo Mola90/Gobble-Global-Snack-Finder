@@ -37,7 +37,7 @@ router.get('/', withAuth, async (req, res) => {
             numLikes: serialisedData.likes.length,
             numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             logged_in: req.session.logged_in
         };
 
@@ -83,7 +83,7 @@ router.get('/wishlist', withAuth, async (req,res) => {
             numLikes: serialisedData.likes.length,
             numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             logged_in: req.session.logged_in
         };
         // Retrieve the logged-in user's ID from the session or request object
@@ -156,7 +156,7 @@ router.get('/edit', withAuth, async (req, res) => {
             numLikes: serialisedData.likes.length,
             numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             logged_in: req.session.logged_in
         };
         res.render('dashboard-edit-profile', dashboardData)
@@ -225,16 +225,16 @@ router.get('/likes', withAuth, async (req, res) => {
             numLikes: serialisedData.likes.length,
             numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             
         };
         
         const likesData = serialisedData.likes.map((likes) => ({
-            snack_name: likes.Snack.snack_name,
-            brand_name: likes.Snack.brand_name,
-            snack_image: likes.Snack.snack_image,
-            id: likes.Snack.id,
-            snack_countries: likes.Snack.snack_countries
+            snack_name: likes.snack.snack_name,
+            brand_name: likes.snack.brand_name,
+            snack_image: likes.snack.snack_image,
+            id: likes.snack.id,
+            snack_countries: likes.snack.snack_countries
         }));
 
         console.log('Checking the Likes', {likesData});
@@ -296,7 +296,7 @@ router.get('/review', withAuth, async (req, res) => {
             numLikes: serialisedData.likes.length,
             numWishlist: serialisedData.wishlists.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             logged_in: req.session.logged_in
         };
 
@@ -305,11 +305,11 @@ router.get('/review', withAuth, async (req, res) => {
             text_review: rating.text_review,
             review_title: rating.review_title,
             date_created: rating.date_created,
-            snack_name: rating.Snack.snack_name,
-            brand_name: rating.Snack.brand_name,
-            snack_image: rating.Snack.snack_image,
+            snack_name: rating.snack.snack_name,
+            brand_name: rating.snack.brand_name,
+            snack_image: rating.snack.snack_image,
             logged_in: req.session.logged_in,
-            id: rating.Snack.id
+            id: rating.snack.id
         }));
 
         console.log('Reviews This is a check:', reviews);
@@ -382,11 +382,11 @@ router.get('/submission', withAuth, async (req, res) => {
             numWishlist: serialisedData.wishlists.length,
             numLikes: serialisedData.likes.length,
             profile_picture: serialisedData.profile_picture,
-            submittedSnacks: serialisedData.Snacks.length,
+            submittedSnacks: serialisedData.snacks.length,
             logged_in: req.session.logged_in
         };
 
-        const submission = serialisedData.Snacks.map((snack) => ({
+        const submission = serialisedData.snacks.map((snack) => ({
             snack_name: snack.snack_name,
             brand_name: snack.brand_name,
             snack_image: snack.snack_image,

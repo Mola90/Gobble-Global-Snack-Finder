@@ -47,11 +47,10 @@ router.get('/', async(req, res) =>{
             ]
         })
         let serialisedCountry = allCountries.get({plain:true});
-
         let countriesOrdered = serialisedCountry.snack_countries.map((country) => {
-            let singleSnack = country.Snack;
+            let singleSnack = country.snack;
             let ratingsTotal = 0;
-            
+            console.log(singleSnack)
             //Create an array with star rating for rendering user review star ratings
             singleSnack.ratings.forEach((rating) => {
                 ratingsTotal = ratingsTotal + rating.user_rating;
@@ -68,7 +67,7 @@ router.get('/', async(req, res) =>{
                 for(let i = 0; i < blankStars; i++){
                     singleSnack.starArr.push({color: "text-gray-300"});
                 }
-            return singleSnack = country.Snack;
+            return singleSnack = country.snack;
         });
 
         countriesOrdered.sort((a,b) => b.likes.length - a.likes.length);
