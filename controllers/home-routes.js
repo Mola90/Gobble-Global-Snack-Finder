@@ -10,7 +10,7 @@ router.get('/', async(req, res) =>{
 
         const randomIndex = Math.floor(Math.random() * availableCountries.length);
 
-        console.log(randomIndex)
+        console.log(randomIndex);
 
         //Fetch top 5 liked snacks from a random Country
         let allCountries = await Country.findOne({
