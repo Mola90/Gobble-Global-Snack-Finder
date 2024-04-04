@@ -13,7 +13,7 @@ const sequelize = require('./config/connection');
 const sess = {
   secret: 'Super secret secret',
   cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // expires after 1 days
+    maxAge: 24 * 60 * 60 * 1000, // expires after 1 daysss
   },
   resave: false,
   saveUninitialized: false,
